@@ -8,3 +8,13 @@ C:\Users\Gebruiker\source\repos\Kwetter\TweetService\obj\Debug\netcoreapp3.1\Twe
 C:\Users\Gebruiker\source\repos\Kwetter\TweetService\obj\Debug\netcoreapp3.1\TweetService.RazorTargetAssemblyInfo.cache
 C:\Users\Gebruiker\source\repos\Kwetter\TweetService\obj\Debug\netcoreapp3.1\staticwebassets\TweetService.StaticWebAssets.Manifest.cache
 C:\Users\Gebruiker\source\repos\Kwetter\TweetService\obj\Debug\netcoreapp3.1\staticwebassets\TweetService.StaticWebAssets.xml
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\obj\Debug\netcoreapp3.1\TweetService.csproj.CoreCompileInputs.cache
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\obj\Debug\netcoreapp3.1\TweetService.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\bin\Debug\netcoreapp3.1\TweetService.deps.json
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\bin\Debug\netcoreapp3.1\TweetService.runtimeconfig.json
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\bin\Debug\netcoreapp3.1\TweetService.runtimeconfig.dev.json
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\bin\Debug\netcoreapp3.1\TweetService.dll
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\bin\Debug\netcoreapp3.1\TweetService.pdb
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\obj\Debug\netcoreapp3.1\TweetService.dll
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\obj\Debug\netcoreapp3.1\TweetService.pdb
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\obj\Debug\netcoreapp3.1\TweetService.genruntimeconfig.cache

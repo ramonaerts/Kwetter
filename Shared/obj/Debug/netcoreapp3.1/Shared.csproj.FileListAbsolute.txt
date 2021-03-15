@@ -1,0 +1,5 @@
+C:\Users\Gebruiker\source\repos\Kwetter\Shared\bin\Debug\netcoreapp3.1\Shared.deps.json
+C:\Users\Gebruiker\source\repos\Kwetter\Shared\bin\Debug\netcoreapp3.1\Shared.dll
+C:\Users\Gebruiker\source\repos\Kwetter\Shared\obj\Debug\netcoreapp3.1\Shared.csprojAssemblyReference.cache
+C:\Users\Gebruiker\source\repos\Kwetter\Shared\obj\Debug\netcoreapp3.1\Shared.AssemblyInfoInputs.cache
+C:\Users\Gebruiker\source\repos\Kwetter\Shared\obj\Debug\netcoreapp3.1\Shared.AssemblyInfo.cs

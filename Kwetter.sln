@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetService", "TweetService\TweetService.csproj", "{B22F3ABD-6A35-4DC7-A12F-B01CEF15E393}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway", "Gateway\Gateway.csproj", "{5AD257A2-A46D-4FE7-92E1-1321C2E0468B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{760E06D7-2C71-4A00-A37D-B325F7F873EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{B22F3ABD-6A35-4DC7-A12F-B01CEF15E393}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B22F3ABD-6A35-4DC7-A12F-B01CEF15E393}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B22F3ABD-6A35-4DC7-A12F-B01CEF15E393}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AD257A2-A46D-4FE7-92E1-1321C2E0468B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AD257A2-A46D-4FE7-92E1-1321C2E0468B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AD257A2-A46D-4FE7-92E1-1321C2E0468B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AD257A2-A46D-4FE7-92E1-1321C2E0468B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{760E06D7-2C71-4A00-A37D-B325F7F873EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{760E06D7-2C71-4A00-A37D-B325F7F873EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{760E06D7-2C71-4A00-A37D-B325F7F873EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{760E06D7-2C71-4A00-A37D-B325F7F873EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
