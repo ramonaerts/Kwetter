@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Y/uuyiVO2ApGFQEOke88991dgq2KmdqmrXvsMCVSCnkKTQmWv4phDLHgxEznDNlIUL7VQeFfC8PnE1GwIhiiWw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Gebruiker\\source\\repos\\Kwetter\\TweetService\\TweetService.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Gebruiker\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.8\\microsoft.visualstudio.azure.containers.tools.targets.1.10.8.nupkg.sha512"
+  ],
+  "logs": []
+}

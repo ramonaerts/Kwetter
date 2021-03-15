@@ -1,0 +1,10 @@
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\bin\Debug\netcoreapp3.1\appsettings.json
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\bin\Debug\netcoreapp3.1\TweetService.exe
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\obj\Debug\netcoreapp3.1\TweetService.csprojAssemblyReference.cache
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\obj\Debug\netcoreapp3.1\TweetService.AssemblyInfoInputs.cache
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\obj\Debug\netcoreapp3.1\TweetService.AssemblyInfo.cs
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\obj\Debug\netcoreapp3.1\TweetService.RazorTargetAssemblyInfo.cache
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\obj\Debug\netcoreapp3.1\staticwebassets\TweetService.StaticWebAssets.Manifest.cache
+C:\Users\Gebruiker\source\repos\Kwetter\TweetService\obj\Debug\netcoreapp3.1\staticwebassets\TweetService.StaticWebAssets.xml
