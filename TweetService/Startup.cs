@@ -10,6 +10,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Shared;
+using TweetService.MessageHandlers;
+using TweetService.Models;
+using TweetService.Services;
 
 namespace TweetService
 {
@@ -25,7 +30,19 @@ namespace TweetService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
+
+            services.AddMessagePublishing("TweetService", builder =>
+                {
+                    builder.WithHandler<TweetsMessageHandler>("Tweets");
+                });
+
+            services.AddScoped<ITweetService, Services.TweetService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
