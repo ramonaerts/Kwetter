@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v3.1": {
       "Shared/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.1.4",
           "Microsoft.Extensions.DependencyInjection": "5.0.1",
           "Microsoft.Extensions.Hosting.Abstractions": "5.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "5.0.0",
@@ -18,6 +19,32 @@
           "Shared.dll": {}
         }
       },
+      "Microsoft.AspNetCore.JsonPatch/3.1.4": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0",
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.JsonPatch.dll": {
+            "assemblyVersion": "3.1.4.0",
+            "fileVersion": "3.100.420.21604"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.NewtonsoftJson/3.1.4": {
+        "dependencies": {
+          "Microsoft.AspNetCore.JsonPatch": "3.1.4",
+          "Newtonsoft.Json": "12.0.3",
+          "Newtonsoft.Json.Bson": "1.0.2"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll": {
+            "assemblyVersion": "3.1.4.0",
+            "fileVersion": "3.100.420.21604"
+          }
+        }
+      },
+      "Microsoft.CSharp/4.7.0": {},
       "Microsoft.Extensions.Configuration.Abstractions/5.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "5.0.0"
@@ -96,6 +123,17 @@
           }
         }
       },
+      "Newtonsoft.Json.Bson/1.0.2": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.Bson.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.2.22727"
+          }
+        }
+      },
       "RabbitMQ.Client/6.2.1": {
         "dependencies": {
           "System.Memory": "4.5.4",
@@ -124,6 +162,27 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Microsoft.AspNetCore.JsonPatch/3.1.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZNy+dmMOog7PyPCVLfweNYOP3rZzo4eFFrIKS5QjMd/7w2AJ12aVu9rLpZOV0XuQWxUPE7g9ZT75D05Z7wvfxw==",
+      "path": "microsoft.aspnetcore.jsonpatch/3.1.4",
+      "hashPath": "microsoft.aspnetcore.jsonpatch.3.1.4.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Mvc.NewtonsoftJson/3.1.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OL8SnwFxtFZbcb0z17v0Zf2HMIi/BTbgnxLv1NU+/OEnZEtf0a4XND21IS/bcQoPp/84szhsYQnbxGzCCWQlfg==",
+      "path": "microsoft.aspnetcore.mvc.newtonsoftjson/3.1.4",
+      "hashPath": "microsoft.aspnetcore.mvc.newtonsoftjson.3.1.4.nupkg.sha512"
+    },
+    "Microsoft.CSharp/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
+      "path": "microsoft.csharp/4.7.0",
+      "hashPath": "microsoft.csharp.4.7.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Configuration.Abstractions/5.0.0": {
       "type": "package",
@@ -180,6 +239,13 @@
       "sha512": "sha512-6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
       "path": "newtonsoft.json/12.0.3",
       "hashPath": "newtonsoft.json.12.0.3.nupkg.sha512"
+    },
+    "Newtonsoft.Json.Bson/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QYFyxhaABwmq3p/21VrZNYvCg3DaEoN/wUuw5nmfAf0X3HLjgupwhkEWdgfb9nvGAUIv3osmZoD3kKl4jxEmYQ==",
+      "path": "newtonsoft.json.bson/1.0.2",
+      "hashPath": "newtonsoft.json.bson.1.0.2.nupkg.sha512"
     },
     "RabbitMQ.Client/6.2.1": {
       "type": "package",
