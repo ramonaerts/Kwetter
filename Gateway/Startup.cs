@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -18,6 +21,25 @@ namespace Gateway
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            var secret = "eBCatxoffIIq6ESdrDZ8LKI3zpxhYkYM";
+            var key = Encoding.ASCII.GetBytes(secret);
+            services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -37,9 +59,11 @@ namespace Gateway
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseOcelot().Wait();
-
             app.UseRouting();
+
+            app.UseCors("CorsPolicy");
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
@@ -48,6 +72,8 @@ namespace Gateway
                     await context.Response.WriteAsync("Hello World!");
                 });
             });
+
+            app.UseOcelot().Wait();
         }
     }
 }

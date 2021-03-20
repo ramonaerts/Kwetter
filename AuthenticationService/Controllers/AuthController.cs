@@ -23,6 +23,12 @@ namespace AuthenticationService.Controllers
             _authService = authService;
         }
 
+        [HttpGet("test")]
+        public ApiResult TestGet()
+        {
+            return ApiResult.Success("Authenticated!");
+        }
+
         [AllowAnonymous]
         [HttpPost("login")]
         public ApiResult Login([FromBody] LoginMessage message)
@@ -31,6 +37,7 @@ namespace AuthenticationService.Controllers
             if (user == null) return ApiResult.Forbidden("Wrong credentials");
 
             var token = _authService.CreateToken(user.Id);
+
             return ApiResult.Success(user, token);
         }
     }
