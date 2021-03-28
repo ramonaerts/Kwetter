@@ -5,8 +5,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "tweetservice",
-          "Port": 80
+          "Host": "localhost",
+          "Port": 5010
         }
       ],
       "UpstreamPathTemplate": "/api/tweet/{everything}",
@@ -17,8 +17,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "authenticationservice",
-          "Port": 80
+          "Host": "localhost",
+          "Port": 5020
         }
       ],
       "UpstreamPathTemplate": "/api/auth/test",
@@ -33,13 +33,15 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "authenticationservice",
-          "Port": 80
+          "Host": "localhost",
+          "Port": 5020
         }
       ],
       "UpstreamPathTemplate": "/api/auth/login",
       "UpstreamHttpMethod": [ "POST" ]
     }
   ],
-  "GlobalConfiguration": {}
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5001"
+  }
 }

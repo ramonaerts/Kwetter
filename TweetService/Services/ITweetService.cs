@@ -10,7 +10,7 @@ namespace TweetService.Services
     public interface ITweetService
     {
         List<Tweet> GetTweets();
-        void AddUser(User user);
-        List<string> GetUsers();
+        void AddUser(UserChange user);
+        List<User> GetUsers();
     }
 }

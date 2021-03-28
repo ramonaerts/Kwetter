@@ -40,7 +40,7 @@ namespace TweetService
             services.AddMessagePublishing("TweetService", builder =>
                 {
                     builder.WithHandler<TweetsMessageHandler>("Tweets")
-                        .WithHandler<NewUserMessageHandler>("User");
+                        .WithHandler<NewUserMessageHandler>("UserChange");
                 });
 
             services.AddScoped<ITweetService, Services.TweetService>();

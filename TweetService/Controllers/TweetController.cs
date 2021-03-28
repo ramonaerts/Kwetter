@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Shared.API;
+using TweetService.Models;
 using TweetService.Services;
 
 namespace TweetService.Controllers
@@ -20,16 +21,18 @@ namespace TweetService.Controllers
 
         [HttpGet]
         [Route("tweets")]
-        public ApiResult GetTweets()
+        public ApiResult GetUserTweets()
         {
-            return ApiResult.Success("result");
+            List<Tweet> tweets = _tweetService.GetTweets();
+
+            return ApiResult.Success(tweets);
         }
 
         [HttpGet]
         [Route("test")]
         public ApiResult GetTest()
         {
-            List<string> testUsers = _tweetService.GetUsers();
+            List<User> testUsers = _tweetService.GetUsers();
 
             return ApiResult.Success(testUsers);
         }

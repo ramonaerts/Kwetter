@@ -8,7 +8,7 @@ using TweetService.Services;
 
 namespace TweetService.MessageHandlers
 {
-    public class NewUserMessageHandler : IMessageHandler<User>
+    public class NewUserMessageHandler : IMessageHandler<UserChange>
     {
         private readonly ITweetService _tweetService;
         public NewUserMessageHandler(ITweetService tweetService)
@@ -16,7 +16,7 @@ namespace TweetService.MessageHandlers
             _tweetService = tweetService;
         }
 
-        public async Task HandleMessageAsync(string messageType, User message)
+        public async Task HandleMessageAsync(string messageType, UserChange message)
         {
             _tweetService.AddUser(message);
         }

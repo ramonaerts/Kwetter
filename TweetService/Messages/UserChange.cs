@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace TweetService.Messages
 {
-    public class User
+    public class UserChange
     {
+        public int UserId { get; set; }
         public string Username { get; set; }
+        public string Nickname { get; set; }
     }
 }
