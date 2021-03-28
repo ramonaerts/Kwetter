@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AuthenticationService.Entities;
 using AuthenticationService.Messages.Api;
 using Microsoft.IdentityModel.Tokens;
+using Shared.Messaging;
 
 namespace AuthenticationService.Services
 {

@@ -8,20 +8,17 @@ using TweetService.Services;
 
 namespace TweetService.MessageHandlers
 {
-    public class TweetsMessageHandler : IMessageHandler<Tweets>
+    public class NewUserMessageHandler : IMessageHandler<User>
     {
         private readonly ITweetService _tweetService;
-        public TweetsMessageHandler(ITweetService tweetService)
+        public NewUserMessageHandler(ITweetService tweetService)
         {
             _tweetService = tweetService;
         }
 
-        public async Task HandleMessageAsync(string messageType, Tweets message)
+        public async Task HandleMessageAsync(string messageType, User message)
         {
-            foreach (var item in message.TweetList)
-            {
-                Console.WriteLine(item);
-            }
+            _tweetService.AddUser(message);
         }
     }
 }

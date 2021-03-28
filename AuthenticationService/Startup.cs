@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Shared;
 
 namespace AuthenticationService
 {
@@ -48,6 +49,8 @@ namespace AuthenticationService
                     ValidateAudience = false
                 };
             });
+
+            services.AddMessagePublishing("AuthenticationService");
 
             services.AddSingleton<IAuthService>(new AuthService(key));
         }

@@ -8,6 +8,7 @@ using AuthenticationService.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.API;
+using Shared.Messaging;
 
 namespace AuthenticationService.Controllers
 {
@@ -17,10 +18,12 @@ namespace AuthenticationService.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
+        private readonly IMessagePublisher _messagePublisher;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, IMessagePublisher messagePublisher)
         {
             _authService = authService;
+            _messagePublisher = messagePublisher;
         }
 
         [HttpGet("test")]
@@ -37,6 +40,8 @@ namespace AuthenticationService.Controllers
             if (user == null) return ApiResult.Forbidden("Wrong credentials");
 
             var token = _authService.CreateToken(user.Id);
+
+            _messagePublisher.PublishMessageAsync("User", new { Username = "ra15" });
 
             return ApiResult.Success(user, token);
         }

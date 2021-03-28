@@ -6,3 +6,15 @@ services:
     build:
       context: .
       dockerfile: Gateway/Dockerfile
+
+  authenticationservice:
+    image: ${DOCKER_REGISTRY-}authenticationservice
+    build:
+      context: .
+      dockerfile: AuthenticationService/Dockerfile
+
+  tweetservice:
+    image: ${DOCKER_REGISTRY-}tweetservice
+    build:
+      context: .
+      dockerfile: TweetService/Dockerfile
