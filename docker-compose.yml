@@ -1,8 +1,24 @@
 version: '3.4'
 
 services:
+  rabbit:
+    image: rabbitmq:3-management
+    container_name: rabbit
+    hostname: rabbit
+    ports:
+        - "15672:15672"
+        - "5672:5672"
+    expose:
+        - 15672
+        - 5672
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:15672"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+
   gateway:
-    image: ${DOCKER_REGISTRY-}gateway
+    image: ${DOCKER_REGISTRY-}gateway    
     build:
       context: .
       dockerfile: Gateway/Dockerfile
@@ -12,9 +28,19 @@ services:
     build:
       context: .
       dockerfile: AuthenticationService/Dockerfile
+    restart: "on-failure"
+    depends_on:
+        - rabbit
+    links: 
+        - rabbit
 
   tweetservice:
     image: ${DOCKER_REGISTRY-}tweetservice
     build:
       context: .
       dockerfile: TweetService/Dockerfile
+    restart: "on-failure"
+    depends_on:
+        - rabbit
+    links: 
+        - rabbit
