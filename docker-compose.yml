@@ -23,6 +23,12 @@ services:
       context: .
       dockerfile: Gateway/Dockerfile
 
+  filemanagementservice:
+    image: ${DOCKER_REGISTRY-}filemanagementservice    
+    build:
+      context: .
+      dockerfile: FileManagementService/Dockerfile
+
   authenticationservice:
     image: ${DOCKER_REGISTRY-}authenticationservice
     build:
