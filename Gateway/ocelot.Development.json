@@ -2,11 +2,11 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/tweet/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tweetservice",
-          "Port": 443
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/tweet/{everything}",
@@ -14,11 +14,11 @@
     },
     {
       "DownstreamPathTemplate": "/profile/images/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "filemanagementservice",
-          "Port": 443
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/profile/images/{everything}",
@@ -26,11 +26,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/auth/test",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "authenticationservice",
-          "Port": 443
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/auth/test",
@@ -42,11 +42,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/auth/login",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "authenticationservice",
-          "Port": 443
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/auth/login",
