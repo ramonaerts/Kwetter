@@ -26,7 +26,7 @@ namespace FileManagementService.Services
             switch (type)
             {
                 case DataType.Profile:
-                    return "\\Content\\Profileimages\\";
+                    return "/Content/Profileimages/";
                 default:
                     return null;
             }
