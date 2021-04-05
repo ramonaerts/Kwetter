@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AuthenticationService.DAL;
 using AuthenticationService.Entities;
 using AuthenticationService.Messages.Api;
 using Microsoft.IdentityModel.Tokens;
@@ -18,24 +20,17 @@ namespace AuthenticationService.Services
         private readonly IDictionary<string, string> _users = new Dictionary<string, string>
             { { "test1@gmail.com", "password1" },{ "test2@gmail.com", "password2" } };
         private readonly string _key;
+        private readonly IAuthenticationContext _authenticationContext;
 
-        public AuthService(string key)
+        public AuthService(IAuthenticationContext authenticationContext)
         {
-            _key = key;
+            _key = "eBCatxoffIIq6ESdrDZ8LKI3zpxhYkYM";
+            _authenticationContext = authenticationContext;
         }
 
         public User LoginUser(LoginMessage message)
         {
-            if (!_users.Any(u => u.Key == message.Email && u.Value == message.Password)) return null;
-
-            return new User
-            {
-                Email = "test1@gmail.com",
-                Id = 1,
-                Password = "password1",
-                ProfileName = "Ramon",
-                Username = "ra15"
-            };
+            return _authenticationContext.LoginUser(message.Email, message.Password);
         }
 
         public string CreateToken(int userId)

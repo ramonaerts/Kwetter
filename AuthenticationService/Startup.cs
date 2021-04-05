@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AuthenticationService.DAL;
 using AuthenticationService.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -52,7 +53,8 @@ namespace AuthenticationService
 
             services.AddMessagePublishing("AuthenticationService");
 
-            services.AddSingleton<IAuthService>(new AuthService(key));
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddSingleton<IAuthenticationContext, AuthenticationContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
