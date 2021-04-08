@@ -41,6 +41,9 @@ services:
     build:
       context: .
       dockerfile: Gateway/Dockerfile
+    ports:
+      - "50000:80"
+      - "50001:443"
 
   filemanagementservice:
     image: ${DOCKER_REGISTRY-}filemanagementservice    

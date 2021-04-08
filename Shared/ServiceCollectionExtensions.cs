@@ -19,6 +19,7 @@ namespace Shared
             services.AddSingleton(queueNameService);
             var connection = new RabbitMqConnection();
             services.AddSingleton(connection);
+            services.AddSingleton<RabbitMqConfig>();
             services.AddScoped<IMessagePublisher, RabbitMqMessagePublisher>();
         }
     }

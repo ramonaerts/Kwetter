@@ -14,6 +14,7 @@ namespace Shared.Messaging
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly RabbitMqConnection _connection;
+        private readonly RabbitMqConfig _config;
         private readonly QueueName _queueName;
         private readonly MessageHandlerRepository _messageHandlerRepository;
         private readonly ILogger<QueueReaderService> _logger;
@@ -22,6 +23,7 @@ namespace Shared.Messaging
         public QueueReaderService(
             IServiceProvider serviceProvider,
             RabbitMqConnection connection,
+            RabbitMqConfig config,
             QueueName queueName,
             MessageHandlerRepository messageHandlerRepository,
             ILogger<QueueReaderService> logger
@@ -29,6 +31,7 @@ namespace Shared.Messaging
         {
             _serviceProvider = serviceProvider;
             _connection = connection;
+            _config = config;
             _queueName = queueName;
             _messageHandlerRepository = messageHandlerRepository;
             _logger = logger;
@@ -36,6 +39,9 @@ namespace Shared.Messaging
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            // Configure exchanges and queues on RabbitMQ
+            _config.ConfigureRabbit();
+
             // Create a channel for this reader
             _channel = _connection.CreateChannel();
 
