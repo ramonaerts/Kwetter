@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -54,12 +55,15 @@ namespace AuthenticationService
             services.AddMessagePublishing("AuthenticationService");
 
             services.AddScoped<IAuthService, AuthService>();
-            services.AddSingleton<IAuthenticationContext, AuthenticationContext>();
+
+            services.AddDbContext<AuthenticationContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            MigrateDatabase(app);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -74,6 +78,19 @@ namespace AuthenticationService
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static void MigrateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<AuthenticationContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
         }
     }
 }

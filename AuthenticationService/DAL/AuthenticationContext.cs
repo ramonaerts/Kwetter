@@ -3,45 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AuthenticationService.Entities;
+using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 
 namespace AuthenticationService.DAL
 {
-    public class AuthenticationContext : IAuthenticationContext
+    public class AuthenticationContext : DbContext
     {
-        private readonly MySqlConnection _connection = new MySqlConnection("Server=authenticationdatabase;Port=3306;Database=kwetter;Uid=root;password=example");
-        public User LoginUser(string email, string password)
+        public DbSet<User> Users { get; set; }
+
+        public AuthenticationContext(DbContextOptions options) : base(options)
         {
-            try
-            {
-                _connection.Open();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+            
+        }
 
-            var mscCommand = new MySqlCommand("SELECT * FROM authentication WHERE email = @mail && password = @pw;", _connection);
-            mscCommand.Parameters.AddWithValue("@mail", email);
-            mscCommand.Parameters.AddWithValue("@pw", password);
+        public AuthenticationContext() { }
 
-            using (var reader = mscCommand.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    var user = new User
-                    {
-                        Id = (int)reader["id"],
-                        Email = (string)reader["email"],
-                        ProfileName = (string)reader["profilename"],
-                        Username = (string)reader["username"],
-                        Password = (string)reader["password"]
-                    };
-
-                    return user;
-                }
-            }
-            return null;
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseMySql("Server=authenticationdatabase;Port=3306;Database=kwetter;Uid=root;password=example;");
         }
     }
 }

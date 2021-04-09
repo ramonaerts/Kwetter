@@ -16,13 +16,10 @@ namespace AuthenticationService.Services
 {
     public class AuthService : IAuthService
     {
-        //Change directory when database is working.
-        private readonly IDictionary<string, string> _users = new Dictionary<string, string>
-            { { "test1@gmail.com", "password1" },{ "test2@gmail.com", "password2" } };
         private readonly string _key;
-        private readonly IAuthenticationContext _authenticationContext;
+        private readonly AuthenticationContext _authenticationContext;
 
-        public AuthService(IAuthenticationContext authenticationContext)
+        public AuthService(AuthenticationContext authenticationContext)
         {
             _key = "eBCatxoffIIq6ESdrDZ8LKI3zpxhYkYM";
             _authenticationContext = authenticationContext;
@@ -30,7 +27,8 @@ namespace AuthenticationService.Services
 
         public User LoginUser(LoginMessage message)
         {
-            return _authenticationContext.LoginUser(message.Email, message.Password);
+            return _authenticationContext.Users.FirstOrDefault(u =>
+                u.Email == message.Email && u.Password == message.Password);
         }
 
         public string CreateToken(int userId)
