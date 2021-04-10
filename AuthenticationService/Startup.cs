@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -82,13 +84,20 @@ namespace AuthenticationService
 
         private static void MigrateDatabase(IApplicationBuilder app)
         {
-            using (var serviceScope = app.ApplicationServices
-                .GetRequiredService<IServiceScopeFactory>()
-                .CreateScope())
+            using (var scope = app.ApplicationServices.CreateScope())
             {
-                using (var context = serviceScope.ServiceProvider.GetService<AuthenticationContext>())
+                var dbContext = scope.ServiceProvider.GetService<AuthenticationContext>();
+
+                var relationalDatabaseCreator =
+                    (RelationalDatabaseCreator)dbContext.Database.GetService<IDatabaseCreator>();
+
+                var databaseExists = relationalDatabaseCreator.Exists() && relationalDatabaseCreator.HasTables();
+
+                dbContext.Database.Migrate();
+
+                if (!databaseExists)
                 {
-                    context.Database.Migrate();
+                    //TODO: add standard data
                 }
             }
         }
