@@ -10,8 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Shared;
+using TweetService.DAL;
 using TweetService.MessageHandlers;
 using TweetService.Models;
 using TweetService.Services;
@@ -42,6 +44,10 @@ namespace TweetService
                     builder.WithHandler<TweetsMessageHandler>("Tweets")
                         .WithHandler<NewUserMessageHandler>("UserChange");
                 });
+
+
+            services.Configure<TweetContext>(Configuration.GetSection(nameof(TweetContext)));
+            services.AddSingleton<ITweetContext>(sp => sp.GetRequiredService<IOptions<TweetContext>>().Value);
 
             services.AddScoped<ITweetService, Services.TweetService>();
         }

@@ -12,5 +12,7 @@ namespace TweetService.Services
         List<Tweet> GetTweets();
         void AddUser(UserChange user);
         List<User> GetUsers();
+        Entities.Tweet GetTweet();
+        void CreateTweet();
     }
 }

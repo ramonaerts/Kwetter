@@ -10,7 +10,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/tweet/{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamHttpMethod": [ "GET", "POST" ]
     },
     {
       "DownstreamPathTemplate": "/profile/images/{everything}",

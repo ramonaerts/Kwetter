@@ -25,6 +25,13 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: example
 
+  tweetdatabase:
+    image: mongo
+    container_name: TweetDatabase
+    restart: always
+    ports:
+      - "27017:27017"
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin

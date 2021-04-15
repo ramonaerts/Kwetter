@@ -32,9 +32,18 @@ namespace TweetService.Controllers
         [Route("test")]
         public ApiResult GetTest()
         {
-            List<User> testUsers = _tweetService.GetUsers();
+            Entities.Tweet tweet = _tweetService.GetTweet();
 
-            return ApiResult.Success(testUsers);
+            return ApiResult.Success(tweet);
+        }
+
+        [HttpPost]
+        [Route("test")]
+        public ApiResult CreateTest()
+        {
+            _tweetService.CreateTweet();
+
+            return ApiResult.Success("yur");
         }
     }
 }

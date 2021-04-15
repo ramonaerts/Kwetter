@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
+using TweetService.DAL;
 using TweetService.Messages;
 using TweetService.Models;
 
@@ -12,9 +15,14 @@ namespace TweetService.Services
         public static List<User> users = new List<User>();
         public static List<Tweet> tweets = new List<Tweet>();
 
-        public TweetService()
-        {
+        private readonly IMongoCollection<Entities.Tweet> _tweets;
 
+        public TweetService(ITweetContext context)
+        {
+            var client = new MongoClient(context.ConnectionString);
+            var database = client.GetDatabase(context.DatabaseName);
+
+            _tweets = database.GetCollection<Entities.Tweet>(context.CollectionName);
         }
 
         private static void FillMockTweets()
@@ -66,6 +74,23 @@ namespace TweetService.Services
         public List<User> GetUsers()
         {
             return users;
+        }
+
+        public Entities.Tweet GetTweet()
+        {
+            return _tweets.Find(t => t.Id == "1").FirstOrDefault();
+        }
+
+        public void CreateTweet()
+        {
+            Entities.Tweet tweet = new Entities.Tweet
+            {
+                TweetDateTime = DateTime.Now,
+                Id = "1c440290-febf-4d0e-81b6-1bcaac7d1b76",
+                TweetContent = "test"
+            };
+
+            _tweets.InsertOne(tweet);
         }
     }
 }
