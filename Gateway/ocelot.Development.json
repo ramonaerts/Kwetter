@@ -13,6 +13,18 @@
       "UpstreamHttpMethod": [ "GET", "POST" ]
     },
     {
+      "DownstreamPathTemplate": "/api/user/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "userservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/user/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
+    {
       "DownstreamPathTemplate": "/profile/images/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [

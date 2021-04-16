@@ -30,7 +30,7 @@ namespace Shared.Messaging
             channel.QueueDeclare("UserService", false, false);
 
             channel.QueueBind("TweetService", Exchange, "UserChange");
-            channel.QueueBind("AuthenticationService", Exchange, "UserRegister");
+            channel.QueueBind("UserService", Exchange, "UserRegister");
 
             _configured = true;
         }

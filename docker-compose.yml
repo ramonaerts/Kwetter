@@ -34,6 +34,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
+      MYSQL_TCP_PORT: 3307
     ports:
       - "3307:3307"
 
@@ -90,6 +91,17 @@ services:
     build:
       context: .
       dockerfile: TweetService/Dockerfile
+    restart: "on-failure"
+    depends_on:
+        - rabbit
+    links: 
+        - rabbit
+
+  userservice:
+    image: ${DOCKER_REGISTRY-}userservice
+    build:
+      context: .
+      dockerfile: UserService/Dockerfile
     restart: "on-failure"
     depends_on:
         - rabbit
