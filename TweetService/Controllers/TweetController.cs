@@ -11,7 +11,7 @@ namespace TweetService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TweetController
+    public class TweetController : ControllerBase
     {
         private readonly ITweetService _tweetService;
         public TweetController(ITweetService tweetService)

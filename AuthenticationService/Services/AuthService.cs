@@ -31,7 +31,7 @@ namespace AuthenticationService.Services
                 u.Email == message.Email && u.Password == message.Password);
         }
 
-        public string CreateToken(int userId)
+        public string CreateToken(string userId)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(_key);
@@ -39,7 +39,7 @@ namespace AuthenticationService.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim("UserId", userId.ToString())
+                    new Claim("UserId", userId)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey),

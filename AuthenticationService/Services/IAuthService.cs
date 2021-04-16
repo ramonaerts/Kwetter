@@ -10,6 +10,6 @@ namespace AuthenticationService.Services
     public interface IAuthService
     {
         User LoginUser(LoginMessage message);
-        string CreateToken(int userId);
+        string CreateToken(string userId);
     }
 }

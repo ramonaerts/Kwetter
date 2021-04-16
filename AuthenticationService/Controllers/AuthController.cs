@@ -41,7 +41,7 @@ namespace AuthenticationService.Controllers
 
             var token = _authService.CreateToken(user.Id);
 
-            _messagePublisher.PublishMessageAsync("UserChange", new { UserId = user.Id, Username = user.Username, Nickname = user.ProfileName });
+            //_messagePublisher.PublishMessageAsync("UserChange", new { UserId = user.Id, Username = user.Username, Nickname = user.ProfileName });
 
             return ApiResult.Success(user, token);
         }
