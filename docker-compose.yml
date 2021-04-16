@@ -24,6 +24,18 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
+    ports:
+      - "3306:3306"
+
+  userdatabase:
+    image: mysql
+    container_name: UserDatabase
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      - "3307:3307"
 
   tweetdatabase:
     image: mongo
@@ -41,6 +53,7 @@ services:
     restart: always
     links:
       - authenticationdatabase
+      - userdatabase
     ports:
       - 8080:80
     environment:

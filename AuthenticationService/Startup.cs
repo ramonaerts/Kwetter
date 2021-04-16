@@ -84,21 +84,20 @@ namespace AuthenticationService
 
         private static void MigrateDatabase(IApplicationBuilder app)
         {
-            using (var scope = app.ApplicationServices.CreateScope())
+            using var scope = app.ApplicationServices.CreateScope();
+
+            var dbContext = scope.ServiceProvider.GetService<AuthenticationContext>();
+
+            var relationalDatabaseCreator =
+                (RelationalDatabaseCreator)dbContext.Database.GetService<IDatabaseCreator>();
+
+            var databaseExists = relationalDatabaseCreator.Exists() && relationalDatabaseCreator.HasTables();
+
+            dbContext.Database.Migrate();
+
+            if (!databaseExists)
             {
-                var dbContext = scope.ServiceProvider.GetService<AuthenticationContext>();
-
-                var relationalDatabaseCreator =
-                    (RelationalDatabaseCreator)dbContext.Database.GetService<IDatabaseCreator>();
-
-                var databaseExists = relationalDatabaseCreator.Exists() && relationalDatabaseCreator.HasTables();
-
-                dbContext.Database.Migrate();
-
-                if (!databaseExists)
-                {
-                    //TODO: add standard data
-                }
+                //TODO: add standard data
             }
         }
     }

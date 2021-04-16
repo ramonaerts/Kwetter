@@ -10,6 +10,7 @@ namespace Shared.Messaging
     {
         private readonly RabbitMqConnection _conn;
         private bool _configured;
+        private const string Exchange = "kwetter";
 
         public RabbitMqConfig(RabbitMqConnection conn)
         {
@@ -22,12 +23,14 @@ namespace Shared.Messaging
 
             var channel = _conn.CreateChannel();
 
-            channel.ExchangeDeclare("kwetter", "fanout");
+            channel.ExchangeDeclare(Exchange, "fanout");
 
             channel.QueueDeclare("TweetService", false, false);
             channel.QueueDeclare("AuthenticationService", false, false);
+            channel.QueueDeclare("UserService", false, false);
 
-            channel.QueueBind("TweetService", "kwetter", "UserChange");
+            channel.QueueBind("TweetService", Exchange, "UserChange");
+            channel.QueueBind("AuthenticationService", Exchange, "UserRegister");
 
             _configured = true;
         }
