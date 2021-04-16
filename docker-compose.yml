@@ -29,6 +29,9 @@ services:
     image: mongo
     container_name: TweetDatabase
     restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
     ports:
       - "27017:27017"
 
