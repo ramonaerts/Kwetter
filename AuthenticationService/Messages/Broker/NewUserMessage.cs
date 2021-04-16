@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AuthenticationService.Entities
+namespace AuthenticationService.Messages.Broker
 {
-    public class User
+    public class NewUserMessage
     {
         public string Id { get; set; }
         public string Email { get; set; }

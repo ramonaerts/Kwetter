@@ -21,13 +21,13 @@ namespace UserService.Controllers
 
         [HttpPost]
         [Route("register")]
-        public ApiResult RegisterUser(RegisterMessage message) 
+        public async Task<ApiResult> RegisterUser(RegisterMessage message) 
         {
             if(!_userService.VerifyPasswords(message.Password, message.ConfirmPassword)) return ApiResult.BadRequest("Password don't match.");
 
             if(_userService.VerifyUniqueEmail(message.Email)) return ApiResult.BadRequest("This email is already in use.");
 
-            return _userService.RegisterUser(message) ? ApiResult.Success("success") : ApiResult.BadRequest("Something went wrong.");
+            return await _userService.RegisterUser(message) ? ApiResult.Success("success") : ApiResult.BadRequest("Something went wrong.");
         }
     }
 }

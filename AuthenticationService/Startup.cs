@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AuthenticationService.DAL;
+using AuthenticationService.MessageHandlers;
 using AuthenticationService.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -54,7 +55,10 @@ namespace AuthenticationService
                 };
             });
 
-            services.AddMessagePublishing("AuthenticationService");
+            services.AddMessagePublishing("AuthenticationService", builder =>
+            {
+                builder.WithHandler<RegisterNewUserMessageHandler>("NewUserMessage");
+            });
 
             services.AddScoped<IAuthService, AuthService>();
 

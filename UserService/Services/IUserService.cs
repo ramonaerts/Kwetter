@@ -8,7 +8,7 @@ namespace UserService.Services
 {
     public interface IUserService
     {
-        bool RegisterUser(RegisterMessage message);
+        Task<bool> RegisterUser(RegisterMessage message);
         bool VerifyPasswords(string password, string confirmPassword);
         bool VerifyUniqueEmail(string email);
     }

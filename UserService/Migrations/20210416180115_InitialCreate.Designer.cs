@@ -8,7 +8,7 @@ using UserService.DAL;
 namespace UserService.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20210416131828_InitialCreate")]
+    [Migration("20210416180115_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

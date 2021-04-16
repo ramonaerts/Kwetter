@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Shared.Messaging;
 using UserService.DAL;
 using UserService.Entities;
 using UserService.Messages.API;
@@ -11,13 +12,15 @@ namespace UserService.Services
     public class UserService : IUserService
     {
         private readonly UserContext _userContext;
+        private readonly IMessagePublisher _messagePublisher;
 
-        public UserService(UserContext userContext)
+        public UserService(UserContext userContext, IMessagePublisher messagePublisher)
         {
             _userContext = userContext;
+            _messagePublisher = messagePublisher;
         }
 
-        public bool RegisterUser(RegisterMessage message)
+        public async Task<bool> RegisterUser(RegisterMessage message)
         {
             var user = new User()
             {
@@ -30,6 +33,8 @@ namespace UserService.Services
 
             _userContext.Add(user);
             _userContext.SaveChanges();
+
+            await _messagePublisher.PublishMessageAsync("NewUserMessage", new { Id = user.Id, Email = user.Email, Password = message.Password });
 
             return true;
         }

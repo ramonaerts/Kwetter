@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using AuthenticationService.DAL;
 using AuthenticationService.Entities;
 using AuthenticationService.Messages.Api;
+using AuthenticationService.Messages.Broker;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Messaging;
 
@@ -29,6 +30,19 @@ namespace AuthenticationService.Services
         {
             return _authenticationContext.Users.FirstOrDefault(u =>
                 u.Email == message.Email && u.Password == message.Password);
+        }
+
+        public void AddUser(NewUserMessage message)
+        {
+            var user = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                Email = message.Email,
+                Password = message.Password
+            };
+
+            _authenticationContext.Add(user);
+            _authenticationContext.SaveChanges();
         }
 
         public string CreateToken(string userId)
