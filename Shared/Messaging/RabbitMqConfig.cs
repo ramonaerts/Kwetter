@@ -28,9 +28,12 @@ namespace Shared.Messaging
             channel.QueueDeclare("TweetService", false, false);
             channel.QueueDeclare("AuthenticationService", false, false);
             channel.QueueDeclare("UserService", false, false);
+            channel.QueueDeclare("FileManagementService", false, false);
 
+            //QueueBind(Service to which the message will be send, Exchange, Message class names)
             channel.QueueBind("TweetService", Exchange, "UserChange");
             channel.QueueBind("AuthenticationService", Exchange, "NewUserMessage");
+            channel.QueueBind("FileManagementService", Exchange, "NewProfileImage");
 
             _configured = true;
         }

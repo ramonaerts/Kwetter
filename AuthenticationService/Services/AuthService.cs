@@ -36,7 +36,7 @@ namespace AuthenticationService.Services
         {
             var user = new User
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = message.Id,
                 Email = message.Email,
                 Password = message.Password
             };

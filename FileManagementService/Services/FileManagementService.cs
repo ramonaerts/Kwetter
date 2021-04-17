@@ -9,6 +9,14 @@ namespace FileManagementService.Services
 {
     public class FileManagementService : IFileManagementService
     {
+        //Image will be in base64 | image name will be GUID + file extension | DataType will be Profile for now.
+        public void SaveUserImage(string image, string imageName, DataType type)
+        {
+            var filePath = Environment.CurrentDirectory + GetPath(type) + imageName;
+
+            File.WriteAllBytes(filePath, Convert.FromBase64String(image));
+        }
+
         public bool GetContentOfType(string dataString, DataType type, out byte[] bytes)
         {
             bytes = new byte[0];
