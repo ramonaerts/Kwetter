@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using TweetService.DAL;
 using TweetService.Messages;
+using TweetService.Messages.Broker;
 using TweetService.Models;
 
 namespace TweetService.Services
@@ -33,7 +34,7 @@ namespace TweetService.Services
             throw new NotImplementedException();
         }
 
-        public void AddUser(UserChange userChange)
+        public void AddUser(NewProfileMessage userChange)
         {
             var user = new Entities.User
             {

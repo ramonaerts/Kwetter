@@ -11,7 +11,7 @@ namespace FileManagementService.MessageHandlers
 {
     public class NewProfileImageMessageHandler : IMessageHandler<NewProfileImage>
     {
-        private IFileManagementService _fileManagementService;
+        private readonly IFileManagementService _fileManagementService;
 
         public NewProfileImageMessageHandler(IFileManagementService fileManagementService)
         {
