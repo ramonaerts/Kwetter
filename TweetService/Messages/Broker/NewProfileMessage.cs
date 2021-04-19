@@ -7,7 +7,7 @@ namespace TweetService.Messages.Broker
 {
     public class NewProfileMessage
     {
-        public string UserId { get; set; }
+        public string Id { get; set; }
         public string Username { get; set; }
         public string Nickname { get; set; }
         public string Image { get; set; }

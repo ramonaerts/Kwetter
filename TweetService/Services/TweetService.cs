@@ -25,23 +25,19 @@ namespace TweetService.Services
             _users = database.GetCollection<Entities.User>("Users");
         }
 
-        private static void FillMockTweets()
-        {
-        }
-
         public List<Tweet> GetTweets()
         {
             throw new NotImplementedException();
         }
 
-        public void AddUser(NewProfileMessage userChange)
+        public void AddUser(NewProfileMessage message)
         {
             var user = new Entities.User
             {
-                Id = userChange.UserId,
-                Nickname = userChange.Nickname,
-                Username = userChange.Username,
-                Image = userChange.Image
+                Id = message.Id,
+                Nickname = message.Nickname,
+                Username = message.Username,
+                Image = message.Image
             };
 
             _users.InsertOne(user);

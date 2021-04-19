@@ -32,6 +32,7 @@ namespace Shared.Messaging
 
             //QueueBind(Service to which the message will be send, Exchange, Message class names)
             channel.QueueBind("TweetService", Exchange, "UserChange");
+            channel.QueueBind("TweetService", Exchange, "NewProfileMessage");
             channel.QueueBind("AuthenticationService", Exchange, "NewUserMessage");
             channel.QueueBind("FileManagementService", Exchange, "NewProfileImage");
 
