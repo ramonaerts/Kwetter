@@ -35,6 +35,8 @@ namespace UserService.Services
             _userContext.SaveChanges();
 
             await _messagePublisher.PublishMessageAsync("NewUserMessage", new { Id = user.Id, Email = user.Email, Password = message.Password });
+            await _messagePublisher.PublishMessageAsync("NewProfileMessage",
+                new { Id = user.Id, Username = user.Username, Nickname = user.Nickname, Image = user.Image });
 
             return true;
         }

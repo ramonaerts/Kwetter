@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TweetService.Messages
+namespace TweetService.Messages.Broker
 {
-    public class Tweets
+    public class NewProfileMessage
     {
-        public List<string> TweetList { get; set; }
     }
 }
