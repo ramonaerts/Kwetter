@@ -28,3 +28,24 @@ stages:
       inputs:
         command: 'build'
         projects: '**/UserService/UserService.csproj'
+    - task: DockerInstaller@0
+      inputs:
+        dockerVersion: '17.09.0-ce'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Kwetter'
+        command: 'login'
+        addPipelineData: false
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Kwetter'
+        repository: 'ramonaerts/kwetter-userservice'
+        command: 'buildAndPush'
+        Dockerfile: 'UserService/Dockerfile'
+        tags: 'latest'
+        addPipelineData: false
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Kwetter'
+        command: 'logout'
+        addPipelineData: false
