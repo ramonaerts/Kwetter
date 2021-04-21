@@ -33,8 +33,8 @@ stages:
       displayName: Pack Shared
       inputs:
         command: 'pack'
-        packagesToPack: '**/*.csproj'
-        versioningScheme: 'off'
+        arguments: '--configuration $(buildConfiguration)'
+        packagesToPack: 'Shared.csproj'
 
     - task: DotNetCoreCLI@2
       displayName: Publish Shared NuGet package
