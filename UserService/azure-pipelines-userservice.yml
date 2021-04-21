@@ -6,12 +6,10 @@
 trigger:
 - dev
 
-pool:
-  vmImage: 'unbuntu-latest'
-
 variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  vmImageName: 'ubuntu-latest'
 
 stages:
 - stage: Build
@@ -20,6 +18,9 @@ stages:
   jobs:
   - job: Build
     displayName: Build
+
+    pool:
+      vmImage: $(vmImageName)
 
     steps:
     - task: DotNetCoreCLI@2
