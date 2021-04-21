@@ -9,7 +9,7 @@ trigger:
 variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  vmImageName: 'windows-latest'
+  vmImageName: 'ubuntu-latest'
 
 stages:
 - stage: Build
