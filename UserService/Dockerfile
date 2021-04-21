@@ -8,6 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["/UserService.csproj", "UserService/"]
+COPY ["Shared/Shared.csproj", "Shared/"]
 RUN dotnet restore "UserService/UserService.csproj"
 COPY . .
 WORKDIR "/src/UserService"
