@@ -9,7 +9,7 @@ trigger:
 variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  vmImageName: 'ubuntu-latest'
+  vmImageName: 'windows-latest'
 
 stages:
 - stage: Build
@@ -35,7 +35,6 @@ stages:
         command: 'pack'
         arguments: '--configuration $(buildConfiguration)'
         packagesToPack: '**/Shared/Shared.csproj'
-        versioningScheme: 'off'      
 
     - task: NuGetCommand@2
       displayName: Publish Shared NuGet package
@@ -44,5 +43,4 @@ stages:
         packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
         nuGetFeedType: 'internal'
         publishVstsFeed: 'c4521e87-d5c9-442e-866e-c782ad69d302/f16ff7a7-765d-4fc8-9ad9-f53483e530a6'
-        versioningScheme: 'off'
         allowPackageConflicts: true
