@@ -31,6 +31,14 @@ stages:
         vstsFeed: 'c4521e87-d5c9-442e-866e-c782ad69d302/f16ff7a7-765d-4fc8-9ad9-f53483e530a6'
 
     - task: DotNetCoreCLI@2
+      displayName: 'dotnet restore'
+      inputs:
+        command: restore
+        projects: '**/UserService/UserService.csproj'
+        feedsToUse: config
+        nugetConfigPath: 'nuget.config'
+
+    - task: DotNetCoreCLI@2
       displayName: Build UserService
       inputs:
         command: 'build'
