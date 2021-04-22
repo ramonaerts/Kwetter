@@ -24,10 +24,18 @@ stages:
 
     steps:
 
-    - task: NuGetCommand@2
+    # - task: NuGetCommand@2
+    #   inputs:
+    #     command: 'restore'
+    #     restoreSolution: '**/*.sln'
+    #     feedsToUse: 'select'
+    #     vstsFeed: 'c4521e87-d5c9-442e-866e-c782ad69d302/f16ff7a7-765d-4fc8-9ad9-f53483e530a6'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore Nuget Packages'
       inputs:
         command: 'restore'
-        restoreSolution: '**/*.sln'
+        projects: '**/UserService/UserService.csproj'
         feedsToUse: 'select'
         vstsFeed: 'c4521e87-d5c9-442e-866e-c782ad69d302/f16ff7a7-765d-4fc8-9ad9-f53483e530a6'
 
