@@ -10,9 +10,11 @@ WORKDIR /src
 COPY ["nuget.config", ""]
 COPY ["/UserService.csproj", "UserService/"]
 RUN dotnet restore "UserService/UserService.csproj"
-COPY . .
+
 WORKDIR "/src/UserService"
-RUN dotnet build "UserService/UserService.csproj" -c Release -o /app/build
+COPY . .
+
+RUN dotnet build "UserService.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "UserService.csproj" -c Release -o /app/publish
