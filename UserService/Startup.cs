@@ -33,6 +33,8 @@ namespace UserService
         {
             services.AddControllers();
 
+            services.AddAuthorization();
+
             services.AddMessagePublishing("UserService");
 
             services.AddScoped<IUserService, Services.UserService>();
@@ -53,6 +55,7 @@ namespace UserService
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

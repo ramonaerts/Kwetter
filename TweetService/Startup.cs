@@ -44,6 +44,7 @@ namespace TweetService
                     builder.WithHandler<NewUserMessageHandler>("NewProfileMessage");
                 });
 
+            services.AddAuthorization();
 
             services.Configure<TweetContext>(Configuration.GetSection(nameof(TweetContext)));
             services.AddSingleton<ITweetContext>(sp => sp.GetRequiredService<IOptions<TweetContext>>().Value);
@@ -62,6 +63,7 @@ namespace TweetService
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

@@ -55,6 +55,8 @@ namespace AuthenticationService
                 };
             });
 
+            services.AddAuthorization();
+
             services.AddMessagePublishing("AuthenticationService", builder =>
             {
                 builder.WithHandler<RegisterNewUserMessageHandler>("NewUserMessage");
