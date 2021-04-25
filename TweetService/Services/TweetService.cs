@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using TweetService.DAL;
@@ -13,11 +14,14 @@ namespace TweetService.Services
 {
     public class TweetService : ITweetService
     {
+        private readonly IMapper _mapper;
         private readonly IMongoCollection<Entities.Tweet> _tweets;
         private readonly IMongoCollection<Entities.User> _users;
 
-        public TweetService(ITweetContext context)
+        public TweetService(ITweetContext context, IMapper mapper)
         {
+            _mapper = mapper;
+
             var client = new MongoClient(context.ConnectionString);
             var database = client.GetDatabase(context.DatabaseName);
 
@@ -25,9 +29,20 @@ namespace TweetService.Services
             _users = database.GetCollection<Entities.User>("Users");
         }
 
-        public List<Tweet> GetTweets()
+        public List<Tweet> GetTweets(string id)
         {
-            throw new NotImplementedException();
+            var tweets = _tweets.Find(t => t.UserId == id).ToList();
+
+            var user = _users.Find(u => u.Id == id).FirstOrDefault();
+
+            var tweetModels = _mapper.Map<List<Tweet>>(tweets);
+
+            foreach (var tweet in tweetModels)
+            {
+                tweet.User = user;
+            }
+
+            return tweetModels;
         }
 
         public void AddUser(NewProfileMessage message)

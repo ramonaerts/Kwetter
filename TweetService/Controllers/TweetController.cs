@@ -23,11 +23,13 @@ namespace TweetService.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "User,Moderator,Admin")]
+        [AllowAnonymous]
         [Route("tweets")]
         public ApiResult GetUserTweets()
         {
-            var tweets = _tweetService.GetTweets();
+            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+
+            var tweets = _tweetService.GetTweets(id);
 
             return ApiResult.Success(tweets);
         }

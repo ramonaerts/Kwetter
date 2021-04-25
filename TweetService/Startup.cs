@@ -16,6 +16,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Shared;
+using AutoMapper;
 using TweetService.DAL;
 using TweetService.MessageHandlers;
 using TweetService.Models;
@@ -60,6 +61,14 @@ namespace TweetService
                     ValidateAudience = false
                 };
             });
+
+            var mapperConfig = new MapperConfiguration(m =>
+            {
+                m.AddProfile(new AutoMapperProfile());
+            });
+
+            var mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddMessagePublishing("TweetService", builder =>
                 {
