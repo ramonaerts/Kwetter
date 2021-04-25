@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -42,11 +43,13 @@ namespace TweetService.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "User,Moderator,Admin")]
-        [Route("")]
+        [AllowAnonymous]
+        [Route("create")]
         public ApiResult CreateTest()
         {
-            _tweetService.CreateTweet();
+            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+
+            _tweetService.CreateTweet(id);
 
             return ApiResult.Success("Created");
         }

@@ -53,12 +53,13 @@ namespace TweetService.Services
             return _tweets.Find(t => t.Id == "1").FirstOrDefault();
         }
 
-        public void CreateTweet()
+        public void CreateTweet(string id)
         {
             var tweet = new Entities.Tweet
             {
                 TweetDateTime = DateTime.Now,
-                Id = "1c440290-febf-4d0e-81b6-1bcaac7d1b76",
+                Id = Guid.NewGuid().ToString(),
+                UserId = id,
                 TweetContent = "test"
             };
 
