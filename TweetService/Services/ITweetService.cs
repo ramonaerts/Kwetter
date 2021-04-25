@@ -14,6 +14,6 @@ namespace TweetService.Services
         void AddUser(NewProfileMessage user);
         List<User> GetUsers();
         Entities.Tweet GetTweet();
-        void CreateTweet(string id);
+        void CreateTweet(string id, string tweetContent);
     }
 }

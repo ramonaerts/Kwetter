@@ -68,14 +68,14 @@ namespace TweetService.Services
             return _tweets.Find(t => t.Id == "1").FirstOrDefault();
         }
 
-        public void CreateTweet(string id)
+        public void CreateTweet(string id, string tweetContent)
         {
             var tweet = new Entities.Tweet
             {
                 TweetDateTime = DateTime.Now,
                 Id = Guid.NewGuid().ToString(),
                 UserId = id,
-                TweetContent = "test"
+                TweetContent = tweetContent
             };
 
             _tweets.InsertOne(tweet);

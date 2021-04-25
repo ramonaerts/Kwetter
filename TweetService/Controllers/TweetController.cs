@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.API;
+using TweetService.Messages.Api;
 using TweetService.Models;
 using TweetService.Services;
 
@@ -47,11 +48,11 @@ namespace TweetService.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("create")]
-        public ApiResult CreateTest()
+        public ApiResult CreateTweet(CreateTweetMessage message)
         {
             var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            _tweetService.CreateTweet(id);
+            _tweetService.CreateTweet(id, message.TweetContent);
 
             return ApiResult.Success("Created");
         }
