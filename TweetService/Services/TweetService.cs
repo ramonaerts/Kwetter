@@ -70,6 +70,7 @@ namespace TweetService.Services
 
         public void CreateTweet(string id, string tweetContent)
         {
+            //Test
             var tweet = new Entities.Tweet
             {
                 TweetDateTime = DateTime.Now,
