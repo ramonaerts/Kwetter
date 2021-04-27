@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.API;
+using TweetService.Messages.Api;
 using TweetService.Models;
 using TweetService.Services;
 
 namespace TweetService.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class TweetController : ControllerBase
     {
@@ -20,30 +24,37 @@ namespace TweetService.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("tweets")]
         public ApiResult GetUserTweets()
         {
-            List<Tweet> tweets = _tweetService.GetTweets();
+            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+
+            var tweets = _tweetService.GetTweets(id);
 
             return ApiResult.Success(tweets);
         }
 
         [HttpGet]
-        [Route("test")]
+        [Authorize(Roles = "User,Moderator,Admin")]
+        [Route("tweet")]
         public ApiResult GetTest()
         {
-            Entities.Tweet tweet = _tweetService.GetTweet();
+            var tweet = _tweetService.GetTweet();
 
             return ApiResult.Success(tweet);
         }
 
         [HttpPost]
-        [Route("test")]
-        public ApiResult CreateTest()
+        [AllowAnonymous]
+        [Route("create")]
+        public ApiResult CreateTweet(CreateTweetMessage message)
         {
-            _tweetService.CreateTweet();
+            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            return ApiResult.Success("yur");
+            _tweetService.CreateTweet(id, message.TweetContent);
+
+            return ApiResult.Success("Created");
         }
     }
 }

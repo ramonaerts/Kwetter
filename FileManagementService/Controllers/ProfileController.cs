@@ -24,15 +24,13 @@ namespace FileManagementService.Controllers
         [Route("images/{profileImage}")]
         public IActionResult GetProfileImage(string profileImage)
         {
-            if (_fileManagementService.GetContentOfType(profileImage, DataType.Profile, out var imageBytes))
-            {
-                if (!new FileExtensionContentTypeProvider().TryGetContentType(profileImage, out var contentType))
-                    contentType = "application/octet-stream";
+            if (!_fileManagementService.GetContentOfType(profileImage, DataType.Profile, out var imageBytes))
+                return new NotFoundResult();
 
-                return new FileContentResult(imageBytes, contentType);
-            }
+            if (!new FileExtensionContentTypeProvider().TryGetContentType(profileImage, out var contentType))
+                contentType = "application/octet-stream";
 
-            return new NotFoundResult();
+            return new FileContentResult(imageBytes, contentType);
         }
     }
 }

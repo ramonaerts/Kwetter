@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AuthenticationService.Entities;
 using AuthenticationService.Messages.Api;
 using AuthenticationService.Messages.Broker;
+using AuthenticationService.Models;
 
 namespace AuthenticationService.Services
 {
@@ -12,6 +13,6 @@ namespace AuthenticationService.Services
     {
         User LoginUser(LoginMessage message);
         void AddUser(NewUserMessage message);
-        string CreateToken(string userId);
+        string CreateToken(string userId, UserRole role);
     }
 }

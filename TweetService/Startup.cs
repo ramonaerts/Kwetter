@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,8 +13,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Shared;
+using AutoMapper;
 using TweetService.DAL;
 using TweetService.MessageHandlers;
 using TweetService.Models;
@@ -39,11 +43,39 @@ namespace TweetService
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
 
+            var secret = "eBCatxoffIIq6ESdrDZ8LKI3zpxhYkYM";
+            var key = Encoding.ASCII.GetBytes(secret);
+            services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+            var mapperConfig = new MapperConfiguration(m =>
+            {
+                m.AddProfile(new AutoMapperProfile());
+            });
+
+            var mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             services.AddMessagePublishing("TweetService", builder =>
                 {
                     builder.WithHandler<NewUserMessageHandler>("NewProfileMessage");
                 });
 
+            services.AddAuthorization();
 
             services.Configure<TweetContext>(Configuration.GetSection(nameof(TweetContext)));
             services.AddSingleton<ITweetContext>(sp => sp.GetRequiredService<IOptions<TweetContext>>().Value);
@@ -62,6 +94,7 @@ namespace TweetService
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

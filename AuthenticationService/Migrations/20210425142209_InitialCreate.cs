@@ -12,7 +12,8 @@ namespace AuthenticationService.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true)
+                    Password = table.Column<string>(nullable: true),
+                    Role = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -30,6 +30,8 @@ namespace FileManagementService
         {
             services.AddControllers();
 
+            services.AddAuthorization();
+
             services.AddMessagePublishing("FileManagementService", builder =>
             {
                 builder.WithHandler<NewProfileImageMessageHandler>("NewProfileImage");
@@ -49,6 +51,7 @@ namespace FileManagementService
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
