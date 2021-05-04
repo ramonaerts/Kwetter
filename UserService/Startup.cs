@@ -60,6 +60,7 @@ namespace UserService
             services.AddMessagePublishing("UserService");
 
             services.AddScoped<IUserService, Services.UserService>();
+            services.AddScoped<IProfileService, ProfileService>();
 
             services.AddDbContext<UserContext>();
         }
