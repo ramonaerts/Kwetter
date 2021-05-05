@@ -7,6 +7,7 @@ using Shared.Messaging;
 using UserService.DAL;
 using UserService.Entities;
 using UserService.Messages.API;
+using UserService.Messages.Broker;
 
 namespace UserService.Services
 {
@@ -50,6 +51,15 @@ namespace UserService.Services
             await _userContext.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task EditProfileImage(ProfileImageChangedMessage message)
+        {
+            var user = await GetProfileById(message.Id);
+
+            user.Image = message.Image;
+
+            await _userContext.SaveChangesAsync();
         }
     }
 }
