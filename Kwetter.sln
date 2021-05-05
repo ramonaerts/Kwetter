@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationService", "Au
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagementService", "FileManagementService\FileManagementService.csproj", "{8F7B78A9-6E9C-487D-91F7-10A0E896E3D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService", "UserService\UserService.csproj", "{CD9205FA-F6D3-483A-8F55-AEBD93EA82AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService", "UserService\UserService.csproj", "{CD9205FA-F6D3-483A-8F55-AEBD93EA82AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FollowService", "FollowService\FollowService.csproj", "{694B34B2-DC58-418E-BF43-91C4180B8889}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{CD9205FA-F6D3-483A-8F55-AEBD93EA82AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD9205FA-F6D3-483A-8F55-AEBD93EA82AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD9205FA-F6D3-483A-8F55-AEBD93EA82AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{694B34B2-DC58-418E-BF43-91C4180B8889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{694B34B2-DC58-418E-BF43-91C4180B8889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{694B34B2-DC58-418E-BF43-91C4180B8889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{694B34B2-DC58-418E-BF43-91C4180B8889}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

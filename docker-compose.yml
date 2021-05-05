@@ -48,6 +48,16 @@ services:
     ports:
       - "27017:27017"
 
+  followdatabase:
+    image: mongo
+    container_name: FollowDatabase
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27018:27018"
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -102,6 +112,17 @@ services:
     build:
       context: .
       dockerfile: UserService/Dockerfile
+    restart: "on-failure"
+    depends_on:
+        - rabbit
+    links: 
+        - rabbit
+
+  followservice:
+    image: ${DOCKER_REGISTRY-}followservice
+    build:
+      context: .
+      dockerfile: FollowService/Dockerfile
     restart: "on-failure"
     depends_on:
         - rabbit
