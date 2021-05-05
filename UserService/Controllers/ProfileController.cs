@@ -42,9 +42,7 @@ namespace UserService.Controllers
 
             if(message.Id != id) return ApiResult.Forbidden("Not allowed");
 
-            var success = await _profileService.EditProfile(message);
-
-            return ApiResult.Success("Profile edited correctly");
+            return await _profileService.EditProfile(message) ? ApiResult.Success("Profile edited correctly") : ApiResult.BadRequest("Something went wrong");
         }
     }
 }
