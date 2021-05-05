@@ -18,6 +18,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Shared;
 using UserService.DAL;
+using UserService.MessageHandlers;
 using UserService.Services;
 
 namespace UserService
@@ -57,7 +58,10 @@ namespace UserService
 
             services.AddAuthorization();
 
-            services.AddMessagePublishing("UserService");
+            services.AddMessagePublishing("UserService", builder =>
+            {
+                builder.WithHandler<ProfileImageChangedMessageHandler>("ProfileImageChanged");
+            });
 
             services.AddScoped<IUserService, Services.UserService>();
             services.AddScoped<IProfileService, ProfileService>();
