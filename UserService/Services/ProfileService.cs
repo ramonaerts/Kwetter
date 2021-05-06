@@ -60,7 +60,11 @@ namespace UserService.Services
             if (user.Email != message.Email)
             {
                 if (_userService.VerifyUniqueEmail(message.Email)) return false;
+
+                await _messagePublisher.PublishMessageAsync("EmailChangedMessage", new { Id = user.Id, Email = message.Email});
             }
+
+            if (user.Nickname != message.Nickname) await _messagePublisher.PublishMessageAsync("ProfileChangedMessage", new { Id = user.Id, Nickname = message.Nickname });
 
             user.Email = message.Email;
             user.Nickname = message.Nickname;
