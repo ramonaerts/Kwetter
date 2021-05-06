@@ -28,9 +28,16 @@ namespace UserService.Controllers
         [Route("{username}")]
         public async Task<ApiResult> GetProfileByName(string username)
         {
-            var user = await _profileService.GetProfileByUsername(username);
+            var profile = await _profileService.GetProfileByUsername(username);
 
-            return user == null ? ApiResult.NotFound("User was not found") : ApiResult.Success(user);
+            if (profile == null) return ApiResult.NotFound("User was not found");
+
+            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+
+            if (id == profile.Id) profile.Self = true;
+            else profile.Email = null;
+
+            return ApiResult.Success(profile);
         }
 
         [HttpPut]
