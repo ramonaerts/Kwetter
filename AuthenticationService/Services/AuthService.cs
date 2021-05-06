@@ -47,6 +47,18 @@ namespace AuthenticationService.Services
             _authenticationContext.SaveChanges();
         }
 
+        public void UpdateEmail(EmailChangedMessage message)
+        {
+            var user = _authenticationContext.Users.FirstOrDefault(u => u.Id == message.Id);
+
+            if (user == null) return;
+
+            user.Email = message.Email;
+
+            _authenticationContext.Update(user);
+            _authenticationContext.SaveChanges();
+        }
+
         public string CreateToken(string userId, UserRole role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();

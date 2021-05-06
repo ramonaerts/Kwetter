@@ -13,6 +13,7 @@ namespace AuthenticationService.Services
     {
         User LoginUser(LoginMessage message);
         void AddUser(NewUserMessage message);
+        void UpdateEmail(EmailChangedMessage message);
         string CreateToken(string userId, UserRole role);
     }
 }

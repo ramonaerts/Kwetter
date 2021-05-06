@@ -48,6 +48,7 @@ namespace UserService.Services
             user.Email = message.Email;
             user.Nickname = message.Nickname;
 
+            _userContext.Update(user);
             await _userContext.SaveChangesAsync();
 
             return true;
@@ -58,6 +59,7 @@ namespace UserService.Services
             var user = await GetProfileById(message.Id);
 
             user.Image = message.Image;
+            _userContext.Update(user);
 
             await _userContext.SaveChangesAsync();
         }

@@ -58,9 +58,22 @@ namespace TweetService.Services
             _users.InsertOne(user);
         }
 
-        public List<User> GetUsers()
+        public void UpdateUser(ProfileChangedMessage message)
         {
-            throw new NotImplementedException();
+            var user = _users.Find(u => u.Id == message.Id).FirstOrDefault();
+
+            user.Nickname = message.Nickname;
+
+            _users.ReplaceOne(u => u.Id == message.Id, user);
+        }
+
+        public void UpdateUserImage(ProfileImageChangedMessage message)
+        {
+            var user = _users.Find(u => u.Id == message.Id).FirstOrDefault();
+
+            user.Image = message.Image;
+
+            _users.ReplaceOne(u => u.Id == message.Id, user);
         }
 
         public Entities.Tweet GetTweet()

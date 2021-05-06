@@ -60,7 +60,7 @@ namespace UserService
 
             services.AddMessagePublishing("UserService", builder =>
             {
-                builder.WithHandler<ProfileImageChangedMessageHandler>("ProfileImageChanged");
+                builder.WithHandler<ProfileImageChangedMessageHandler>("ProfileImageChangedMessage");
             });
 
             services.AddScoped<IUserService, Services.UserService>();
