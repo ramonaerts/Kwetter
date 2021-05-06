@@ -42,7 +42,7 @@ namespace UserService.Controllers
 
         [HttpPut]
         [AllowAnonymous]
-        [Route("")]
+        [Route("edit")]
         public async Task<ApiResult> EditProfile(EditProfileMessage message)
         {
             var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();

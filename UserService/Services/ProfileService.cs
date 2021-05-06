@@ -46,9 +46,14 @@ namespace UserService.Services
             return userModel;
         }
 
+        public async Task<User> GetUserById(string id)
+        {
+            return await _userContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+        }
+
         public async Task<bool> EditProfile(EditProfileMessage message)
         {
-            var user = await GetProfileById(message.Id);
+            var user = await GetUserById(message.Id);
 
             if (user == null) return false;
 
@@ -68,7 +73,7 @@ namespace UserService.Services
 
         public async Task EditProfileImage(ProfileImageChangedMessage message)
         {
-            var user = await GetProfileById(message.Id);
+            var user = await GetUserById(message.Id);
 
             user.Image = message.Image;
             _userContext.Update(user);
