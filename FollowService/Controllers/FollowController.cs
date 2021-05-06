@@ -25,7 +25,7 @@ namespace FollowService.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("")]
+        [Route("follow")]
         public async Task<ApiResult> PostFollower(FollowMessage message)
         {
             var followerId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
@@ -37,7 +37,7 @@ namespace FollowService.Controllers
 
         [HttpDelete]
         [AllowAnonymous]
-        [Route("")]
+        [Route("unfollow")]
         public async Task<ApiResult> DeleteFollower(FollowMessage message)
         {
             var followerId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();

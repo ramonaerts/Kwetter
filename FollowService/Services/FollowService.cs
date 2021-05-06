@@ -18,14 +18,14 @@ namespace FollowService.Services
             var client = new MongoClient(context.ConnectionString);
             var database = client.GetDatabase(context.DatabaseName);
 
-            _follows = database.GetCollection<Follow>("Follows");
+            _follows = database.GetCollection<Follow>("Followings");
         }
 
         public async Task<bool> FollowExists(string followerId, string followingId)
         {
             var follow = await _follows.Find(f => f.Follower == followerId && f.Following == followingId).FirstOrDefaultAsync();
 
-            return follow.Id != null;
+            return follow != null;
         }
 
         public async Task<bool> FollowUser(string followerId, string followingId)
