@@ -37,14 +37,26 @@ namespace FollowService.Controllers
 
         [HttpDelete]
         [AllowAnonymous]
-        [Route("unfollow")]
-        public async Task<ApiResult> DeleteFollower(FollowMessage message)
+        [Route("{id}")]
+        public async Task<ApiResult> DeleteFollower(string id)
         {
             var followerId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            var result = await _followService.UnFollowUser(followerId, message.Id);
+            var result = await _followService.UnFollowUser(followerId, id);
 
             return result ? ApiResult.Success("followed successfully") : ApiResult.BadRequest("Something went wrong");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("{id}")]
+        public async Task<ApiResult> CheckIfFollows(string id)
+        {
+            var followerId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+
+            var result = await _followService.FollowExists(followerId, id);
+
+            return ApiResult.Success(result);
         }
     }
 }

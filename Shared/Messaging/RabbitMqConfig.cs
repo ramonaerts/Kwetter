@@ -43,6 +43,9 @@ namespace Shared.Messaging
             channel.QueueBind("UserService", Exchange, "ProfileImageChangedMessage");
             channel.QueueBind("TweetService", Exchange, "ProfileImageChangedMessage");
 
+            channel.QueueBind("UserService", Exchange, "AddFollowerMessage");
+            channel.QueueBind("UserService", Exchange, "RemoveFollowerMessage");
+
             _configured = true;
         }
     }
