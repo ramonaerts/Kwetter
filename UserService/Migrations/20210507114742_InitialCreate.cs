@@ -14,7 +14,11 @@ namespace UserService.Migrations
                     Email = table.Column<string>(nullable: true),
                     Username = table.Column<string>(nullable: true),
                     Nickname = table.Column<string>(nullable: true),
-                    Image = table.Column<string>(nullable: true)
+                    Location = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true),
+                    FollowersCount = table.Column<int>(nullable: false),
+                    FollowingCount = table.Column<int>(nullable: false),
+                    Verified = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

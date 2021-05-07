@@ -8,7 +8,7 @@ using UserService.DAL;
 namespace UserService.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20210416180115_InitialCreate")]
+    [Migration("20210507114742_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,16 @@ namespace UserService.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<int>("FollowersCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FollowingCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Image")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Location")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Nickname")
@@ -34,6 +43,9 @@ namespace UserService.Migrations
 
                     b.Property<string>("Username")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<bool>("Verified")
+                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
 

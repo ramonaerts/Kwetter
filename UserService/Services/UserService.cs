@@ -28,7 +28,11 @@ namespace UserService.Services
                 Email = message.Email,
                 Username = message.Username,
                 Nickname = message.Username,
-                Image = "default.png"
+                Image = "default.png",
+                Location = null,
+                FollowersCount = 0,
+                FollowingCount = 0,
+                Verified = false
             };
 
             _userContext.Add(user);
