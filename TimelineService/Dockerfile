@@ -7,10 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["TimelineService/TimelineService.csproj", "TimelineService/"]
+COPY ["nuget.config", ""]
+COPY ["/TimelineService.csproj", "TimelineService/"]
 RUN dotnet restore "TimelineService/TimelineService.csproj"
-COPY . .
+
 WORKDIR "/src/TimelineService"
+COPY . .
+
 RUN dotnet build "TimelineService.csproj" -c Release -o /app/build
 
 FROM build AS publish
