@@ -33,13 +33,11 @@ namespace FileManagementService.Services
 
         private static string GetPath(DataType type)
         {
-            switch (type)
+            return type switch
             {
-                case DataType.Profile:
-                    return "/Content/Profileimages/";
-                default:
-                    return null;
-            }
+                DataType.Profile => "/Content/Profileimages/",
+                _ => null
+            };
         }
 
         private static string GetFileExtension(string base64)
