@@ -30,6 +30,7 @@ namespace Shared.Messaging
             channel.QueueDeclare("UserService", false, false);
             channel.QueueDeclare("FileManagementService", false, false);
             channel.QueueDeclare("FollowService", false, false);
+            channel.QueueDeclare("TimelineService", false, false);
 
             //QueueBind(Service to which the message will be send, Exchange, Message class names)
             channel.QueueBind("TweetService", Exchange, "UserChange");
@@ -45,6 +46,12 @@ namespace Shared.Messaging
 
             channel.QueueBind("UserService", Exchange, "AddFollowerMessage");
             channel.QueueBind("UserService", Exchange, "RemoveFollowerMessage");
+
+            channel.QueueBind("TimelineService", Exchange, "NewProfileMessage");
+            channel.QueueBind("TimelineService", Exchange, "ProfileImageChangedMessage");
+            channel.QueueBind("TimelineService", Exchange, "NewPostedTweet");
+            channel.QueueBind("TimelineService", Exchange, "AddFollowerMessage");
+            channel.QueueBind("TimelineService", Exchange, "RemoveFollowerMessage");
 
             _configured = true;
         }
