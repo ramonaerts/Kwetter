@@ -4,17 +4,26 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FileManagementService.Enums;
+using Shared.Messaging;
 
 namespace FileManagementService.Services
 {
     public class FileManagementService : IFileManagementService
     {
-        //Image will be in base64 | image name will be GUID + file extension | DataType will be Profile for now.
-        public void SaveUserImage(string image, DataType type)
+        private readonly IMessagePublisher _messagePublisher;
+
+        public FileManagementService(IMessagePublisher messagePublisher)
+        {
+            _messagePublisher = messagePublisher;
+        }
+
+        public async Task SaveUserImage(string id, string image, DataType type)
         {
             var base64 = image.Substring(image.LastIndexOf(',') + 1);
+            var uniqueFileName = Guid.NewGuid() + GetFileExtension(base64);
+            var filePath = Environment.CurrentDirectory + GetPath(type) + uniqueFileName;
 
-            var filePath = Environment.CurrentDirectory + GetPath(type) + Guid.NewGuid() + GetFileExtension(base64);
+            await _messagePublisher.PublishMessageAsync("ProfileImageChangedMessage", new { Id = id, Image = uniqueFileName });
 
             File.WriteAllBytes(filePath, Convert.FromBase64String(base64));
         }

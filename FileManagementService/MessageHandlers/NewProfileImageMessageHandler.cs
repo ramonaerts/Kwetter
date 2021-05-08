@@ -20,7 +20,7 @@ namespace FileManagementService.MessageHandlers
 
         public async Task HandleMessageAsync(string messageType, NewProfileImage message)
         {
-            _fileManagementService.SaveUserImage(message.Image, DataType.Profile);
+            //_fileManagementService.SaveUserImage(message.Image, DataType.Profile);
         }
     }
 }

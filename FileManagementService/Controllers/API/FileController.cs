@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using FileManagementService.Enums;
 using FileManagementService.Messages.API;
@@ -25,9 +26,11 @@ namespace FileManagementService.Controllers.API
 
         [AllowAnonymous]
         [HttpPost("edit")]
-        public ApiResult EditProfilePicture(EditProfileImageMessage message)
+        public async Task<ApiResult> EditProfilePicture(EditProfileImageMessage message)
         {
-            _fileManagementService.SaveUserImage(message.Image, DataType.Profile);
+            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+
+            await _fileManagementService.SaveUserImage(id, message.Image, DataType.Profile);
 
             return ApiResult.Success("Image successfully changed");
         }
