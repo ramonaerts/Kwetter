@@ -10,6 +10,7 @@ using AuthenticationService.DAL;
 using AuthenticationService.Entities;
 using AuthenticationService.Messages.Api;
 using AuthenticationService.Messages.Broker;
+using AuthenticationService.Models;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Messaging;
 
@@ -38,14 +39,27 @@ namespace AuthenticationService.Services
             {
                 Id = message.Id,
                 Email = message.Email,
-                Password = message.Password
+                Password = message.Password,
+                Role = UserRole.User
             };
 
             _authenticationContext.Add(user);
             _authenticationContext.SaveChanges();
         }
 
-        public string CreateToken(string userId)
+        public void UpdateEmail(EmailChangedMessage message)
+        {
+            var user = _authenticationContext.Users.FirstOrDefault(u => u.Id == message.Id);
+
+            if (user == null) return;
+
+            user.Email = message.Email;
+
+            _authenticationContext.Update(user);
+            _authenticationContext.SaveChanges();
+        }
+
+        public string CreateToken(string userId, UserRole role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(_key);
@@ -53,9 +67,10 @@ namespace AuthenticationService.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim("UserId", userId)
+                    new Claim(ClaimTypes.Name, userId),
+                    new Claim(ClaimTypes.Role, role.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey),
                     SecurityAlgorithms.HmacSha256Signature)
             };

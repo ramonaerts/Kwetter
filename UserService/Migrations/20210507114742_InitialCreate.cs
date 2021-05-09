@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace AuthenticationService.Migrations
+namespace UserService.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -12,7 +12,13 @@ namespace AuthenticationService.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true)
+                    Username = table.Column<string>(nullable: true),
+                    Nickname = table.Column<string>(nullable: true),
+                    Location = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true),
+                    FollowersCount = table.Column<int>(nullable: false),
+                    FollowingCount = table.Column<int>(nullable: false),
+                    Verified = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

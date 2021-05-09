@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.API;
 using UserService.Messages.API;
@@ -9,6 +10,7 @@ using UserService.Services;
 
 namespace UserService.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -20,6 +22,7 @@ namespace UserService.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("register")]
         public async Task<ApiResult> RegisterUser(RegisterMessage message) 
         {

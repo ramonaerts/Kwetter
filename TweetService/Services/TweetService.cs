@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
+using Shared.Messaging;
 using TweetService.DAL;
 using TweetService.Messages;
 using TweetService.Messages.Broker;
@@ -13,11 +15,16 @@ namespace TweetService.Services
 {
     public class TweetService : ITweetService
     {
+        private readonly IMapper _mapper;
+        private readonly IMessagePublisher _messagePublisher;
         private readonly IMongoCollection<Entities.Tweet> _tweets;
         private readonly IMongoCollection<Entities.User> _users;
 
-        public TweetService(ITweetContext context)
+        public TweetService(ITweetContext context, IMapper mapper, IMessagePublisher messagePublisher)
         {
+            _mapper = mapper;
+            _messagePublisher = messagePublisher;
+
             var client = new MongoClient(context.ConnectionString);
             var database = client.GetDatabase(context.DatabaseName);
 
@@ -25,9 +32,22 @@ namespace TweetService.Services
             _users = database.GetCollection<Entities.User>("Users");
         }
 
-        public List<Tweet> GetTweets()
+        public List<Tweet> GetTweets(string id)
         {
-            throw new NotImplementedException();
+            var tweets = _tweets.Find(t => t.UserId == id).ToList();
+
+            var user = _users.Find(u => u.Id == id).FirstOrDefault();
+
+            var tweetModels = _mapper.Map<List<Tweet>>(tweets);
+
+            foreach (var tweet in tweetModels)
+            {
+                tweet.User = user;
+            }
+
+            tweetModels = tweetModels.OrderByDescending(x => x.TweetDateTime).ToList();
+
+            return tweetModels;
         }
 
         public void AddUser(NewProfileMessage message)
@@ -43,9 +63,22 @@ namespace TweetService.Services
             _users.InsertOne(user);
         }
 
-        public List<User> GetUsers()
+        public void UpdateUser(ProfileChangedMessage message)
         {
-            throw new NotImplementedException();
+            var user = _users.Find(u => u.Id == message.Id).FirstOrDefault();
+
+            user.Nickname = message.Nickname;
+
+            _users.ReplaceOne(u => u.Id == message.Id, user);
+        }
+
+        public void UpdateUserImage(ProfileImageChangedMessage message)
+        {
+            var user = _users.Find(u => u.Id == message.Id).FirstOrDefault();
+
+            user.Image = message.Image;
+
+            _users.ReplaceOne(u => u.Id == message.Id, user);
         }
 
         public Entities.Tweet GetTweet()
@@ -53,14 +86,17 @@ namespace TweetService.Services
             return _tweets.Find(t => t.Id == "1").FirstOrDefault();
         }
 
-        public void CreateTweet()
+        public async Task CreateTweet(string id, string tweetContent)
         {
             var tweet = new Entities.Tweet
             {
                 TweetDateTime = DateTime.Now,
-                Id = "1c440290-febf-4d0e-81b6-1bcaac7d1b76",
-                TweetContent = "test"
+                Id = Guid.NewGuid().ToString(),
+                UserId = id,
+                TweetContent = tweetContent
             };
+
+            await _messagePublisher.PublishMessageAsync("NewPostedTweetMessage", new { TweetDateTime = tweet.TweetDateTime, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
 
             _tweets.InsertOne(tweet);
         }

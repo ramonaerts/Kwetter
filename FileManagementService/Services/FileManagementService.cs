@@ -4,17 +4,28 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FileManagementService.Enums;
+using Shared.Messaging;
 
 namespace FileManagementService.Services
 {
     public class FileManagementService : IFileManagementService
     {
-        //Image will be in base64 | image name will be GUID + file extension | DataType will be Profile for now.
-        public void SaveUserImage(string image, string imageName, DataType type)
-        {
-            var filePath = Environment.CurrentDirectory + GetPath(type) + imageName;
+        private readonly IMessagePublisher _messagePublisher;
 
-            File.WriteAllBytes(filePath, Convert.FromBase64String(image));
+        public FileManagementService(IMessagePublisher messagePublisher)
+        {
+            _messagePublisher = messagePublisher;
+        }
+
+        public async Task SaveUserImage(string id, string image, DataType type)
+        {
+            var base64 = image.Substring(image.LastIndexOf(',') + 1);
+            var uniqueFileName = Guid.NewGuid() + GetFileExtension(base64);
+            var filePath = Environment.CurrentDirectory + GetPath(type) + uniqueFileName;
+
+            await _messagePublisher.PublishMessageAsync("ProfileImageChangedMessage", new { Id = id, Image = uniqueFileName });
+
+            File.WriteAllBytes(filePath, Convert.FromBase64String(base64));
         }
 
         public bool GetContentOfType(string dataString, DataType type, out byte[] bytes)
@@ -31,13 +42,23 @@ namespace FileManagementService.Services
 
         private static string GetPath(DataType type)
         {
-            switch (type)
+            return type switch
             {
-                case DataType.Profile:
-                    return "/Content/Profileimages/";
-                default:
-                    return null;
-            }
+                DataType.Profile => "/Content/Profileimages/",
+                _ => null
+            };
+        }
+
+        private static string GetFileExtension(string base64)
+        {
+            var data = base64.Substring(0, 5);
+
+            return data.ToUpper() switch
+            {
+                "IVBOR" => ".png",
+                "/9J/4" => ".jpg",
+                _ => null,
+            };
         }
     }
 }

@@ -3,14 +3,16 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["TweetService/TweetService.csproj", "TweetService/"]
+COPY ["nuget.config", ""]
+COPY ["/TweetService.csproj", "TweetService/"]
 RUN dotnet restore "TweetService/TweetService.csproj"
-COPY . .
+
 WORKDIR "/src/TweetService"
+COPY . .
+
 RUN dotnet build "TweetService.csproj" -c Release -o /app/build
 
 FROM build AS publish

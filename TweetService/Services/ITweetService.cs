@@ -10,10 +10,11 @@ namespace TweetService.Services
 {
     public interface ITweetService
     {
-        List<Tweet> GetTweets();
+        List<Tweet> GetTweets(string id);
         void AddUser(NewProfileMessage user);
-        List<User> GetUsers();
+        void UpdateUser(ProfileChangedMessage message);
+        void UpdateUserImage(ProfileImageChangedMessage message);
         Entities.Tweet GetTweet();
-        void CreateTweet();
+        Task CreateTweet(string id, string tweetContent);
     }
 }

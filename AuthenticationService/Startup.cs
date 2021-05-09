@@ -37,27 +37,31 @@ namespace AuthenticationService
         {
             services.AddControllers();
 
-            var key = "eBCatxoffIIq6ESdrDZ8LKI3zpxhYkYM";
-
-            services.AddAuthentication(x =>
+            var secret = "eBCatxoffIIq6ESdrDZ8LKI3zpxhYkYM";
+            var key = Encoding.ASCII.GetBytes(secret);
+            services.AddAuthentication(option =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x => {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
             });
 
+            services.AddAuthorization();
+
             services.AddMessagePublishing("AuthenticationService", builder =>
             {
                 builder.WithHandler<RegisterNewUserMessageHandler>("NewUserMessage");
+                builder.WithHandler<EmailChangedMessageHandler>("EmailChangedMessage");
             });
 
             services.AddScoped<IAuthService, AuthService>();
@@ -78,6 +82,7 @@ namespace AuthenticationService
             app.UseRouting();
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
