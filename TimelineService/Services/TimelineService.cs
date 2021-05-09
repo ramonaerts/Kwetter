@@ -33,7 +33,7 @@ namespace TimelineService.Services
         {
             var followings = GetFollowings(userId);
 
-            List<Tweet> tweets = null;
+            var tweets = new List<Tweet>();
 
             foreach (var follow in followings)
             {
@@ -47,7 +47,7 @@ namespace TimelineService.Services
                 tweet.User = _users.Find(u => u.Id == tweet.UserId).FirstOrDefault();
             }
 
-            tweetModels = tweetModels.OrderBy(x => x.TweetDateTime).ToList();
+            tweetModels = tweetModels.OrderByDescending(x => x.TweetDateTime).ToList();
 
             return tweetModels;
         }

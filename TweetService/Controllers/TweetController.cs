@@ -36,6 +36,16 @@ namespace TweetService.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
+        [Route("{id}")]
+        public ApiResult GetProfileTweets(string id)
+        {
+            var tweets = _tweetService.GetTweets(id);
+
+            return ApiResult.Success(tweets);
+        }
+
+        [HttpGet]
         [Authorize(Roles = "User,Moderator,Admin")]
         [Route("tweet")]
         public ApiResult GetTest()

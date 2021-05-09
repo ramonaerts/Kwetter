@@ -45,6 +45,8 @@ namespace TweetService.Services
                 tweet.User = user;
             }
 
+            tweetModels = tweetModels.OrderByDescending(x => x.TweetDateTime).ToList();
+
             return tweetModels;
         }
 
