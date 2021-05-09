@@ -23,7 +23,7 @@ namespace TimelineService.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "User,Moderator,Admin")]
         [Route("timeline")]
         public async Task<ApiResult> GetUserTimeline()
         {

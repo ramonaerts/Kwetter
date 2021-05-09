@@ -24,7 +24,7 @@ namespace TweetService.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "User,Moderator,Admin")]
         [Route("tweets")]
         public ApiResult GetUserTweets()
         {
@@ -36,7 +36,7 @@ namespace TweetService.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "User,Moderator,Admin")]
         [Route("{id}")]
         public ApiResult GetProfileTweets(string id)
         {
@@ -56,7 +56,7 @@ namespace TweetService.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "User,Moderator,Admin")]
         [Route("create")]
         public async Task<ApiResult> CreateTweet(CreateTweetMessage message)
         {

@@ -24,7 +24,7 @@ namespace UserService.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "User,Moderator,Admin")]
         [Route("{username}")]
         public async Task<ApiResult> GetProfileByName(string username)
         {
@@ -41,7 +41,7 @@ namespace UserService.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "User,Moderator,Admin")]
         [Route("@me")]
         public async Task<ApiResult> GetOwnProfile()
         {
@@ -53,7 +53,7 @@ namespace UserService.Controllers
         }
 
         [HttpPut]
-        [AllowAnonymous]
+        [Authorize(Roles = "User,Moderator,Admin")]
         [Route("edit")]
         public async Task<ApiResult> EditProfile(EditProfileMessage message)
         {

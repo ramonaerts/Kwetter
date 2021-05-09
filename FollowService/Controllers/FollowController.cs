@@ -24,7 +24,7 @@ namespace FollowService.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "User,Moderator,Admin")]
         [Route("follow")]
         public async Task<ApiResult> PostFollower(FollowMessage message)
         {
@@ -36,7 +36,7 @@ namespace FollowService.Controllers
         }
 
         [HttpDelete]
-        [AllowAnonymous]
+        [Authorize(Roles = "User,Moderator,Admin")]
         [Route("{id}")]
         public async Task<ApiResult> DeleteFollower(string id)
         {
@@ -48,7 +48,7 @@ namespace FollowService.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "User,Moderator,Admin")]
         [Route("{id}")]
         public async Task<ApiResult> CheckIfFollows(string id)
         {

@@ -24,7 +24,7 @@ namespace FileManagementService.Controllers.API
             _fileManagementService = fileManagementService;
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "User,Moderator,Admin")]
         [HttpPost("edit")]
         public async Task<ApiResult> EditProfilePicture(EditProfileImageMessage message)
         {

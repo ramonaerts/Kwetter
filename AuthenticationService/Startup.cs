@@ -82,6 +82,7 @@ namespace AuthenticationService
             app.UseRouting();
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
