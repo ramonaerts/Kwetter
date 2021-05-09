@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TimelineService.Messages.Broker;
+using TimelineService.Models;
 
 namespace TimelineService.Services
 {
     public interface ITimelineService
     {
-        Task GetUserTimeline(string userId);
+        List<Tweet> GetUserTimeline(string userId);
         Task AddTweet(NewPostedTweetMessage message);
         Task FollowUser(AddFollowerMessage message);
         Task UnFollowUser(RemoveFollowerMessage message);

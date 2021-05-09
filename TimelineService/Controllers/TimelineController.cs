@@ -24,14 +24,14 @@ namespace TimelineService.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("")]
+        [Route("timeline")]
         public async Task<ApiResult> GetUserTimeline()
         {
             var userId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            await _timelineService.GetUserTimeline(userId);
+            var tweets = _timelineService.GetUserTimeline(userId);
 
-            return ApiResult.Success("success");
+            return ApiResult.Success(tweets);
         }
     }
 }

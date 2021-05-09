@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MongoDB.Driver;
 using TimelineService.DAL;
 using TimelineService.Entities;
@@ -11,12 +12,15 @@ namespace TimelineService.Services
 {
     public class TimelineService : ITimelineService
     {
+        private readonly IMapper _mapper;
         private readonly IMongoCollection<Tweet> _tweets;
         private readonly IMongoCollection<User> _users;
         private readonly IMongoCollection<Follow> _follows;
 
-        public TimelineService(ITimelineContext context)
+        public TimelineService(ITimelineContext context, IMapper mapper)
         {
+            _mapper = mapper;
+
             var client = new MongoClient(context.ConnectionString);
             var database = client.GetDatabase(context.DatabaseName);
 
@@ -25,11 +29,27 @@ namespace TimelineService.Services
             _follows = database.GetCollection<Follow>("Followings");
         }
 
-        public async Task GetUserTimeline(string userId)
+        public List<Models.Tweet> GetUserTimeline(string userId)
         {
             var followings = GetFollowings(userId);
 
-            throw new NotImplementedException();
+            List<Tweet> tweets = null;
+
+            foreach (var follow in followings)
+            {
+                tweets.AddRange(_tweets.Find(t => t.UserId == follow.Following).ToList());
+            }
+
+            var tweetModels = _mapper.Map<List<Models.Tweet>>(tweets);
+
+            foreach (var tweet in tweetModels)
+            {
+                tweet.User = _users.Find(u => u.Id == tweet.UserId).FirstOrDefault();
+            }
+
+            tweetModels = tweetModels.OrderBy(x => x.TweetDateTime).ToList();
+
+            return tweetModels;
         }
 
         public List<Follow> GetFollowings(string userId)
