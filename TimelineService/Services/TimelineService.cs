@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MongoDB.Driver;
 using TimelineService.DAL;
 using TimelineService.Entities;
+using TimelineService.Messages.Broker;
 
 namespace TimelineService.Services
 {
@@ -19,14 +20,75 @@ namespace TimelineService.Services
             var client = new MongoClient(context.ConnectionString);
             var database = client.GetDatabase(context.DatabaseName);
 
-            _tweets = database.GetCollection<Entities.Tweet>("Tweets");
-            _users = database.GetCollection<Entities.User>("Users");
+            _tweets = database.GetCollection<Tweet>("Tweets");
+            _users = database.GetCollection<User>("Users");
             _follows = database.GetCollection<Follow>("Followings");
         }
 
-        public Task GetUserTimeline(string userId)
+        public async Task GetUserTimeline(string userId)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task AddTweet(NewPostedTweetMessage message)
+        {
+            var tweet = new Tweet
+            {
+                TweetDateTime = message.TweetDateTime,
+                Id = message.Id,
+                UserId = message.UserId,
+                TweetContent = message.TweetContent
+            };
+
+            await _tweets.InsertOneAsync(tweet);
+        }
+
+        public async Task FollowUser(AddFollowerMessage message)
+        {
+            var follow = new Follow
+            {
+                Id = message.Id,
+                Follower = message.FollowerId,
+                Following = message.FollowingId
+            };
+
+            await _follows.InsertOneAsync(follow);
+        }
+
+        public async Task UnFollowUser(RemoveFollowerMessage message)
+        {
+            await _follows.DeleteOneAsync(f => f.Follower == message.FollowerId && f.Following == message.FollowingId);
+        }
+
+        public async Task AddUser(NewProfileMessage message)
+        {
+            var user = new User
+            {
+                Id = message.Id,
+                Nickname = message.Nickname,
+                Username = message.Username,
+                Image = message.Image
+            };
+
+            await _users.InsertOneAsync(user);
+        }
+
+        public async Task UpdateUser(ProfileChangedMessage message)
+        {
+            var user = _users.Find(u => u.Id == message.Id).FirstOrDefault();
+
+            user.Nickname = message.Nickname;
+
+            await _users.ReplaceOneAsync(u => u.Id == message.Id, user);
+        }
+
+        public async Task UpdateUserImage(ProfileImageChangedMessage message)
+        {
+            var user = _users.Find(u => u.Id == message.Id).FirstOrDefault();
+
+            user.Image = message.Image;
+
+            await _users.ReplaceOneAsync(u => u.Id == message.Id, user);
         }
     }
 }

@@ -15,6 +15,6 @@ namespace TweetService.Services
         void UpdateUser(ProfileChangedMessage message);
         void UpdateUserImage(ProfileImageChangedMessage message);
         Entities.Tweet GetTweet();
-        void CreateTweet(string id, string tweetContent);
+        Task CreateTweet(string id, string tweetContent);
     }
 }

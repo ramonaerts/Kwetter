@@ -48,11 +48,11 @@ namespace TweetService.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("create")]
-        public ApiResult CreateTweet(CreateTweetMessage message)
+        public async Task<ApiResult> CreateTweet(CreateTweetMessage message)
         {
             var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            _tweetService.CreateTweet(id, message.TweetContent);
+            await _tweetService.CreateTweet(id, message.TweetContent);
 
             return ApiResult.Success("Created");
         }

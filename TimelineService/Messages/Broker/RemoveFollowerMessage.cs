@@ -7,7 +7,7 @@ namespace TimelineService.Messages.Broker
 {
     public class RemoveFollowerMessage
     {
-        private string FollowId { get; set; }
-        private string FollowingId { get; set; }
+        public string FollowerId { get; set; }
+        public string FollowingId { get; set; }
     }
 }

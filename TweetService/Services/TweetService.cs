@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
+using Shared.Messaging;
 using TweetService.DAL;
 using TweetService.Messages;
 using TweetService.Messages.Broker;
@@ -15,12 +16,14 @@ namespace TweetService.Services
     public class TweetService : ITweetService
     {
         private readonly IMapper _mapper;
+        private readonly IMessagePublisher _messagePublisher;
         private readonly IMongoCollection<Entities.Tweet> _tweets;
         private readonly IMongoCollection<Entities.User> _users;
 
-        public TweetService(ITweetContext context, IMapper mapper)
+        public TweetService(ITweetContext context, IMapper mapper, IMessagePublisher messagePublisher)
         {
             _mapper = mapper;
+            _messagePublisher = messagePublisher;
 
             var client = new MongoClient(context.ConnectionString);
             var database = client.GetDatabase(context.DatabaseName);
@@ -81,7 +84,7 @@ namespace TweetService.Services
             return _tweets.Find(t => t.Id == "1").FirstOrDefault();
         }
 
-        public void CreateTweet(string id, string tweetContent)
+        public async Task CreateTweet(string id, string tweetContent)
         {
             var tweet = new Entities.Tweet
             {
@@ -90,6 +93,8 @@ namespace TweetService.Services
                 UserId = id,
                 TweetContent = tweetContent
             };
+
+            await _messagePublisher.PublishMessageAsync("NewPostedTweetMessage", new { TweetDateTime = tweet.TweetDateTime, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
 
             _tweets.InsertOne(tweet);
         }

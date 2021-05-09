@@ -16,6 +16,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Shared;
 using TimelineService.DAL;
+using TimelineService.MessageHandlers;
 using TimelineService.Services;
 
 namespace TimelineService
@@ -55,7 +56,15 @@ namespace TimelineService
 
             services.AddAuthorization();
 
-            //services.AddMessagePublishing("TimelineService");
+            services.AddMessagePublishing("TimelineService", builder =>
+            {
+                builder.WithHandler<AddFollowerMessageHandler>("AddFollowerMessage");
+                builder.WithHandler<NewPostedTweetMessageHandler>("NewPostedTweetMessage");
+                builder.WithHandler<NewProfileMessageHandler>("NewProfileMessage");
+                builder.WithHandler<ProfileChangedMessageHandler>("ProfileChangedMessage");
+                builder.WithHandler<ProfileImageChangedMessageHandler>("ProfileImageChangedMessage");
+                builder.WithHandler<RemoveFollowerMessageHandler>("RemoveFollowerMessage");
+            });
 
             services.Configure<TimelineContext>(Configuration.GetSection(nameof(TimelineContext)));
             services.AddSingleton<ITimelineContext>(sp => sp.GetRequiredService<IOptions<TimelineContext>>().Value);
