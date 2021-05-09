@@ -27,7 +27,14 @@ namespace TimelineService.Services
 
         public async Task GetUserTimeline(string userId)
         {
+            var followings = GetFollowings(userId);
+
             throw new NotImplementedException();
+        }
+
+        public List<Follow> GetFollowings(string userId)
+        {
+            return _follows.Find(f => f.Follower == userId).ToList();
         }
 
         public async Task AddTweet(NewPostedTweetMessage message)
