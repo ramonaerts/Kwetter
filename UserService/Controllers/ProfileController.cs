@@ -40,6 +40,18 @@ namespace UserService.Controllers
             return ApiResult.Success(profile);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("@me")]
+        public async Task<ApiResult> GetOwnProfile()
+        {
+            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+
+            var user = await _profileService.GetProfileById(id);
+
+            return ApiResult.Success(user);
+        }
+
         [HttpPut]
         [AllowAnonymous]
         [Route("edit")]
