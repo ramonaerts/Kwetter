@@ -17,9 +17,9 @@ namespace TimelineService.MessageHandlers
             _timelineService = timelineService;
         }
 
-        public Task HandleMessageAsync(string messageType, ProfileChangedMessage message)
+        public async Task HandleMessageAsync(string messageType, ProfileChangedMessage message)
         {
-            throw new NotImplementedException();
+            await _timelineService.UpdateUser(message);
         }
     }
 }

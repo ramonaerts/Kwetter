@@ -17,9 +17,9 @@ namespace TimelineService.MessageHandlers
             _timelineService = timelineService;
         }
 
-        public Task HandleMessageAsync(string messageType, RemoveFollowerMessage message)
+        public async Task HandleMessageAsync(string messageType, RemoveFollowerMessage message)
         {
-            throw new NotImplementedException();
+            await _timelineService.UnFollowUser(message);
         }
     }
 }

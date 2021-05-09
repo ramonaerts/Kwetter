@@ -16,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Shared;
 
 namespace FollowService
 {
@@ -53,6 +54,8 @@ namespace FollowService
             });
 
             services.AddAuthorization();
+
+            services.AddMessagePublishing("FollowService");
 
             services.Configure<FollowContext>(Configuration.GetSection(nameof(FollowContext)));
             services.AddSingleton<IFollowContext>(sp => sp.GetRequiredService<IOptions<FollowContext>>().Value);

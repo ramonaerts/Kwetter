@@ -17,9 +17,9 @@ namespace TimelineService.MessageHandlers
             _timelineService = timelineService;
         }
 
-        public Task HandleMessageAsync(string messageType, ProfileImageChangedMessage message)
+        public async Task HandleMessageAsync(string messageType, ProfileImageChangedMessage message)
         {
-            throw new NotImplementedException();
+            await _timelineService.UpdateUserImage(message);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace FollowService.Services
         {
             if (!await FollowExists(followerId, followingId)) return false;
 
-            await _messagePublisher.PublishMessageAsync("AddFollowerMessage", new { FollowerId = followerId, FollowingId = followingId });
+            await _messagePublisher.PublishMessageAsync("RemoveFollowerMessage", new { FollowerId = followerId, FollowingId = followingId });
 
             await _follows.DeleteOneAsync(f => f.Follower == followerId && f.Following == followingId);
 

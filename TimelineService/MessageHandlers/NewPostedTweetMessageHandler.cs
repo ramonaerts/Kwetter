@@ -17,9 +17,9 @@ namespace TimelineService.MessageHandlers
             _timelineService = timelineService;
         }
 
-        public Task HandleMessageAsync(string messageType, NewPostedTweetMessage message)
+        public async Task HandleMessageAsync(string messageType, NewPostedTweetMessage message)
         {
-            throw new NotImplementedException();
+            await _timelineService.AddTweet(message);
         }
     }
 }
