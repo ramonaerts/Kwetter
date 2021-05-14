@@ -72,8 +72,6 @@ namespace AuthenticationService
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            MigrateDatabase(app);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -89,24 +87,18 @@ namespace AuthenticationService
             {
                 endpoints.MapControllers();
             });
+
+            using var serviceScope = app.ApplicationServices.CreateScope();
+
+            var context = serviceScope.ServiceProvider.GetService<AuthenticationContext>();
+            MigrateDatabase(context);
         }
 
-        private static void MigrateDatabase(IApplicationBuilder app)
+        private static void MigrateDatabase(DbContext context)
         {
-            using var scope = app.ApplicationServices.CreateScope();
-
-            var dbContext = scope.ServiceProvider.GetService<AuthenticationContext>();
-
-            var relationalDatabaseCreator =
-                (RelationalDatabaseCreator)dbContext.Database.GetService<IDatabaseCreator>();
-
-            var databaseExists = relationalDatabaseCreator.Exists() && relationalDatabaseCreator.HasTables();
-
-            dbContext.Database.Migrate();
-
-            if (!databaseExists)
+            if (context.Database.GetPendingMigrations().Any())
             {
-                //TODO: add standard data
+                context.Database.Migrate();
             }
         }
     }

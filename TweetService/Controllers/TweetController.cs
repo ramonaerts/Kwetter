@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.API;
+using TweetService.Entities;
 using TweetService.Messages.Api;
 using TweetService.Models;
 using TweetService.Services;
+using Tweet = TweetService.Models.Tweet;
 
 namespace TweetService.Controllers
 {
@@ -46,13 +48,21 @@ namespace TweetService.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "User,Moderator,Admin")]
-        [Route("tweet")]
-        public ApiResult GetTest()
+        [AllowAnonymous]
+        [Route("profanity")]
+        public async Task<ApiResult> GetTest()
         {
-            var tweet = _tweetService.GetTweet();
+            var tweet = new Entities.Tweet
+            {
+                Id = "1",
+                TweetContent = "this is a test tweet",
+                TweetDateTime = DateTime.Now,
+                UserId = "11"
+            };
 
-            return ApiResult.Success(tweet);
+            await _tweetService.CheckForProfanity(tweet);
+
+            return ApiResult.Success("test result");
         }
 
         [HttpPost]
