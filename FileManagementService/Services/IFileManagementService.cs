@@ -9,6 +9,7 @@ namespace FileManagementService.Services
     public interface IFileManagementService
     {
         bool GetContentOfType(string dataString, DataType type, out byte[] bytes);
-        Task SaveUserImage(string id, string image, DataType type);
+        Task SaveProfileImage(string id, string image, DataType type);
+        void DeleteOldProfileImage(string id, string oldImage, DataType type);
     }
 }

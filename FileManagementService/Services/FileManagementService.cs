@@ -17,7 +17,7 @@ namespace FileManagementService.Services
             _messagePublisher = messagePublisher;
         }
 
-        public async Task SaveUserImage(string id, string image, DataType type)
+        public async Task SaveProfileImage(string id, string image, DataType type)
         {
             var base64 = image.Substring(image.LastIndexOf(',') + 1);
             var uniqueFileName = Guid.NewGuid() + GetFileExtension(base64);
@@ -26,6 +26,13 @@ namespace FileManagementService.Services
             await _messagePublisher.PublishMessageAsync("ProfileImageChangedMessage", new { Id = id, Image = uniqueFileName });
 
             File.WriteAllBytes(filePath, Convert.FromBase64String(base64));
+        }
+
+        public async Task DeleteOldProfileImage(string id, string oldImage, DataType type)
+        {
+            var filePath = Environment.CurrentDirectory + GetPath(type) + oldImage;
+
+            File.Delete(filePath);
         }
 
         public bool GetContentOfType(string dataString, DataType type, out byte[] bytes)
