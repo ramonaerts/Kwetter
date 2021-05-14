@@ -10,6 +10,6 @@ namespace FileManagementService.Services
     {
         bool GetContentOfType(string dataString, DataType type, out byte[] bytes);
         Task SaveProfileImage(string id, string image, DataType type);
-        void DeleteOldProfileImage(string id, string oldImage, DataType type);
+        Task DeleteOldProfileImage(string id, string oldImage, DataType type);
     }
 }
