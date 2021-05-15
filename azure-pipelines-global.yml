@@ -31,6 +31,7 @@ stages:
         command: 'restore'
         projects: '**/*.sln'
         feedsToUse: 'select'
+        vstsFeed: 'c4521e87-d5c9-442e-866e-c782ad69d302/f16ff7a7-765d-4fc8-9ad9-f53483e530a6'
     
     - task: SonarCloudPrepare@1
       displayName: Prepare SonarCloud
