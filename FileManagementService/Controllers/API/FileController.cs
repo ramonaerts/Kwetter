@@ -30,7 +30,9 @@ namespace FileManagementService.Controllers.API
         {
             var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            await _fileManagementService.SaveUserImage(id, message.Image, DataType.Profile);
+            if (message.OldImage != "") await _fileManagementService.DeleteOldProfileImage(id, message.NewImage, DataType.Profile);
+
+            await _fileManagementService.SaveProfileImage(id, message.NewImage, DataType.Profile);
 
             return ApiResult.Success("Image successfully changed");
         }

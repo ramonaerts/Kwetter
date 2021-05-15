@@ -16,5 +16,6 @@ namespace TweetService.Services
         void UpdateUserImage(ProfileImageChangedMessage message);
         Entities.Tweet GetTweet();
         Task CreateTweet(string id, string tweetContent);
+        Task CheckForProfanity(Entities.Tweet tweet);
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
+using Newtonsoft.Json.Linq;
 using Shared.Messaging;
 using TweetService.DAL;
 using TweetService.Messages;
@@ -96,9 +98,25 @@ namespace TweetService.Services
                 TweetContent = tweetContent
             };
 
+            await CheckForProfanity(tweet);
+
             await _messagePublisher.PublishMessageAsync("NewPostedTweetMessage", new { TweetDateTime = tweet.TweetDateTime, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
 
             _tweets.InsertOne(tweet);
+        }
+
+        public async Task CheckForProfanity(Entities.Tweet tweet)
+        {
+            var httpClient = new HttpClient();
+
+            var result = JObject.Parse(await httpClient.GetStringAsync(
+                "https://kwettermoderation.azurewebsites.net/api/CheckSwearWords?code=5/AcOOlYPIJlHOlEnQVmGYI5TxoNjfXYAMjjJee1a8YtXIOHpucY6w=="));
+
+            if (result["ProfanityResult"].Value<bool>())
+            {
+                //Uncomment this after moderationservice is working
+                //await _messagePublisher.PublishMessageAsync("NewProfanityTweet", new { TweetDateTime = tweet.TweetDateTime, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AuthenticationService.Migrations
 {
@@ -12,7 +13,8 @@ namespace AuthenticationService.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
+                    Hash = table.Column<byte[]>(nullable: true),
+                    Salt = table.Column<byte[]>(nullable: true),
                     Role = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

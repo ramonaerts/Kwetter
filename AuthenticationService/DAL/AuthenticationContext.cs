@@ -17,7 +17,10 @@ namespace AuthenticationService.DAL
             
         }
 
-        public AuthenticationContext() { }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>(entity => { entity.HasKey(user => user.Id); });
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using AuthenticationService.DAL;
@@ -11,6 +12,7 @@ using AuthenticationService.Entities;
 using AuthenticationService.Messages.Api;
 using AuthenticationService.Messages.Broker;
 using AuthenticationService.Models;
+using Konscious.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Messaging;
 
@@ -29,22 +31,57 @@ namespace AuthenticationService.Services
 
         public User LoginUser(LoginMessage message)
         {
-            return _authenticationContext.Users.FirstOrDefault(u =>
-                u.Email == message.Email && u.Password == message.Password);
+            var user = _authenticationContext.Users.FirstOrDefault(u => u.Email == message.Email);
+
+            if (user == null) return null;
+
+            return !VerifyHash(message.Password, user.Salt, user.Hash) ? null : user;
         }
 
         public void AddUser(NewUserMessage message)
         {
+            var salt = GenerateSalt();
+            var hash = HashPassword(message.Password, salt);
+
             var user = new User
             {
                 Id = message.Id,
                 Email = message.Email,
-                Password = message.Password,
+                Hash = hash,
+                Salt = salt,
                 Role = UserRole.User
             };
 
             _authenticationContext.Add(user);
             _authenticationContext.SaveChanges();
+        }
+
+        private byte[] HashPassword(string password, byte[] salt)
+        {
+            var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password))
+            {
+                Salt = salt,
+                DegreeOfParallelism = 16,
+                MemorySize = 8192,
+                Iterations = 40
+        };
+
+            return argon2.GetBytes(128);
+        }
+
+        private byte[] GenerateSalt()
+        {
+            var buffer = new byte[128];
+            var rng = new RNGCryptoServiceProvider();
+            rng.GetBytes(buffer);
+
+            return buffer;
+        }
+
+        private bool VerifyHash(string password, byte[] salt, byte[] hash)
+        {
+            var newHash = HashPassword(password, salt);
+            return hash.SequenceEqual(newHash);
         }
 
         public void UpdateEmail(EmailChangedMessage message)
