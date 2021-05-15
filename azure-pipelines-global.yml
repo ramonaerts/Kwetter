@@ -1,0 +1,61 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- main
+- dev
+
+variables:
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build stage
+
+  jobs:
+  - job: Build
+    displayName: Build
+
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore solution'
+      inputs:
+        command: 'restore'
+        projects: '**/*.sln'
+        feedsToUse: 'select'
+    
+    - task: SonarCloudPrepare@1
+      displayName: Prepare SonarCloud
+      inputs:
+        SonarCloud: 'Kwetter SonarCloud'
+        organization: '407383'
+        scannerMode: 'MSBuild'
+        projectKey: '407383_Kwetter'
+        projectName: 'Kwetter'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build solution'
+      inputs:
+        command: 'build'
+        projects: '**/*.sln'
+    
+    # - task: DotNetCoreCLI@2
+    #   displayName: 'Execute Unit tests'
+    #   inputs:
+    #     command: 'test'
+    #     projects: '**/*.sln'
+    #     arguments: '--collect "Code Coverage"'
+
+    - task: SonarCloudAnalyze@1
+      displayName: 'Run SonarCloud'
+
+    - task: SonarCloudPublish@1
+      displayName: 'Publish SonarCloud results'
