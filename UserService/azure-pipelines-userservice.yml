@@ -47,15 +47,15 @@ stages:
         scannerMode: 'MSBuild'
         projectKey: '407383_Kwetter'
         projectName: 'Kwetter'
-
-    - task: SonarCloudAnalyze@1
-      displayName: 'Run SonarCloud'
     
     - task: DotNetCoreCLI@2
       displayName: Build UserService
       inputs:
         command: 'build'
         projects: '**/UserService/UserService.csproj'
+    
+    - task: SonarCloudAnalyze@1
+      displayName: 'Run SonarCloud'
     
     - task: SonarCloudPublish@1
       displayName: 'Publish results on build summary'
