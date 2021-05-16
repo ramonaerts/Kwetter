@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace AuthenticationService.Messages.Api
+﻿namespace AuthenticationService.Messages.Api
 {
     public class LoginMessage
     {

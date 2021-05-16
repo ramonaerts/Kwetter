@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TweetService.Messages.Broker
+﻿namespace TweetService.Messages.Broker
 {
     public class ProfileChangedMessage
     {

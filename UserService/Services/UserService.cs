@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Shared.Messaging;
@@ -22,7 +21,7 @@ namespace UserService.Services
 
         public async Task<bool> RegisterUser(RegisterMessage message)
         {
-            var user = new User()
+            var user = new User
             {
                 Id = Guid.NewGuid().ToString(),
                 Email = message.Email,

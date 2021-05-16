@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using FileManagementService.Enums;
 using Shared.Messaging;
@@ -28,7 +26,7 @@ namespace FileManagementService.Services
             File.WriteAllBytes(filePath, Convert.FromBase64String(base64));
         }
 
-        public async Task DeleteOldProfileImage(string id, string oldImage, DataType type)
+        public void DeleteOldProfileImage(string id, string oldImage, DataType type)
         {
             var filePath = Environment.CurrentDirectory + GetPath(type) + oldImage;
 

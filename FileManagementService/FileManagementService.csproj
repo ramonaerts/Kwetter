@@ -14,5 +14,9 @@
     <PackageReference Include="Shared" Version="1.0.1.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MessageHandlers\" />
+  </ItemGroup>
+
 
 </Project>

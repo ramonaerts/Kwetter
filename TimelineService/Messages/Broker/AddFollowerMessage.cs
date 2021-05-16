@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TimelineService.Messages.Broker
+﻿namespace TimelineService.Messages.Broker
 {
     public class AddFollowerMessage
     {

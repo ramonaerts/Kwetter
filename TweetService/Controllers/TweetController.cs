@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.API;
-using TweetService.Entities;
 using TweetService.Messages.Api;
-using TweetService.Models;
 using TweetService.Services;
-using Tweet = TweetService.Models.Tweet;
 
 namespace TweetService.Controllers
 {

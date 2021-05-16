@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TweetService.Messages;
 using TweetService.Messages.Broker;
 using TweetService.Models;
 
@@ -11,9 +8,9 @@ namespace TweetService.Services
     public interface ITweetService
     {
         List<Tweet> GetTweets(string id);
-        void AddUser(NewProfileMessage user);
-        void UpdateUser(ProfileChangedMessage message);
-        void UpdateUserImage(ProfileImageChangedMessage message);
+        Task AddUser(NewProfileMessage message);
+        Task UpdateUser(ProfileChangedMessage message);
+        Task UpdateUserImage(ProfileImageChangedMessage message);
         Entities.Tweet GetTweet();
         Task CreateTweet(string id, string tweetContent);
         Task CheckForProfanity(Entities.Tweet tweet);
