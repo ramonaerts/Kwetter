@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Shared.Messaging;
 using TweetService.DAL;
@@ -99,23 +101,35 @@ namespace TweetService.Services
                 TweetContent = tweetContent
             };
 
-            await CheckForProfanity(tweet);
+            if(await CheckForProfanity(tweet))
+            {
+                //TODO: Add message handler here.
+            }
 
             await _messagePublisher.PublishMessageAsync("NewPostedTweetMessage", new { TweetDateTime = tweet.TweetDateTime, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
 
             _tweets.InsertOne(tweet);
         }
 
-        public async Task CheckForProfanity(Entities.Tweet tweet)
+        public async Task<bool> CheckForProfanity(Entities.Tweet tweet)
         {
             var httpClient = new HttpClient();
 
-            var result = JObject.Parse(await httpClient.GetStringAsync(_url));
-
-            if (result["ProfanityResult"].Value<bool>())
+            var request = new HttpRequestMessage
             {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri(_url),
+                Content = new StringContent("{\"tweetcontent\":\"" + tweet.TweetContent + "\"}", Encoding.UTF8, "application/json")
+            };
 
-            }
+            using var response = await httpClient.SendAsync(request);
+
+            response.EnsureSuccessStatusCode();
+            var jsonString = await response.Content.ReadAsStringAsync();
+
+            var jObject = JsonConvert.DeserializeObject<JObject>(jsonString);
+
+            return jObject["ProfanityResult"].Value<bool>();
         }
     }
 }

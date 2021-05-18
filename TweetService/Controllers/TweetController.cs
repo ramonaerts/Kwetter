@@ -56,7 +56,7 @@ namespace TweetService.Controllers
                 UserId = "11"
             };
 
-            await _tweetService.CheckForProfanity(tweet);
+            var result = await _tweetService.CheckForProfanity(tweet);
 
             return ApiResult.Success("test result");
         }

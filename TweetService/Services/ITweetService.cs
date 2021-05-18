@@ -13,6 +13,6 @@ namespace TweetService.Services
         Task UpdateUserImage(ProfileImageChangedMessage message);
         Entities.Tweet GetTweet();
         Task CreateTweet(string id, string tweetContent);
-        Task CheckForProfanity(Entities.Tweet tweet);
+        Task<bool> CheckForProfanity(Entities.Tweet tweet);
     }
 }
