@@ -31,6 +31,7 @@ namespace Shared.Messaging
             channel.QueueDeclare("FileManagementService", false, false);
             channel.QueueDeclare("FollowService", false, false);
             channel.QueueDeclare("TimelineService", false, false);
+            channel.QueueDeclare("ModerationService", false, false);
 
             //QueueBind(Service to which the message will be send, Exchange, Message class names)
             channel.QueueBind("TweetService", Exchange, "UserChange");

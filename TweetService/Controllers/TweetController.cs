@@ -43,24 +43,6 @@ namespace TweetService.Controllers
             return ApiResult.Success(tweets);
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("profanity")]
-        public async Task<ApiResult> GetTest()
-        {
-            var tweet = new Entities.Tweet
-            {
-                Id = "1",
-                TweetContent = "this is a test tweet",
-                TweetDateTime = DateTime.Now,
-                UserId = "11"
-            };
-
-            var result = await _tweetService.CheckForProfanity(tweet);
-
-            return ApiResult.Success("test result");
-        }
-
         [HttpPost]
         [Authorize(Roles = "User,Moderator,Admin")]
         [Route("create")]
