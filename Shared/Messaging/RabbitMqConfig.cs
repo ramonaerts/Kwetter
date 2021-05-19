@@ -56,6 +56,9 @@ namespace Shared.Messaging
             channel.QueueBind("TimelineService", Exchange, "RemoveFollowerMessage");
 
             channel.QueueBind("ModerationService", Exchange, "NewProfanityTweet");
+            channel.QueueBind("ModerationService", Exchange, "NewProfileMessage");
+            channel.QueueBind("ModerationService", Exchange, "ProfileChangedMessage");
+            channel.QueueBind("ModerationService", Exchange, "ProfileImageChangedMessage");
 
             _configured = true;
         }

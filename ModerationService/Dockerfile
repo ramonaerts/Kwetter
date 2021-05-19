@@ -7,10 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["ModerationService/ModerationService.csproj", "ModerationService/"]
+COPY ["nuget.config", ""]
+COPY ["/ModerationService.csproj", "ModerationService/"]
 RUN dotnet restore "ModerationService/ModerationService.csproj"
-COPY . .
+
 WORKDIR "/src/ModerationService"
+COPY . .
+
 RUN dotnet build "ModerationService.csproj" -c Release -o /app/build
 
 FROM build AS publish

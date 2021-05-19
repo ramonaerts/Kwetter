@@ -68,6 +68,16 @@ services:
     ports:
       - "27019:27017"
 
+  moderationdatabase:
+    image: mongo
+    container_name: ModerationDatabase
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27020:27017"
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -144,6 +154,17 @@ services:
     build:
       context: .
       dockerfile: TimelineService/Dockerfile
+    restart: "on-failure"
+    depends_on:
+        - rabbit
+    links: 
+        - rabbit
+
+  moderationservice:
+    image: ${DOCKER_REGISTRY-}moderationservice
+    build:
+      context: .
+      dockerfile: ModerationService/Dockerfile
     restart: "on-failure"
     depends_on:
         - rabbit
