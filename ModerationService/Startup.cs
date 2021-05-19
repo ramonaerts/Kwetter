@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ModerationService.DAL;
+using ModerationService.MessageHandlers;
 using ModerationService.Services;
 using Shared;
 
@@ -46,7 +47,13 @@ namespace ModerationService
                 };
             });
 
-            services.AddMessagePublishing("ModerationService");
+            services.AddMessagePublishing("ModerationService", builder =>
+            {
+                builder.WithHandler<NewProfileMessageHandler>("NewProfileMessage");
+                builder.WithHandler<ProfileChangedMessageHandler>("ProfileChangedMessage");
+                builder.WithHandler<NewProfanityTweetMessageHandler>("NewProfanityTweetMessage");
+                builder.WithHandler<ProfileImageChangedMessageHandler>("ProfileImageChangedMessage");
+            });
 
             services.Configure<ModerationContext>(Configuration.GetSection(nameof(ModerationContext)));
             services.AddSingleton<IModerationContext>(sp => sp.GetRequiredService<IOptions<ModerationContext>>().Value);
