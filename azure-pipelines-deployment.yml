@@ -1,0 +1,51 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- main
+- master
+
+variables:
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build stage
+
+  jobs:
+  - job: Build
+    displayName: Build
+
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore solution'
+      inputs:
+        command: 'restore'
+        projects: '**/*.sln'
+        feedsToUse: 'select'
+        vstsFeed: 'c4521e87-d5c9-442e-866e-c782ad69d302/f16ff7a7-765d-4fc8-9ad9-f53483e530a6'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build solution'
+      inputs:
+        command: 'build'
+        projects: '**/*.sln'
+
+    - task: Kubernetes@1
+      displayName: Deploy to Kubernetes
+      inputs:
+        connectionType: 'Azure Resource Manager'
+        azureSubscriptionEndpoint: 'Azure for Students(bb379f5d-411a-426e-833f-527813d02fdc)'
+        azureResourceGroup: 'kwetter'
+        kubernetesCluster: 'kwetter-cluster'
+        command: 'apply'
+        useConfigurationFile: true
+        configuration: 'kubernetes/deployment.yml'
