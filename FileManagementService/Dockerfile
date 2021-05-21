@@ -7,10 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["FileManagementService/FileManagementService.csproj", "FileManagementService/"]
+COPY ["nuget.config", ""]
+COPY ["/FileManagementService.csproj", "FileManagementService/"]
 RUN dotnet restore "FileManagementService/FileManagementService.csproj"
-COPY . .
+
 WORKDIR "/src/FileManagementService"
+COPY . .
+
 RUN dotnet build "FileManagementService.csproj" -c Release -o /app/build
 
 FROM build AS publish

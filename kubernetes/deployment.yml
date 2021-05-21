@@ -1,0 +1,1014 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: authenticationdatabase
+    name: authenticationdatabase
+  spec:
+    ports:
+    - name: "3306"
+      port: 3306
+      targetPort: 3306
+    selector:
+      io.kompose.service: authenticationdatabase
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: authenticationservice
+    name: authenticationservice
+  spec:
+    ports:
+    - name: "5020"
+      port: 5020
+      targetPort: 80
+    - name: "5021"
+      port: 5021
+      targetPort: 443
+    selector:
+      io.kompose.service: authenticationservice
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: filemanagementservice
+    name: filemanagementservice
+  spec:
+    ports:
+    - name: "5030"
+      port: 5030
+      targetPort: 80
+    - name: "5031"
+      port: 5031
+      targetPort: 443
+    selector:
+      io.kompose.service: filemanagementservice
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: followdatabase
+    name: followdatabase
+  spec:
+    ports:
+    - name: "27018"
+      port: 27018
+      targetPort: 27017
+    selector:
+      io.kompose.service: followdatabase
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: followservice
+    name: followservice
+  spec:
+    ports:
+    - name: "5050"
+      port: 5050
+      targetPort: 80
+    - name: "5051"
+      port: 5051
+      targetPort: 443
+    selector:
+      io.kompose.service: followservice
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: gateway
+    name: gateway
+  spec:
+    ports:
+    - name: "50000"
+      port: 50000
+      targetPort: 80
+    - name: "50001"
+      port: 50001
+      targetPort: 443
+    selector:
+      io.kompose.service: gateway
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: moderationdatabase
+    name: moderationdatabase
+  spec:
+    ports:
+    - name: "27020"
+      port: 27020
+      targetPort: 27017
+    selector:
+      io.kompose.service: moderationdatabase
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: moderationservice
+    name: moderationservice
+  spec:
+    ports:
+    - name: "5070"
+      port: 5070
+      targetPort: 80
+    - name: "5071"
+      port: 5071
+      targetPort: 443
+    selector:
+      io.kompose.service: moderationservice
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: phpmyadmin
+    name: phpmyadmin
+  spec:
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 80
+    selector:
+      io.kompose.service: phpmyadmin
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: rabbit
+    name: rabbit
+  spec:
+    ports:
+    - name: "15672"
+      port: 15672
+      targetPort: 15672
+    - name: "5672"
+      port: 5672
+      targetPort: 5672
+    selector:
+      io.kompose.service: rabbit
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: timelinedatabase
+    name: timelinedatabase
+  spec:
+    ports:
+    - name: "27019"
+      port: 27019
+      targetPort: 27017
+    selector:
+      io.kompose.service: timelinedatabase
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: timelineservice
+    name: timelineservice
+  spec:
+    ports:
+    - name: "5060"
+      port: 5060
+      targetPort: 80
+    - name: "5061"
+      port: 5061
+      targetPort: 443
+    selector:
+      io.kompose.service: timelineservice
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: tweetdatabase
+    name: tweetdatabase
+  spec:
+    ports:
+    - name: "27017"
+      port: 27017
+      targetPort: 27017
+    selector:
+      io.kompose.service: tweetdatabase
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: tweetservice
+    name: tweetservice
+  spec:
+    ports:
+    - name: "5010"
+      port: 5010
+      targetPort: 80
+    - name: "5011"
+      port: 5011
+      targetPort: 443
+    selector:
+      io.kompose.service: tweetservice
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: userdatabase
+    name: userdatabase
+  spec:
+    ports:
+    - name: "3307"
+      port: 3307
+      targetPort: 3307
+    selector:
+      io.kompose.service: userdatabase
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: userservice
+    name: userservice
+  spec:
+    ports:
+    - name: "5040"
+      port: 5040
+      targetPort: 80
+    - name: "5041"
+      port: 5041
+      targetPort: 443
+    selector:
+      io.kompose.service: userservice
+  status:
+    loadBalancer: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: authenticationdatabase
+    name: authenticationdatabase
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: authenticationdatabase
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: authenticationdatabase
+      spec:
+        containers:
+        - args:
+          - --default-authentication-plugin=mysql_native_password
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: example
+          image: mysql
+          imagePullPolicy: ""
+          name: authenticationdatabase
+          ports:
+          - containerPort: 3306
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: authenticationservice
+    name: authenticationservice
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: authenticationservice
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: authenticationservice
+      spec:
+        containers:
+        - image: authenticationservice
+          imagePullPolicy: ""
+          name: authenticationservice
+          ports:
+          - containerPort: 80
+          - containerPort: 443
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: filemanagementservice
+    name: filemanagementservice
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: filemanagementservice
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: filemanagementservice
+      spec:
+        containers:
+        - image: filemanagementservice
+          imagePullPolicy: ""
+          name: filemanagementservice
+          ports:
+          - containerPort: 80
+          - containerPort: 443
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: followdatabase
+    name: followdatabase
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: followdatabase
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: followdatabase
+      spec:
+        containers:
+        - env:
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: example
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: root
+          image: mongo
+          imagePullPolicy: ""
+          name: followdatabase
+          ports:
+          - containerPort: 27017
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: followservice
+    name: followservice
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: followservice
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: followservice
+      spec:
+        containers:
+        - image: followservice
+          imagePullPolicy: ""
+          name: followservice
+          ports:
+          - containerPort: 80
+          - containerPort: 443
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: gateway
+    name: gateway
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: gateway
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: gateway
+      spec:
+        containers:
+        - image: gateway
+          imagePullPolicy: ""
+          name: gateway
+          ports:
+          - containerPort: 80
+          - containerPort: 443
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: moderationdatabase
+    name: moderationdatabase
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: moderationdatabase
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: moderationdatabase
+      spec:
+        containers:
+        - env:
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: example
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: root
+          image: mongo
+          imagePullPolicy: ""
+          name: moderationdatabase
+          ports:
+          - containerPort: 27017
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: moderationservice
+    name: moderationservice
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: moderationservice
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: moderationservice
+      spec:
+        containers:
+        - image: moderationservice
+          imagePullPolicy: ""
+          name: moderationservice
+          ports:
+          - containerPort: 80
+          - containerPort: 443
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: phpmyadmin
+    name: phpmyadmin
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: phpmyadmin
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: phpmyadmin
+      spec:
+        containers:
+        - env:
+          - name: PMA_ARBITRARY
+            value: "1"
+          image: phpmyadmin/phpmyadmin
+          imagePullPolicy: ""
+          name: phpmyadmin
+          ports:
+          - containerPort: 80
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: rabbit
+    name: rabbit
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: rabbit
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: rabbit
+      spec:
+        containers:
+        - image: rabbitmq:3-management
+          imagePullPolicy: ""
+          livenessProbe:
+            exec:
+              command:
+              - curl
+              - -f
+              - http://localhost:15672
+            failureThreshold: 5
+            periodSeconds: 30
+            timeoutSeconds: 10
+          name: rabbit
+          ports:
+          - containerPort: 15672
+          - containerPort: 5672
+          resources: {}
+        hostname: rabbit
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: timelinedatabase
+    name: timelinedatabase
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: timelinedatabase
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: timelinedatabase
+      spec:
+        containers:
+        - env:
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: example
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: root
+          image: mongo
+          imagePullPolicy: ""
+          name: timelinedatabase
+          ports:
+          - containerPort: 27017
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: timelineservice
+    name: timelineservice
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: timelineservice
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: timelineservice
+      spec:
+        containers:
+        - image: timelineservice
+          imagePullPolicy: ""
+          name: timelineservice
+          ports:
+          - containerPort: 80
+          - containerPort: 443
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: tweetdatabase
+    name: tweetdatabase
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: tweetdatabase
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: tweetdatabase
+      spec:
+        containers:
+        - env:
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: example
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: root
+          image: mongo
+          imagePullPolicy: ""
+          name: tweetdatabase
+          ports:
+          - containerPort: 27017
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: tweetservice
+    name: tweetservice
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: tweetservice
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: tweetservice
+      spec:
+        containers:
+        - image: tweetservice
+          imagePullPolicy: ""
+          name: tweetservice
+          ports:
+          - containerPort: 80
+          - containerPort: 443
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: userdatabase
+    name: userdatabase
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: userdatabase
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: userdatabase
+      spec:
+        containers:
+        - args:
+          - --default-authentication-plugin=mysql_native_password
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: example
+          - name: MYSQL_TCP_PORT
+            value: "3307"
+          image: mysql
+          imagePullPolicy: ""
+          name: userdatabase
+          ports:
+          - containerPort: 3307
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: userservice
+    name: userservice
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: userservice
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: userservice
+      spec:
+        containers:
+        - image: userservice
+          imagePullPolicy: ""
+          name: userservice
+          ports:
+          - containerPort: 80
+          - containerPort: 443
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+kind: List
+metadata: {}
+
