@@ -121,6 +121,7 @@ items:
       io.kompose.service: gateway
     name: gateway
   spec:
+	type: LoadBalancer
     ports:
     - name: "50000"
       port: 50000
