@@ -8,10 +8,10 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["nuget.config", ""]
-COPY ["/Gateway.csproj", "Gateway/"]
-RUN dotnet restore "Gateway/Gateway.csproj"
+COPY ["/Gateway.csproj", "./"]
+RUN dotnet restore "Gateway.csproj"
 
-WORKDIR "/src/Gateway"
+WORKDIR "/src/"
 COPY . .
 
 RUN dotnet build "Gateway.csproj" -c Release -o /app/build
