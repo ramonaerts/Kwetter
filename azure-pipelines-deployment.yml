@@ -40,7 +40,6 @@ stages:
         projects: '**/*.sln'
 
     - task: Kubernetes@1
-      displayName: Deploy to Kubernetes
       inputs:
         connectionType: 'Azure Resource Manager'
         azureSubscriptionEndpoint: 'Azure for Students(bb379f5d-411a-426e-833f-527813d02fdc)'
