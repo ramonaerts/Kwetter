@@ -20,6 +20,7 @@ namespace TimelineService.Controllers
             _timelineService = timelineService;
         }
 
+        //Functionality to get current user timeline.
         [HttpGet]
         [Authorize(Roles = "User,Moderator,Admin")]
         [Route("timeline")]
