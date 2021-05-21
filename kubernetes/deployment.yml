@@ -419,7 +419,7 @@ items:
           io.kompose.service: authenticationservice
       spec:
         containers:
-        - image: authenticationservice
+        - image: ramonaerts/kwetter-authenticationservice:latest
           imagePullPolicy: ""
           name: authenticationservice
           ports:
@@ -458,7 +458,7 @@ items:
           io.kompose.service: filemanagementservice
       spec:
         containers:
-        - image: filemanagementservice
+        - image: ramonaerts/kwetter-filemanagementservice:latest
           imagePullPolicy: ""
           name: filemanagementservice
           ports:
@@ -540,7 +540,7 @@ items:
           io.kompose.service: followservice
       spec:
         containers:
-        - image: followservice
+        - image: ramonaerts/kwetter-followservice:latest
           imagePullPolicy: ""
           name: followservice
           ports:
@@ -579,7 +579,7 @@ items:
           io.kompose.service: gateway
       spec:
         containers:
-        - image: gateway
+        - image: ramonaerts/kwetter-gateway:latest
           imagePullPolicy: ""
           name: gateway
           ports:
@@ -661,7 +661,7 @@ items:
           io.kompose.service: moderationservice
       spec:
         containers:
-        - image: moderationservice
+        - image: ramonaerts/kwetter-moderationservice:latest
           imagePullPolicy: ""
           name: moderationservice
           ports:
@@ -833,7 +833,7 @@ items:
           io.kompose.service: timelineservice
       spec:
         containers:
-        - image: timelineservice
+        - image: ramonaerts/kwetter-timelineservice:latest
           imagePullPolicy: ""
           name: timelineservice
           ports:
@@ -915,7 +915,7 @@ items:
           io.kompose.service: tweetservice
       spec:
         containers:
-        - image: tweetservice
+        - image: ramonaerts/kwetter-tweetservice:latest
           imagePullPolicy: ""
           name: tweetservice
           ports:
@@ -999,7 +999,7 @@ items:
           io.kompose.service: userservice
       spec:
         containers:
-        - image: userservice
+        - image: ramonaerts/kwetter-userservice:latest
           imagePullPolicy: ""
           name: userservice
           ports:
