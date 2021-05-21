@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Shared.Messaging;
 using TweetService.DAL;
-using TweetService.Messages;
 using TweetService.Messages.Broker;
 using TweetService.Models;
 
@@ -21,11 +22,13 @@ namespace TweetService.Services
         private readonly IMessagePublisher _messagePublisher;
         private readonly IMongoCollection<Entities.Tweet> _tweets;
         private readonly IMongoCollection<Entities.User> _users;
+        private readonly string _url;
 
         public TweetService(ITweetContext context, IMapper mapper, IMessagePublisher messagePublisher)
         {
             _mapper = mapper;
             _messagePublisher = messagePublisher;
+            _url = "https://kwettermoderation.azurewebsites.net/api/CheckSwearWords?code=5/AcOOlYPIJlHOlEnQVmGYI5TxoNjfXYAMjjJee1a8YtXIOHpucY6w==";
 
             var client = new MongoClient(context.ConnectionString);
             var database = client.GetDatabase(context.DatabaseName);
@@ -52,7 +55,7 @@ namespace TweetService.Services
             return tweetModels;
         }
 
-        public void AddUser(NewProfileMessage message)
+        public async Task AddUser(NewProfileMessage message)
         {
             var user = new Entities.User
             {
@@ -62,25 +65,25 @@ namespace TweetService.Services
                 Image = message.Image
             };
 
-            _users.InsertOne(user);
+            await _users.InsertOneAsync(user);
         }
 
-        public void UpdateUser(ProfileChangedMessage message)
+        public async Task UpdateUser(ProfileChangedMessage message)
         {
             var user = _users.Find(u => u.Id == message.Id).FirstOrDefault();
 
             user.Nickname = message.Nickname;
 
-            _users.ReplaceOne(u => u.Id == message.Id, user);
+            await _users.ReplaceOneAsync(u => u.Id == message.Id, user);
         }
 
-        public void UpdateUserImage(ProfileImageChangedMessage message)
+        public async Task UpdateUserImage(ProfileImageChangedMessage message)
         {
             var user = _users.Find(u => u.Id == message.Id).FirstOrDefault();
 
             user.Image = message.Image;
 
-            _users.ReplaceOne(u => u.Id == message.Id, user);
+            await _users.ReplaceOneAsync(u => u.Id == message.Id, user);
         }
 
         public Entities.Tweet GetTweet()
@@ -98,25 +101,35 @@ namespace TweetService.Services
                 TweetContent = tweetContent
             };
 
-            await CheckForProfanity(tweet);
+            if(await CheckForProfanity(tweet))
+            {
+                //TODO: Add message handler here.
+            }
 
             await _messagePublisher.PublishMessageAsync("NewPostedTweetMessage", new { TweetDateTime = tweet.TweetDateTime, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
 
             _tweets.InsertOne(tweet);
         }
 
-        public async Task CheckForProfanity(Entities.Tweet tweet)
+        public async Task<bool> CheckForProfanity(Entities.Tweet tweet)
         {
             var httpClient = new HttpClient();
 
-            var result = JObject.Parse(await httpClient.GetStringAsync(
-                "https://kwettermoderation.azurewebsites.net/api/CheckSwearWords?code=5/AcOOlYPIJlHOlEnQVmGYI5TxoNjfXYAMjjJee1a8YtXIOHpucY6w=="));
-
-            if (result["ProfanityResult"].Value<bool>())
+            var request = new HttpRequestMessage
             {
-                //Uncomment this after moderationservice is working
-                //await _messagePublisher.PublishMessageAsync("NewProfanityTweet", new { TweetDateTime = tweet.TweetDateTime, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
-            }
+                Method = HttpMethod.Get,
+                RequestUri = new Uri(_url),
+                Content = new StringContent("{\"tweetcontent\":\"" + tweet.TweetContent + "\"}", Encoding.UTF8, "application/json")
+            };
+
+            using var response = await httpClient.SendAsync(request);
+
+            response.EnsureSuccessStatusCode();
+            var jsonString = await response.Content.ReadAsStringAsync();
+
+            var jObject = JsonConvert.DeserializeObject<JObject>(jsonString);
+
+            return jObject["ProfanityResult"].Value<bool>();
         }
     }
 }

@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService", "UserService\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FollowService", "FollowService\FollowService.csproj", "{694B34B2-DC58-418E-BF43-91C4180B8889}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimelineService", "TimelineService\TimelineService.csproj", "{1C37FE55-A969-4C02-AB6A-209381D918BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimelineService", "TimelineService\TimelineService.csproj", "{1C37FE55-A969-4C02-AB6A-209381D918BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModerationService", "ModerationService\ModerationService.csproj", "{AD7222E4-861D-4A59-8025-34AB957167C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{1C37FE55-A969-4C02-AB6A-209381D918BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C37FE55-A969-4C02-AB6A-209381D918BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C37FE55-A969-4C02-AB6A-209381D918BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD7222E4-861D-4A59-8025-34AB957167C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD7222E4-861D-4A59-8025-34AB957167C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD7222E4-861D-4A59-8025-34AB957167C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD7222E4-861D-4A59-8025-34AB957167C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

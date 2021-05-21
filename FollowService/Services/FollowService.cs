@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using FollowService.DAL;
 using FollowService.Entities;
-using FollowService.Messages.API;
 using MongoDB.Driver;
 using Shared.Messaging;
 

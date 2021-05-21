@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FileManagementService.Enums;
@@ -30,7 +28,7 @@ namespace FileManagementService.Controllers.API
         {
             var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            if (message.OldImage != "") await _fileManagementService.DeleteOldProfileImage(id, message.NewImage, DataType.Profile);
+            if (message.OldImage != "") _fileManagementService.DeleteOldProfileImage(id, message.NewImage, DataType.Profile);
 
             await _fileManagementService.SaveProfileImage(id, message.NewImage, DataType.Profile);
 

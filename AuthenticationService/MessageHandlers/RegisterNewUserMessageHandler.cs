@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AuthenticationService.Messages.Broker;
 using AuthenticationService.Services;
 using Shared.Messaging;
@@ -19,7 +16,7 @@ namespace AuthenticationService.MessageHandlers
 
         public async Task HandleMessageAsync(string messageType, NewUserMessage message)
         {
-            _authService.AddUser(message);
+            await _authService.AddUser(message);
         }
     }
 }

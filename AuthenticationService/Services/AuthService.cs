@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -14,7 +12,6 @@ using AuthenticationService.Messages.Broker;
 using AuthenticationService.Models;
 using Konscious.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
-using Shared.Messaging;
 
 namespace AuthenticationService.Services
 {
@@ -38,7 +35,7 @@ namespace AuthenticationService.Services
             return !VerifyHash(message.Password, user.Salt, user.Hash) ? null : user;
         }
 
-        public void AddUser(NewUserMessage message)
+        public async Task AddUser(NewUserMessage message)
         {
             var salt = GenerateSalt();
             var hash = HashPassword(message.Password, salt);
@@ -53,7 +50,7 @@ namespace AuthenticationService.Services
             };
 
             _authenticationContext.Add(user);
-            _authenticationContext.SaveChanges();
+            await _authenticationContext.SaveChangesAsync();
         }
 
         private byte[] HashPassword(string password, byte[] salt)
@@ -84,7 +81,7 @@ namespace AuthenticationService.Services
             return hash.SequenceEqual(newHash);
         }
 
-        public void UpdateEmail(EmailChangedMessage message)
+        public async Task UpdateEmail(EmailChangedMessage message)
         {
             var user = _authenticationContext.Users.FirstOrDefault(u => u.Id == message.Id);
 
@@ -93,7 +90,7 @@ namespace AuthenticationService.Services
             user.Email = message.Email;
 
             _authenticationContext.Update(user);
-            _authenticationContext.SaveChanges();
+            await _authenticationContext.SaveChangesAsync();
         }
 
         public string CreateToken(string userId, UserRole role)

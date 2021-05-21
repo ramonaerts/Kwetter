@@ -68,6 +68,16 @@ services:
     ports:
       - "27019:27017"
 
+  moderationdatabase:
+    image: mongo
+    container_name: ModerationDatabase
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27020:27017"
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -94,58 +104,60 @@ services:
     build:
       context: .
       dockerfile: FileManagementService/Dockerfile
+    ports:
+      - "5030:80"
+      - "5031:443"
 
   authenticationservice:
     image: ${DOCKER_REGISTRY-}authenticationservice
     build:
       context: .
       dockerfile: AuthenticationService/Dockerfile
-    restart: "on-failure"
-    depends_on:
-        - rabbit
-    links: 
-        - rabbit
+    ports:
+      - "5020:80"
+      - "5021:443"
 
   tweetservice:
     image: ${DOCKER_REGISTRY-}tweetservice
     build:
       context: .
       dockerfile: TweetService/Dockerfile
-    restart: "on-failure"
-    depends_on:
-        - rabbit
-    links: 
-        - rabbit
+    ports:
+      - "5010:80"
+      - "5011:443"
 
   userservice:
     image: ${DOCKER_REGISTRY-}userservice
     build:
       context: .
       dockerfile: UserService/Dockerfile
-    restart: "on-failure"
-    depends_on:
-        - rabbit
-    links: 
-        - rabbit
+    ports:
+      - "5040:80"
+      - "5041:443"
 
   followservice:
     image: ${DOCKER_REGISTRY-}followservice
     build:
       context: .
       dockerfile: FollowService/Dockerfile
-    restart: "on-failure"
-    depends_on:
-        - rabbit
-    links: 
-        - rabbit
+    ports:
+      - "5050:80"
+      - "5051:443"
 
   timelineservice:
     image: ${DOCKER_REGISTRY-}timelineservice
     build:
       context: .
       dockerfile: TimelineService/Dockerfile
-    restart: "on-failure"
-    depends_on:
-        - rabbit
-    links: 
-        - rabbit
+    ports:
+      - "5060:80"
+      - "5061:443"
+
+  moderationservice:
+    image: ${DOCKER_REGISTRY-}moderationservice
+    build:
+      context: .
+      dockerfile: ModerationService/Dockerfile
+    ports:
+      - "5070:80"
+      - "5071:443"

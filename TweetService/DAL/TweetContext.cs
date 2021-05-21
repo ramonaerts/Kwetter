@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using MongoDB.Driver;
-using TweetService.Entities;
-
-namespace TweetService.DAL
+﻿namespace TweetService.DAL
 {
     public class TweetContext : ITweetContext
     {

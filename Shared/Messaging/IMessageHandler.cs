@@ -8,7 +8,7 @@ namespace Shared.Messaging
         Task HandleMessageAsync(string messageType, byte[] obj);
     }
 
-    public interface IMessageHandler<TMessage> : IMessageHandler 
+    public interface IMessageHandler<in TMessage> : IMessageHandler 
         where TMessage : class
     {
         Task IMessageHandler.HandleMessageAsync(string messageType, byte[] obj)
