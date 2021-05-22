@@ -60,12 +60,13 @@ namespace TimelineService
 
             services.AddMessagePublishing("TimelineService", builder =>
             {
+                builder.WithHandler<NewProfileMessageHandler>("NewProfileMessage");
+                builder.WithHandler<ForgetUserMessageHandler>("ForgetUserMessage");
                 builder.WithHandler<AddFollowerMessageHandler>("AddFollowerMessage");
                 builder.WithHandler<NewPostedTweetMessageHandler>("NewPostedTweetMessage");
-                builder.WithHandler<NewProfileMessageHandler>("NewProfileMessage");
                 builder.WithHandler<ProfileChangedMessageHandler>("ProfileChangedMessage");
-                builder.WithHandler<ProfileImageChangedMessageHandler>("ProfileImageChangedMessage");
                 builder.WithHandler<RemoveFollowerMessageHandler>("RemoveFollowerMessage");
+                builder.WithHandler<ProfileImageChangedMessageHandler>("ProfileImageChangedMessage");
             });
 
             services.Configure<TimelineContext>(Configuration.GetSection(nameof(TimelineContext)));

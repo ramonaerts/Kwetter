@@ -1,5 +1,6 @@
 using System.Text;
 using FollowService.DAL;
+using FollowService.MessageHandler;
 using FollowService.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -48,7 +49,10 @@ namespace FollowService
 
             services.AddAuthorization();
 
-            services.AddMessagePublishing("FollowService");
+            services.AddMessagePublishing("FollowService", builder =>
+            {
+                builder.WithHandler<ForgetUserMessageHandler>("ForgetUserMessage");
+            });
 
             services.Configure<FollowContext>(Configuration.GetSection(nameof(FollowContext)));
             services.AddSingleton<IFollowContext>(sp => sp.GetRequiredService<IOptions<FollowContext>>().Value);

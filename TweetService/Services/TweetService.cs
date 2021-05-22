@@ -131,5 +131,11 @@ namespace TweetService.Services
 
             return jObject["ProfanityResult"].Value<bool>();
         }
+
+        public async Task ForgetUser(ForgetUserMessage message)
+        {
+            await _users.DeleteOneAsync(u => u.Id == message.Id);
+            await _tweets.DeleteManyAsync(u => u.UserId == message.Id);
+        }
     }
 }

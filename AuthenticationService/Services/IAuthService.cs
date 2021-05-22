@@ -12,5 +12,6 @@ namespace AuthenticationService.Services
         Task AddUser(NewUserMessage message);
         Task UpdateEmail(EmailChangedMessage message);
         string CreateToken(string userId, UserRole role);
+        Task ForgetUser(ForgetUserMessage message);
     }
 }

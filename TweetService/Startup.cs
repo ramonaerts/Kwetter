@@ -65,6 +65,7 @@ namespace TweetService
             services.AddMessagePublishing("TweetService", builder =>
                 {
                     builder.WithHandler<NewUserMessageHandler>("NewProfileMessage");
+                    builder.WithHandler<ForgetUserMessageHandler>("ForgetUserMessage");
                     builder.WithHandler<ProfileChangedMessageHandler>("ProfileChangedMessage");
                     builder.WithHandler<ProfileImageChangedMessageHandler>("ProfileImageChangedMessage");
                 });

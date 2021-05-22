@@ -116,5 +116,13 @@ namespace TimelineService.Services
 
             await _users.ReplaceOneAsync(u => u.Id == message.Id, user);
         }
+
+        public async Task ForgetUser(ForgetUserMessage message)
+        {
+            await _users.DeleteOneAsync(u => u.Id == message.Id);
+            await _tweets.DeleteManyAsync(u => u.UserId == message.Id);
+            await _follows.DeleteManyAsync(f => f.Follower == message.Id);
+            await _follows.DeleteManyAsync(f => f.Following == message.Id);
+        }
     }
 }
