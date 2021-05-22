@@ -58,7 +58,7 @@ namespace UserService.Services
         public async Task<bool> ForgetUser(string id)
         {
             var exists = await VerifyIfUserExists(id);
-            if (exists == false) return false;
+            if (!exists) return false;
 
             _userContext.Users.RemoveRange(_userContext.Users.Where(u => u.Id == id));
             await _userContext.SaveChangesAsync();
