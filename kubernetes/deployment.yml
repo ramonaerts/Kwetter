@@ -572,7 +572,12 @@ items:
           ports:
           - containerPort: 80
           - containerPort: 443
+          env:
+            - name: "ASPNETCORE_ENVIRONMENT"
+              value: "Development"
           resources: {}
+          stdin: true
+          tty: true
         restartPolicy: Always
         serviceAccountName: ""
         volumes: null
