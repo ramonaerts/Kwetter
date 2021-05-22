@@ -38,12 +38,6 @@ stages:
       inputs:
         command: 'build'
         projects: '**/*.sln'
-
-    - task: KubernetesManifest@0
-      inputs:
-        action: 'deploy'
-        kubernetesServiceConnection: 'kwetter_kubernetes'
-        manifests: 'kubernetes/deployment.yaml'
     
     - task: Kubernetes@1
       inputs:
