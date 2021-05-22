@@ -131,7 +131,7 @@ items:
     name: gateway
   spec:
     type: LoadBalancer
-    loadBalancerIp: 40.87.126.102
+    loadBalancerIP: 40.87.126.102
     ports:
     - name: "http"
       port: 50000
