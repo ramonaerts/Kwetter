@@ -131,17 +131,18 @@ items:
     name: gateway
   spec:
     type: LoadBalancer
+    loadBalancerIP: 40.87.126.102
     ports:
-    - name: "50000"
+    - name: "http"
       port: 50000
       targetPort: 80
       nodePort: 30000
-    - name: "50001"
+    - name: "https"
       port: 50001
       targetPort: 443
       nodePort: 30001
     selector:
-      io.kompose.service: gateway
+      app: gateway
 - apiVersion: v1
   kind: Service
   metadata:

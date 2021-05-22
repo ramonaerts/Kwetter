@@ -38,13 +38,14 @@ stages:
       inputs:
         command: 'build'
         projects: '**/*.sln'
-
+    
     - task: Kubernetes@1
       inputs:
         connectionType: 'Azure Resource Manager'
         azureSubscriptionEndpoint: 'Azure for Students(bb379f5d-411a-426e-833f-527813d02fdc)'
         azureResourceGroup: 'kwetter'
         kubernetesCluster: 'kwetter-cluster'
+        namespace: 'default'
         command: 'apply'
         useConfigurationFile: true
-        configuration: 'kubernetes/deployment.yml'
+        configuration: 'kubernetes/deployment.yaml'
