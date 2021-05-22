@@ -60,6 +60,12 @@ namespace Shared.Messaging
             channel.QueueBind("ModerationService", Exchange, "ProfileChangedMessage");
             channel.QueueBind("ModerationService", Exchange, "ProfileImageChangedMessage");
 
+            channel.QueueBind("AuthenticationService", Exchange, "ForgetUserMessage");
+            channel.QueueBind("FollowService", Exchange, "ForgetUserMessage");
+            channel.QueueBind("ModerationService", Exchange, "ForgetUserMessage");
+            channel.QueueBind("TimelineService", Exchange, "ForgetUserMessage");
+            channel.QueueBind("TweetService", Exchange, "ForgetUserMessage");
+
             _configured = true;
         }
     }

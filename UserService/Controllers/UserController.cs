@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.API;
@@ -28,6 +30,18 @@ namespace UserService.Controllers
             if(_userService.VerifyUniqueEmail(message.Email)) return ApiResult.BadRequest("This email is already in use.");
 
             return await _userService.RegisterUser(message) ? ApiResult.Success("success") : ApiResult.BadRequest("Something went wrong.");
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "User")]
+        [Route("forget")]
+        public async Task<ApiResult> ForgetUser()
+        {
+            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+
+            var result = await _userService.ForgetUser(id);
+
+            return result ? ApiResult.Success("Account deleted") : ApiResult.NotFound("User could not be found");
         }
     }
 }
