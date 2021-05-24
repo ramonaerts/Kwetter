@@ -12,11 +12,15 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.4" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
     <PackageReference Include="MongoDB.Driver" Version="2.12.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
     <PackageReference Include="Shared" Version="1.0.2.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Folder Include="MessageHandlers\" />
+    <Folder Include="Messages\API\" />
+    <Folder Include="Messages\Broker\" />
   </ItemGroup>
 
 

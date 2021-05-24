@@ -1,6 +1,22 @@
 {
   "Routes": [
     {
+      "DownstreamPathTemplate": "/api/like/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "likeservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/like/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/moderation/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [

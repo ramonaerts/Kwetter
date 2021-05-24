@@ -7,10 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["LikeService/LikeService.csproj", "LikeService/"]
+COPY ["nuget.config", ""]
+COPY ["/LikeService.csproj", "LikeService/"]
 RUN dotnet restore "LikeService/LikeService.csproj"
-COPY . .
+
 WORKDIR "/src/LikeService"
+COPY . .
+
 RUN dotnet build "LikeService.csproj" -c Release -o /app/build
 
 FROM build AS publish

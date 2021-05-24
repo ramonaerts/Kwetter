@@ -78,6 +78,16 @@ services:
     ports:
       - "27020:27017"
 
+  likedatabase:
+    image: mongo
+    container_name: LikeDatabase
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27021:27017"
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -161,3 +171,12 @@ services:
     ports:
       - "5070:80"
       - "5071:443"
+
+  likeservice:
+    image: ${DOCKER_REGISTRY-}likeservice
+    build:
+      context: .
+      dockerfile: LikeService/Dockerfile
+    ports:
+      - "5080:80"
+      - "5081:443"
