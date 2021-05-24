@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LikeService.DAL;
 using LikeService.Entities;
+using LikeService.Messages.Broker;
 using LikeService.Models;
 using MongoDB.Driver;
 
@@ -104,6 +105,11 @@ namespace LikeService.Services
             var userLike = _userLikes.Find(u => u.UserId == userId).FirstOrDefault();
 
             return userLike.UserLikes.Contains(tweetId);
+        }
+
+        public async Task ForgetUser(ForgetUserMessage message)
+        {
+            await _userLikes.DeleteOneAsync(u => u.UserId == message.Id);
         }
     }
 }

@@ -18,9 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MessageHandlers\" />
     <Folder Include="Messages\API\" />
-    <Folder Include="Messages\Broker\" />
   </ItemGroup>
 
 
