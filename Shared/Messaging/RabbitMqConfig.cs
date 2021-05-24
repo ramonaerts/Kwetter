@@ -32,12 +32,11 @@ namespace Shared.Messaging
             channel.QueueDeclare("FollowService", false, false);
             channel.QueueDeclare("TimelineService", false, false);
             channel.QueueDeclare("ModerationService", false, false);
+            channel.QueueDeclare("LikeService", false, false);
 
             //QueueBind(Service to which the message will be send, Exchange, Message class names)
-            channel.QueueBind("TweetService", Exchange, "UserChange");
             channel.QueueBind("TweetService", Exchange, "NewProfileMessage");
             channel.QueueBind("AuthenticationService", Exchange, "NewUserMessage");
-            channel.QueueBind("FileManagementService", Exchange, "NewProfileImage");
 
             channel.QueueBind("AuthenticationService", Exchange, "EmailChangedMessage");
             channel.QueueBind("TweetService", Exchange, "ProfileChangedMessage");
@@ -48,17 +47,24 @@ namespace Shared.Messaging
             channel.QueueBind("UserService", Exchange, "AddFollowerMessage");
             channel.QueueBind("UserService", Exchange, "RemoveFollowerMessage");
 
-            channel.QueueBind("TimelineService", Exchange, "NewProfileMessage");
-            channel.QueueBind("TimelineService", Exchange, "ProfileChangedMessage");
-            channel.QueueBind("TimelineService", Exchange, "ProfileImageChangedMessage");
             channel.QueueBind("TimelineService", Exchange, "NewPostedTweet");
+            channel.QueueBind("TimelineService", Exchange, "NewProfileMessage");
             channel.QueueBind("TimelineService", Exchange, "AddFollowerMessage");
+            channel.QueueBind("TimelineService", Exchange, "ProfileChangedMessage");
             channel.QueueBind("TimelineService", Exchange, "RemoveFollowerMessage");
+            channel.QueueBind("TimelineService", Exchange, "ProfileImageChangedMessage");
 
             channel.QueueBind("ModerationService", Exchange, "NewProfanityTweet");
             channel.QueueBind("ModerationService", Exchange, "NewProfileMessage");
             channel.QueueBind("ModerationService", Exchange, "ProfileChangedMessage");
             channel.QueueBind("ModerationService", Exchange, "ProfileImageChangedMessage");
+            
+            channel.QueueBind("LikeService", Exchange, "ForgetUserMessage");
+            channel.QueueBind("TweetService", Exchange, "ForgetUserMessage");
+            channel.QueueBind("FollowService", Exchange, "ForgetUserMessage");
+            channel.QueueBind("TimelineService", Exchange, "ForgetUserMessage");
+            channel.QueueBind("ModerationService", Exchange, "ForgetUserMessage");
+            channel.QueueBind("AuthenticationService", Exchange, "ForgetUserMessage");
 
             _configured = true;
         }

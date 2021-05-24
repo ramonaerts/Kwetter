@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using FollowService.DAL;
 using FollowService.Entities;
+using FollowService.Messages.Broker;
 using MongoDB.Driver;
 using Shared.Messaging;
 
@@ -56,6 +57,12 @@ namespace FollowService.Services
             await _follows.DeleteOneAsync(f => f.Follower == followerId && f.Following == followingId);
 
             return true;
+        }
+
+        public async Task ForgetUser(ForgetUserMessage message)
+        {
+            await _follows.DeleteManyAsync(f => f.Follower == message.Id);
+            await _follows.DeleteManyAsync(f => f.Following == message.Id);
         }
     }
 }

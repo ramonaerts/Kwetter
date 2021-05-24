@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Shared.Messaging;
 using UserService.DAL;
 using UserService.Entities;
@@ -52,6 +53,24 @@ namespace UserService.Services
         public bool VerifyUniqueEmail(string email)
         {
             return _userContext.Users.Any(e => e.Email == email);
+        }
+
+        public async Task<bool> ForgetUser(string id)
+        {
+            var exists = await VerifyIfUserExists(id);
+            if (!exists) return false;
+
+            _userContext.Users.RemoveRange(_userContext.Users.Where(u => u.Id == id));
+            await _userContext.SaveChangesAsync();
+
+            await _messagePublisher.PublishMessageAsync("ForgetUserMessage", new {Id = id});
+
+            return true;
+        }
+
+        public async Task<bool> VerifyIfUserExists(string id)
+        {
+            return await _userContext.Users.AnyAsync(e => e.Id == id);
         }
     }
 }

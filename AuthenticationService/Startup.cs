@@ -54,6 +54,7 @@ namespace AuthenticationService
             {
                 builder.WithHandler<RegisterNewUserMessageHandler>("NewUserMessage");
                 builder.WithHandler<EmailChangedMessageHandler>("EmailChangedMessage");
+                builder.WithHandler<ForgetUserMessageHandler>("ForgetUserMessage");
             });
 
             services.AddScoped<IAuthService, AuthService>();

@@ -12,5 +12,6 @@ namespace ModerationService.Services
         Task AddUser(NewProfileMessage message);
         Task UpdateUser(ProfileChangedMessage message);
         Task UpdateUserImage(ProfileImageChangedMessage message);
+        Task ForgetUser(ForgetUserMessage message);
     }
 }

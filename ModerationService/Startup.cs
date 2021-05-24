@@ -50,6 +50,7 @@ namespace ModerationService
             services.AddMessagePublishing("ModerationService", builder =>
             {
                 builder.WithHandler<NewProfileMessageHandler>("NewProfileMessage");
+                builder.WithHandler<ForgetUserMessageHandler>("ForgetUserMessage");
                 builder.WithHandler<ProfileChangedMessageHandler>("ProfileChangedMessage");
                 builder.WithHandler<NewProfanityTweetMessageHandler>("NewProfanityTweetMessage");
                 builder.WithHandler<ProfileImageChangedMessageHandler>("ProfileImageChangedMessage");

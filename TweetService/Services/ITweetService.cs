@@ -14,5 +14,6 @@ namespace TweetService.Services
         Entities.Tweet GetTweet();
         Task CreateTweet(string id, string tweetContent);
         Task<bool> CheckForProfanity(Entities.Tweet tweet);
+        Task ForgetUser(ForgetUserMessage message);
     }
 }

@@ -8,5 +8,6 @@ namespace UserService.Services
         Task<bool> RegisterUser(RegisterMessage message);
         bool VerifyPasswords(string password, string confirmPassword);
         bool VerifyUniqueEmail(string email);
+        Task<bool> ForgetUser(string id);
     }
 }

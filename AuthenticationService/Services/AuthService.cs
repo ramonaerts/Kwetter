@@ -11,6 +11,7 @@ using AuthenticationService.Messages.Api;
 using AuthenticationService.Messages.Broker;
 using AuthenticationService.Models;
 using Konscious.Security.Cryptography;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AuthenticationService.Services
@@ -110,6 +111,14 @@ namespace AuthenticationService.Services
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public async Task ForgetUser(ForgetUserMessage message)
+        {
+            var user = await _authenticationContext.Users.FirstOrDefaultAsync(u => u.Id == message.Id);
+
+            _authenticationContext.Remove(user);
+            await _authenticationContext.SaveChangesAsync();
         }
     }
 }
