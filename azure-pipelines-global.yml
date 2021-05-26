@@ -48,12 +48,12 @@ stages:
         command: 'build'
         projects: '**/*.sln'
     
-    # - task: DotNetCoreCLI@2
-    #   displayName: 'Execute Unit tests'
-    #   inputs:
-    #     command: 'test'
-    #     projects: '**/*.sln'
-    #     arguments: '--collect "Code Coverage"'
+    - task: DotNetCoreCLI@2
+      displayName: 'Execute Unit tests'
+      inputs:
+        command: 'test'
+        projects: '**/*.sln'
+        arguments: '--collect "Code Coverage"'
 
     - task: SonarCloudAnalyze@1
       displayName: 'Run SonarCloud'
