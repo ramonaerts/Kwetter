@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LikeService.Entities;
+using MongoDB.Driver;
 
 namespace LikeService.DAL
 {
     public interface ILikeContext
     {
-        string ConnectionString { get; set; }
-        string DatabaseName { get; set; }
-        string CollectionName { get; set; }
+        IMongoCollection<UserLike> UserLikes { get; }
+        IMongoCollection<TweetLike> TweetLikes { get; }
     }
 }
