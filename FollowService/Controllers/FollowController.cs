@@ -48,11 +48,11 @@ namespace FollowService.Controllers
         [HttpGet]
         [Authorize(Roles = "User,Moderator,Admin")]
         [Route("{id}")]
-        public async Task<ApiResult> CheckIfFollows(string id)
+        public ApiResult CheckIfFollows(string id)
         {
             var followerId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            var result = await _followService.FollowExists(followerId, id);
+            var result = _followService.FollowExists(followerId, id);
 
             return ApiResult.Success(result);
         }
