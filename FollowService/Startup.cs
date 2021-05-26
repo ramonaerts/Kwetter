@@ -1,5 +1,6 @@
 using System.Text;
 using FollowService.DAL;
+using FollowService.DAL.Config;
 using FollowService.MessageHandler;
 using FollowService.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -54,8 +55,13 @@ namespace FollowService
                 builder.WithHandler<ForgetUserMessageHandler>("ForgetUserMessage");
             });
 
-            services.Configure<FollowContext>(Configuration.GetSection(nameof(FollowContext)));
-            services.AddSingleton<IFollowContext>(sp => sp.GetRequiredService<IOptions<FollowContext>>().Value);
+            var config = new ServerConfig();
+            Configuration.Bind(config);
+
+            var followContext = new FollowContext(config.MongoDB);
+            var repo = new FollowRepository(followContext);
+
+            services.AddSingleton<IFollowRepository>(repo);
 
             services.AddScoped<IFollowService, Services.FollowService>();
         }

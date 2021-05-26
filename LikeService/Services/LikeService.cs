@@ -12,34 +12,29 @@ namespace LikeService.Services
 {
     public class LikeService : ILikeService
     {
-        private readonly IMongoCollection<TweetLike> _tweetLikes;
-        private readonly IMongoCollection<UserLike> _userLikes;
+        private readonly ILikeRepository _likeRepository;
 
-        public LikeService(ILikeContext context)
+        public LikeService(ILikeRepository likeRepository)
         {
-            var client = new MongoClient(context.ConnectionString);
-            var database = client.GetDatabase(context.DatabaseName);
-
-            _tweetLikes = database.GetCollection<TweetLike>("TweetLikes");
-            _userLikes = database.GetCollection<UserLike>("UserLikes");
+            _likeRepository = likeRepository;
         }
 
         public async Task<bool> NewLike(string userId, string tweetId)
         {
-            var userLike = _userLikes.Find(u => u.UserId == userId).FirstOrDefault();
+            var userLike = _likeRepository.GetUserLikeByUserId(userId);
             if (userLike == null)
             {
                 userLike = CreateNewUserLike(userId);
 
-                await _userLikes.InsertOneAsync(userLike);
+                await _likeRepository.SaveUserLike(userLike);
             }
 
-            var tweetLike = _tweetLikes.Find(t => t.TweetId == tweetId).FirstOrDefault();
+            var tweetLike = _likeRepository.GetTweetLikeByTweetId(tweetId);
             if (tweetLike == null)
             {
                 tweetLike = CreateNewTweetLike(tweetId);
 
-                await _tweetLikes.InsertOneAsync(tweetLike);
+                await _likeRepository.SaveTweetLike(tweetLike);
             }
 
             if (CheckIfUserLikesTweet(tweetId, userId)) return false;
@@ -47,8 +42,8 @@ namespace LikeService.Services
             tweetLike.LikeCount += 1;
             userLike.UserLikes.Add(tweetId);
 
-            await _tweetLikes.ReplaceOneAsync(t => t.Id == tweetLike.Id, tweetLike);
-            await _userLikes.ReplaceOneAsync(u => u.Id == userLike.Id, userLike);
+            await _likeRepository.UpdateTweetLike(tweetLike);
+            await _likeRepository.UpdateUserLike(userLike);
 
             return true;
         }
@@ -57,30 +52,34 @@ namespace LikeService.Services
         {
             if (!CheckIfUserLikesTweet(tweetId, userId)) return false;
 
-            var tweetLike = _tweetLikes.Find(t => t.TweetId == tweetId).FirstOrDefault();
+            var tweetLike = _likeRepository.GetTweetLikeByTweetId(tweetId);
             tweetLike.LikeCount -= 1;
-            await _tweetLikes.ReplaceOneAsync(t => t.Id == tweetLike.Id, tweetLike);
+            await _likeRepository.UpdateTweetLike(tweetLike);
 
-            var userLike = _userLikes.Find(u => u.UserId == userId).FirstOrDefault();
+            var userLike = _likeRepository.GetUserLikeByUserId(userId);
             userLike.UserLikes.Remove(tweetId);
-            await _userLikes.ReplaceOneAsync(u => u.Id == userLike.Id, userLike);
+            await _likeRepository.UpdateUserLike(userLike);
 
             return true;
         }
 
         public Like GetLikes(string userId, string tweetId)
         {
-            var tweetLike = _tweetLikes.Find(t => t.TweetId == tweetId).FirstOrDefault();
-            var userLike = _userLikes.Find(u => u.UserId == userId).FirstOrDefault();
+            var tweetLike = _likeRepository.GetTweetLikeByTweetId(tweetId);
+            var likeCount = 0;
+            if (tweetLike != null) likeCount = tweetLike.LikeCount;
+
+            var userLike = _likeRepository.GetUserLikeByUserId(userId);
+            var liked = userLike != null && userLike.UserLikes.Contains(tweetId);
 
             return new Like
             {
-                LikeCount = tweetLike.LikeCount,
-                Liked = userLike.UserLikes.Contains(tweetId)
+                LikeCount = likeCount,
+                Liked = liked
             };
         }
 
-        public TweetLike CreateNewTweetLike(string tweetId)
+        private TweetLike CreateNewTweetLike(string tweetId)
         {
             return new TweetLike
             {
@@ -90,7 +89,7 @@ namespace LikeService.Services
             };
         }
 
-        public UserLike CreateNewUserLike(string userId)
+        private UserLike CreateNewUserLike(string userId)
         {
             return new UserLike
             {
@@ -100,16 +99,16 @@ namespace LikeService.Services
             };
         }
 
-        public bool CheckIfUserLikesTweet(string tweetId, string userId)
+        private bool CheckIfUserLikesTweet(string tweetId, string userId)
         {
-            var userLike = _userLikes.Find(u => u.UserId == userId).FirstOrDefault();
+            var userLike = _likeRepository.GetUserLikeByUserId(userId);
 
-            return userLike.UserLikes.Contains(tweetId);
+            return userLike != null && userLike.UserLikes.Contains(tweetId);
         }
 
         public async Task ForgetUser(ForgetUserMessage message)
         {
-            await _userLikes.DeleteOneAsync(u => u.UserId == message.Id);
+            await _likeRepository.DeleteUserLike(message.Id);
         }
     }
 }

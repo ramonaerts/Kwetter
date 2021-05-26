@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LikeService.DAL;
+using LikeService.DAL.Config;
+using LikeService.Entities;
+using LikeService.MessageHandlers;
 using LikeService.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -16,6 +19,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Driver;
 using Shared;
 
 namespace LikeService
@@ -57,11 +61,16 @@ namespace LikeService
 
             services.AddMessagePublishing("LikeService", builder =>
             {
-                //builder.WithHandler<ForgetUserMessageHandler>("ForgetUserMessage");
+                builder.WithHandler<ForgetUserMessageHandler>("ForgetUserMessage");
             });
 
-            services.Configure<LikeContext>(Configuration.GetSection(nameof(LikeContext)));
-            services.AddSingleton<ILikeContext>(sp => sp.GetRequiredService<IOptions<LikeContext>>().Value);
+            var config = new ServerConfig();
+            Configuration.Bind(config);
+
+            var likeContext = new LikeContext(config.MongoDB);
+            var repo = new LikeRepository(likeContext);
+
+            services.AddSingleton<ILikeRepository>(repo);
 
             services.AddScoped<ILikeService, Services.LikeService>();
         }
