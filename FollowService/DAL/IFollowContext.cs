@@ -1,9 +1,10 @@
-﻿namespace FollowService.DAL
+﻿using FollowService.Entities;
+using MongoDB.Driver;
+
+namespace FollowService.DAL
 {
     public interface IFollowContext
     {
-        string ConnectionString { get; set; }
-        string DatabaseName { get; set; }
-        string CollectionName { get; set; }
+        IMongoCollection<Follow> Follows { get; }
     }
 }

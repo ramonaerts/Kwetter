@@ -10,29 +10,25 @@ namespace FollowService.Services
 {
     public class FollowService : IFollowService
     {
-        private readonly IMongoCollection<Follow> _follows;
+        private readonly IFollowRepository _followRepository;
         private readonly IMessagePublisher _messagePublisher;
 
-        public FollowService(IFollowContext context, IMessagePublisher messagePublisher)
+        public FollowService(IMessagePublisher messagePublisher, IFollowRepository followRepository)
         {
             _messagePublisher = messagePublisher;
-
-            var client = new MongoClient(context.ConnectionString);
-            var database = client.GetDatabase(context.DatabaseName);
-
-            _follows = database.GetCollection<Follow>("Followings");
+            _followRepository = followRepository;
         }
 
-        public async Task<bool> FollowExists(string followerId, string followingId)
+        public bool FollowExists(string followerId, string followingId)
         {
-            var follow = await _follows.Find(f => f.Follower == followerId && f.Following == followingId).FirstOrDefaultAsync();
+            var follow = _followRepository.GetFollow(followerId, followingId);
 
             return follow != null;
         }
 
         public async Task<bool> FollowUser(string followerId, string followingId)
         {
-            if (await FollowExists(followerId, followingId)) return false;
+            if (FollowExists(followerId, followingId)) return false;
 
             var follow = new Follow
             {
@@ -43,26 +39,26 @@ namespace FollowService.Services
 
             await _messagePublisher.PublishMessageAsync("AddFollowerMessage", new { Id = follow.Id, FollowerId = follow.Follower, FollowingId = follow.Following });
 
-            await _follows.InsertOneAsync(follow);
+            await _followRepository.AddOneFollower(follow);
 
             return true;
         }
 
         public async Task<bool> UnFollowUser(string followerId, string followingId)
         {
-            if (!await FollowExists(followerId, followingId)) return false;
+            if (!FollowExists(followerId, followingId)) return false;
 
             await _messagePublisher.PublishMessageAsync("RemoveFollowerMessage", new { FollowerId = followerId, FollowingId = followingId });
 
-            await _follows.DeleteOneAsync(f => f.Follower == followerId && f.Following == followingId);
+            await _followRepository.DeleteOneFollower(followerId, followingId);
 
             return true;
         }
 
         public async Task ForgetUser(ForgetUserMessage message)
         {
-            await _follows.DeleteManyAsync(f => f.Follower == message.Id);
-            await _follows.DeleteManyAsync(f => f.Following == message.Id);
+            await _followRepository.DeleteAllFollowers(message.Id);
+            await _followRepository.DeleteAllFollowing(message.Id);
         }
     }
 }

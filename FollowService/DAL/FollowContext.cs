@@ -1,9 +1,19 @@
-﻿namespace FollowService.DAL
+﻿using FollowService.DAL.Config;
+using FollowService.Entities;
+using MongoDB.Driver;
+
+namespace FollowService.DAL
 {
     public class FollowContext : IFollowContext
     {
-        public string ConnectionString { get; set; }
-        public string DatabaseName { get; set; }
-        public string CollectionName { get; set; }
+        private readonly IMongoDatabase _db;
+
+        public FollowContext(MongoDBConfig config)
+        {
+            var client = new MongoClient(config.ConnectionString);
+            _db = client.GetDatabase(config.Database);
+        }
+
+        public IMongoCollection<Follow> Follows => _db.GetCollection<Follow>("Follows");
     }
 }

@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModerationService", "Modera
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LikeService", "LikeService\LikeService.csproj", "{6C7AADEB-E37D-49BD-9404-1AAC638171D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LikeService.Test", "LikeService.Test\LikeService.Test.csproj", "{696F480A-503D-408B-9E2F-BFD8640076B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LikeService.Test", "LikeService.Test\LikeService.Test.csproj", "{696F480A-503D-408B-9E2F-BFD8640076B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FollowService.Test", "FollowService.Test\FollowService.Test.csproj", "{9CF9B497-962C-4D78-A64E-2A62BF0316D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{696F480A-503D-408B-9E2F-BFD8640076B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{696F480A-503D-408B-9E2F-BFD8640076B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{696F480A-503D-408B-9E2F-BFD8640076B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CF9B497-962C-4D78-A64E-2A62BF0316D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CF9B497-962C-4D78-A64E-2A62BF0316D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CF9B497-962C-4D78-A64E-2A62BF0316D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CF9B497-962C-4D78-A64E-2A62BF0316D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
