@@ -79,7 +79,7 @@ namespace LikeService.Services
             };
         }
 
-        public TweetLike CreateNewTweetLike(string tweetId)
+        private TweetLike CreateNewTweetLike(string tweetId)
         {
             return new TweetLike
             {
@@ -89,7 +89,7 @@ namespace LikeService.Services
             };
         }
 
-        public UserLike CreateNewUserLike(string userId)
+        private UserLike CreateNewUserLike(string userId)
         {
             return new UserLike
             {
@@ -99,11 +99,11 @@ namespace LikeService.Services
             };
         }
 
-        public bool CheckIfUserLikesTweet(string tweetId, string userId)
+        private bool CheckIfUserLikesTweet(string tweetId, string userId)
         {
             var userLike = _likeRepository.GetUserLikeByUserId(userId);
 
-            return userLike.UserLikes.Contains(tweetId);
+            return userLike != null && userLike.UserLikes.Contains(tweetId);
         }
 
         public async Task ForgetUser(ForgetUserMessage message)

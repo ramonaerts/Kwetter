@@ -1,48 +1,141 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
-using LikeService.Entities;
+using LikeService.Messages.Broker;
 using LikeService.Test.Mock;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using MongoDB.Bson;
-using MongoDB.Driver;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
 namespace LikeService.Test
 {
-    [TestFixture]
     public class LikeServiceTests
     {
-        private readonly Mock<IMongoCollection<UserLike>> _userLikeMock;
-        private readonly Mock<IMongoCollection<TweetLike>> _tweetLikeMock;
+        private readonly Services.LikeService _likeService;
 
-        private Mock<IMongoRepositoryMock> _mongoRepoMock;
         public LikeServiceTests()
         {
-            _userLikeMock = new Mock<IMongoCollection<UserLike>>();
-            _tweetLikeMock = new Mock<IMongoCollection<TweetLike>>();
+            var mongoRepositoryMock = new MongoRepositoryMock();
+            _likeService = new Services.LikeService(mongoRepositoryMock);
         }
 
-        [OneTimeSetUp]
-        public void Setup()
+        [Fact]
+        public void GetNoLikesTest()
         {
+            var result = _likeService.GetLikes("1", "1");
 
+            Assert.Equal(0, result.LikeCount);
+            Assert.False(result.Liked);
         }
 
-        [Test]
-        public async Task CreateLikeTest()
+        [Fact]
+        public async Task GetLikedTest()
         {
+            await _likeService.NewLike("1", "1");
 
+            var result = _likeService.GetLikes("1", "1");
+
+            Assert.Equal(1, result.LikeCount);
+            Assert.True(result.Liked);
         }
 
-        [Test]
-        public void GetLikeTest()
+        [Fact]
+        public async Task GetNotLikedTest()
         {
-            
+            await _likeService.NewLike("2", "1");
+
+            var result = _likeService.GetLikes("1", "1");
+
+            Assert.Equal(1, result.LikeCount);
+            Assert.False(result.Liked);
+        }
+
+        [Fact]
+        public async Task GetMultipleLikesLikedTest()
+        {
+            for (var i = 1; i < 11; i++)
+            {
+                await _likeService.NewLike(i.ToString(), "1");
+            }
+
+            var result = _likeService.GetLikes("1", "1");
+
+            Assert.Equal(10, result.LikeCount);
+            Assert.True(result.Liked);
+        }
+
+        [Fact]
+        public async Task GetMultipleLikesNotLikedTest()
+        {
+            for (var i = 2; i < 12; i++)
+            {
+                await _likeService.NewLike(i.ToString(), "1");
+            }
+
+            var result = _likeService.GetLikes("1", "1");
+
+            Assert.Equal(10, result.LikeCount);
+            Assert.False(result.Liked);
+        }
+
+        [Fact]
+        public async Task UnLikeTweetTest()
+        {
+            await _likeService.NewLike("1", "1");
+
+            var resultBefore = _likeService.GetLikes("1", "1");
+
+            Assert.Equal(1, resultBefore.LikeCount);
+            Assert.True(resultBefore.Liked);
+
+            await _likeService.RemoveLike("1", "1");
+
+            var resultAfter = _likeService.GetLikes("1", "1");
+
+            Assert.Equal(0, resultAfter.LikeCount);
+            Assert.False(resultAfter.Liked);
+        }
+
+        [Fact]
+        public async Task UnLikeNotLikedTweetTestFailed()
+        {
+            await _likeService.NewLike("2", "1");
+
+            var resultBefore = _likeService.GetLikes("1", "1");
+
+            Assert.Equal(1, resultBefore.LikeCount);
+            Assert.False(resultBefore.Liked);
+
+            var resultFail = await _likeService.RemoveLike("1", "1");
+
+            Assert.False(resultFail);
+        }
+
+        [Fact]
+        public async Task UnLikeTweetTestSucceeded()
+        {
+            await _likeService.NewLike("1", "1");
+            var result = await _likeService.RemoveLike("1", "1");
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public async Task UnLikeTweetTestFailed()
+        {
+            var result = await _likeService.RemoveLike("1", "1");
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public async Task ForgetUserTest()
+        {
+            await _likeService.NewLike("1", "1");
+
+            await _likeService.ForgetUser(new ForgetUserMessage {Id = "1"});
+
+            var result = _likeService.GetLikes("1", "1");
+
+            Assert.Equal(1, result.LikeCount);
         }
     }
 }
