@@ -2,7 +2,7 @@
 {
     public class EditProfileImageMessage
     {
-        public string NewImage { get; set; }
-        public string OldImage { get; set; }
+        public string Image { get; set; }
+        //public string OldImage { get; set; }
     }
 }
