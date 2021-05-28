@@ -1,25 +1,11 @@
 apiVersion: v1
 items:
-- apiVersion: networking.k8s.io/v1
-  kind: Ingress
-  metadata:
-    name: http-ingress
-  spec:
-    rules:
-    - http:
-        paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: gateway
-              port:
-                number: 50000
 - apiVersion: v1
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -38,7 +24,8 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -60,7 +47,8 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -82,7 +70,8 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -101,7 +90,8 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -123,7 +113,8 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -131,23 +122,66 @@ items:
     name: gateway
   spec:
     type: LoadBalancer
-    loadBalancerIP: 40.87.126.102
     ports:
-    - name: "http"
+    - name: "50000"
       port: 50000
       targetPort: 80
       nodePort: 30000
-    - name: "https"
+    - name: "50001"
       port: 50001
       targetPort: 443
       nodePort: 30001
     selector:
-      app: gateway
+      io.kompose.service: gateway
 - apiVersion: v1
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: likedatabase
+    name: likedatabase
+  spec:
+    ports:
+    - name: "27021"
+      port: 27021
+      targetPort: 27017
+    selector:
+      io.kompose.service: likedatabase
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: likeservice
+    name: likeservice
+  spec:
+    ports:
+    - name: "5080"
+      port: 5080
+      targetPort: 80
+    - name: "5081"
+      port: 5081
+      targetPort: 443
+    selector:
+      io.kompose.service: likeservice
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -166,7 +200,8 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -188,7 +223,8 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -207,7 +243,8 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -229,7 +266,8 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -248,7 +286,8 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -270,7 +309,8 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -289,7 +329,8 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -311,7 +352,8 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -330,7 +372,8 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -352,7 +395,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -367,7 +411,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -393,7 +438,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -408,7 +454,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -430,7 +477,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -445,7 +493,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -467,7 +516,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -482,7 +532,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -508,7 +559,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -523,7 +575,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -545,7 +598,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -560,7 +614,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -573,12 +628,7 @@ items:
           ports:
           - containerPort: 80
           - containerPort: 443
-          env:
-            - name: "ASPNETCORE_ENVIRONMENT"
-              value: "Development"
           resources: {}
-          stdin: true
-          tty: true
         restartPolicy: Always
         serviceAccountName: ""
         volumes: null
@@ -587,7 +637,90 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: likedatabase
+    name: likedatabase
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: likedatabase
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: likedatabase
+      spec:
+        containers:
+        - env:
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: example
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: root
+          image: mongo
+          imagePullPolicy: ""
+          name: likedatabase
+          ports:
+          - containerPort: 27017
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: likeservice
+    name: likeservice
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: likeservice
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: likeservice
+      spec:
+        containers:
+        - image: ramonaerts/kwetter-likeservice:latest
+          imagePullPolicy: ""
+          name: likeservice
+          ports:
+          - containerPort: 80
+          - containerPort: 443
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -602,7 +735,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -628,7 +762,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -643,7 +778,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -665,7 +801,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -680,7 +817,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -704,7 +842,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -719,7 +858,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -751,7 +891,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -766,7 +907,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -792,7 +934,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -807,7 +950,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -829,7 +973,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -844,7 +989,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -870,7 +1016,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -885,7 +1032,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -907,7 +1055,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -922,7 +1071,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -950,7 +1100,8 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -965,7 +1116,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
