@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Provider.Consul;
 using Ocelot.Provider.Kubernetes;
 
 namespace Gateway
@@ -45,7 +46,7 @@ namespace Gateway
                         .AllowAnyHeader());
             });
 
-            services.AddOcelot().AddKubernetes();
+            services.AddOcelot().AddConsul();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
