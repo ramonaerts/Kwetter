@@ -131,8 +131,9 @@
   ],
   "GlobalConfiguration": {
     "ServiceDiscoveryProvider": {
-      "Namespace": "default",
-      "Type": "kube"
+      "Host": "consul",
+      "Port": 8500,
+      "Type": "Consul"
     }
   }
 }
