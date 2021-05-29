@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Shared;
+using Shared.Consul;
 
 namespace AuthenticationService
 {
@@ -28,6 +29,8 @@ namespace AuthenticationService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            ConfigureConsul(services);
 
             var secret = "eBCatxoffIIq6ESdrDZ8LKI3zpxhYkYM";
             var key = Encoding.ASCII.GetBytes(secret);
@@ -85,6 +88,13 @@ namespace AuthenticationService
 
             var context = serviceScope.ServiceProvider.GetService<AuthenticationContext>();
             MigrateDatabase(context);
+        }
+
+        private void ConfigureConsul(IServiceCollection services)
+        {
+            var serviceConfig = Configuration.GetServiceConfig();
+
+            services.RegisterConsulServices(serviceConfig);
         }
 
         private static void MigrateDatabase(DbContext context)

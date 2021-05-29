@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Shared;
 using AutoMapper;
+using Shared.Consul;
 using TweetService.DAL;
 using TweetService.MessageHandlers;
 using TweetService.Services;
@@ -34,6 +35,8 @@ namespace TweetService
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
+
+            ConfigureConsul(services);
 
             var secret = "eBCatxoffIIq6ESdrDZ8LKI3zpxhYkYM";
             var key = Encoding.ASCII.GetBytes(secret);
@@ -96,6 +99,13 @@ namespace TweetService
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void ConfigureConsul(IServiceCollection services)
+        {
+            var serviceConfig = Configuration.GetServiceConfig();
+
+            services.RegisterConsulServices(serviceConfig);
         }
     }
 }
