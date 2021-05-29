@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Shared;
-using UserService.Config;
+using Shared.Consul;
 using UserService.DAL;
 using UserService.MessageHandlers;
 using UserService.Services;
