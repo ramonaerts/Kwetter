@@ -83,12 +83,7 @@
     {
       "DownstreamPathTemplate": "/api/tweet/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tweetservice",
-          "Port": 80
-        }
-      ],
+      "ServiceName": "tweetservice",
       "UpstreamPathTemplate": "/api/tweet/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
       "AuthenticationOptions": {
@@ -99,12 +94,7 @@
     {
       "DownstreamPathTemplate": "/api/profile/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "userservice",
-          "Port": 80
-        }
-      ],
+      "ServiceName": "userservice",
       "UpstreamPathTemplate": "/api/profile/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "AuthenticationOptions": {
@@ -134,12 +124,7 @@
     {
       "DownstreamPathTemplate": "/api/auth/test",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "authenticationservice",
-          "Port": 80
-        }
-      ],
+      "ServiceName": "authenticationservice",
       "UpstreamPathTemplate": "/api/auth/test",
       "UpstreamHttpMethod": [ "GET" ],
       "AuthenticationOptions": {
@@ -150,12 +135,7 @@
     {
       "DownstreamPathTemplate": "/api/auth/login",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "authenticationservice",
-          "Port": 80
-        }
-      ],
+      "ServiceName": "authenticationservice",
       "UpstreamPathTemplate": "/api/auth/login",
       "UpstreamHttpMethod": [ "POST" ]
     }
