@@ -9,10 +9,7 @@
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
-      "ServiceName": "likeservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+      "ServiceName": "likeservice"
     },
     {
       "DownstreamPathTemplate": "/api/moderation/{everything}",
@@ -23,10 +20,7 @@
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
-      "ServiceName": "moderationservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+      "ServiceName": "moderationservice"
     },
     {
       "DownstreamPathTemplate": "/api/timeline/{everything}",
@@ -37,10 +31,7 @@
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
-      "ServiceName": "timelineservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+      "ServiceName": "timelineservice"
     },
     {
       "DownstreamPathTemplate": "/api/file/{everything}",
@@ -51,10 +42,7 @@
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
-      "ServiceName": "filemanagementservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+      "ServiceName": "filemanagementservice"
     },
     {
       "DownstreamPathTemplate": "/api/follow/{everything}",
@@ -65,10 +53,7 @@
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
-      "ServiceName": "followservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+      "ServiceName": "followservice"
     },
     {
       "DownstreamPathTemplate": "/api/tweet/{everything}",
@@ -79,10 +64,7 @@
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
-      "ServiceName": "tweetservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+      "ServiceName": "tweetservice"
     },
     {
       "DownstreamPathTemplate": "/api/profile/{everything}",
@@ -93,40 +75,28 @@
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
-      "ServiceName": "userservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+      "ServiceName": "userservice"
     },
     {
       "DownstreamPathTemplate": "/api/user/{everything}",
       "DownstreamScheme": "http",
       "UpstreamPathTemplate": "/api/user/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "ServiceName": "userservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+      "ServiceName": "userservice"
     },
     {
       "DownstreamPathTemplate": "/profile/images/{everything}",
       "DownstreamScheme": "http",
       "UpstreamPathTemplate": "/profile/images/{everything}",
       "UpstreamHttpMethod": [ "GET" ],
-      "ServiceName": "filemanagementservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+      "ServiceName": "filemanagementservice"
     },
     {
       "DownstreamPathTemplate": "/api/auth/login",
       "DownstreamScheme": "http",
       "UpstreamPathTemplate": "/api/auth/login",
       "UpstreamHttpMethod": [ "POST" ],
-      "ServiceName": "authenticationservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+      "ServiceName": "authenticationservice"
     }
   ],
   "GlobalConfiguration": {
