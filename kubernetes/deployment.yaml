@@ -55,14 +55,13 @@ items:
       io.kompose.service: consul
     name: consul
   spec:
+    type: LoadBalancer
     ports:
     - name: "8500"
       port: 8500
       targetPort: 8500
     selector:
       io.kompose.service: consul
-  status:
-    loadBalancer: {}
 - apiVersion: v1
   kind: Service
   metadata:
