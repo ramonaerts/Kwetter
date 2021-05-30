@@ -270,6 +270,7 @@ items:
       io.kompose.service: rabbit
     name: rabbit
   spec:
+    type: LoadBalancer
     ports:
     - name: "15672"
       port: 15672
@@ -279,8 +280,6 @@ items:
       targetPort: 5672
     selector:
       io.kompose.service: rabbit
-  status:
-    loadBalancer: {}
 - apiVersion: v1
   kind: Service
   metadata:
