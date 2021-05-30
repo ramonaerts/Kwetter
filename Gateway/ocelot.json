@@ -9,7 +9,10 @@
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
-      "ServiceName": "likeservice"
+      "ServiceName": "likeservice",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/moderation/{everything}",
@@ -20,7 +23,10 @@
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
-      "ServiceName": "moderationservice"
+      "ServiceName": "moderationservice",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/timeline/{everything}",
@@ -31,7 +37,10 @@
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
-      "ServiceName": "timelineservice"
+      "ServiceName": "timelineservice",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/file/{everything}",
@@ -42,7 +51,10 @@
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
-      "ServiceName": "filemanagementservice"
+      "ServiceName": "filemanagementservice",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/follow/{everything}",
@@ -53,7 +65,10 @@
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
-      "ServiceName": "followservice"
+      "ServiceName": "followservice",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/tweet/{everything}",
@@ -64,7 +79,10 @@
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
-      "ServiceName": "tweetservice"
+      "ServiceName": "tweetservice",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/profile/{everything}",
@@ -75,28 +93,40 @@
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
-      "ServiceName": "userservice"
+      "ServiceName": "userservice",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/user/{everything}",
       "DownstreamScheme": "http",
       "UpstreamPathTemplate": "/api/user/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "ServiceName": "userservice"
+      "ServiceName": "userservice",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     },
     {
       "DownstreamPathTemplate": "/profile/images/{everything}",
       "DownstreamScheme": "http",
       "UpstreamPathTemplate": "/profile/images/{everything}",
       "UpstreamHttpMethod": [ "GET" ],
-      "ServiceName": "filemanagementservice"
+      "ServiceName": "filemanagementservice",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/auth/login",
       "DownstreamScheme": "http",
       "UpstreamPathTemplate": "/api/auth/login",
       "UpstreamHttpMethod": [ "POST" ],
-      "ServiceName": "authenticationservice"
+      "ServiceName": "authenticationservice",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     }
   ],
   "GlobalConfiguration": {
