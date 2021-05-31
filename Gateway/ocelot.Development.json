@@ -3,12 +3,7 @@
     {
       "DownstreamPathTemplate": "/api/like/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "likeservice",
-          "Port": 80
-        }
-      ],
+      "ServiceName": "likeservice",
       "UpstreamPathTemplate": "/api/like/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "AuthenticationOptions": {
@@ -19,12 +14,7 @@
     {
       "DownstreamPathTemplate": "/api/moderation/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "moderationservice",
-          "Port": 80
-        }
-      ],
+      "ServiceName": "moderationservice",
       "UpstreamPathTemplate": "/api/moderation/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "AuthenticationOptions": {
@@ -35,12 +25,7 @@
     {
       "DownstreamPathTemplate": "/api/timeline/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "timelineservice",
-          "Port": 80
-        }
-      ],
+      "ServiceName": "timelineservice",
       "UpstreamPathTemplate": "/api/timeline/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ],
       "AuthenticationOptions": {
@@ -51,12 +36,7 @@
     {
       "DownstreamPathTemplate": "/api/file/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "filemanagementservice",
-          "Port": 80
-        }
-      ],
+      "ServiceName": "filemanagementservice",
       "UpstreamPathTemplate": "/api/file/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ],
       "AuthenticationOptions": {
@@ -67,12 +47,7 @@
     {
       "DownstreamPathTemplate": "/api/follow/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "followservice",
-          "Port": 80
-        }
-      ],
+      "ServiceName": "followservice",
       "UpstreamPathTemplate": "/api/follow/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ],
       "AuthenticationOptions": {
@@ -112,12 +87,7 @@
     {
       "DownstreamPathTemplate": "/profile/images/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "filemanagementservice",
-          "Port": 80
-        }
-      ],
+      "ServiceName": "filemanagementservice",
       "UpstreamPathTemplate": "/profile/images/{everything}",
       "UpstreamHttpMethod": [ "GET" ]
     },
