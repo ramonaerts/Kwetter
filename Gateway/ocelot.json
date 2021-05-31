@@ -3,130 +3,150 @@
     {
       "DownstreamPathTemplate": "/api/like/{everything}",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "likeservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/api/like/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      },
-      "ServiceName": "likeservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
       }
     },
     {
       "DownstreamPathTemplate": "/api/moderation/{everything}",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moderationservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/api/moderation/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      },
-      "ServiceName": "moderationservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
       }
     },
     {
       "DownstreamPathTemplate": "/api/timeline/{everything}",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "timelineservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/api/timeline/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      },
-      "ServiceName": "timelineservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
       }
     },
     {
       "DownstreamPathTemplate": "/api/file/{everything}",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "filemanagementservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/api/file/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      },
-      "ServiceName": "filemanagementservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
       }
     },
     {
       "DownstreamPathTemplate": "/api/follow/{everything}",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "followservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/api/follow/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      },
-      "ServiceName": "followservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
       }
     },
     {
       "DownstreamPathTemplate": "/api/tweet/{everything}",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tweetservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/api/tweet/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      },
-      "ServiceName": "tweetservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
       }
     },
     {
       "DownstreamPathTemplate": "/api/profile/{everything}",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "userservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/api/profile/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      },
-      "ServiceName": "userservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
       }
     },
     {
       "DownstreamPathTemplate": "/api/user/{everything}",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "userservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/api/user/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "ServiceName": "userservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
       "DownstreamPathTemplate": "/profile/images/{everything}",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "filemanagementservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/profile/images/{everything}",
-      "UpstreamHttpMethod": [ "GET" ],
-      "ServiceName": "filemanagementservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+      "UpstreamHttpMethod": [ "GET" ]
     },
     {
       "DownstreamPathTemplate": "/api/auth/login",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "authenticationservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/api/auth/login",
-      "UpstreamHttpMethod": [ "POST" ],
-      "ServiceName": "authenticationservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+      "UpstreamHttpMethod": [ "POST" ]
     }
   ],
   "GlobalConfiguration": {

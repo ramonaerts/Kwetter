@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Shared;
+using Shared.Consul;
 
 namespace FileManagementService
 {
@@ -24,6 +25,8 @@ namespace FileManagementService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            ConfigureConsul(services);
 
             var secret = "eBCatxoffIIq6ESdrDZ8LKI3zpxhYkYM";
             var key = Encoding.ASCII.GetBytes(secret);
@@ -49,6 +52,13 @@ namespace FileManagementService
             services.AddMessagePublishing("FileManagementService");
 
             services.AddScoped<IFileManagementService, Services.FileManagementService>();
+        }
+
+        private void ConfigureConsul(IServiceCollection services)
+        {
+            var serviceConfig = Configuration.GetServiceConfig();
+
+            services.RegisterConsulServices(serviceConfig);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

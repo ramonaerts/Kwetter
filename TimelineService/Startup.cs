@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Shared;
+using Shared.Consul;
 using TimelineService.DAL;
 using TimelineService.MessageHandlers;
 using TimelineService.Services;
@@ -28,6 +29,8 @@ namespace TimelineService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            ConfigureConsul(services);
 
             var secret = "eBCatxoffIIq6ESdrDZ8LKI3zpxhYkYM";
             var key = Encoding.ASCII.GetBytes(secret);
@@ -73,6 +76,13 @@ namespace TimelineService
             services.AddSingleton<ITimelineContext>(sp => sp.GetRequiredService<IOptions<TimelineContext>>().Value);
 
             services.AddScoped<ITimelineService, Services.TimelineService>();
+        }
+
+        private void ConfigureConsul(IServiceCollection services)
+        {
+            var serviceConfig = Configuration.GetServiceConfig();
+
+            services.RegisterConsulServices(serviceConfig);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipelines.

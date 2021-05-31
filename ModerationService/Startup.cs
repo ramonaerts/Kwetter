@@ -11,6 +11,7 @@ using ModerationService.DAL;
 using ModerationService.MessageHandlers;
 using ModerationService.Services;
 using Shared;
+using Shared.Consul;
 
 namespace ModerationService
 {
@@ -27,6 +28,8 @@ namespace ModerationService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            ConfigureConsul(services);
 
             var secret = "eBCatxoffIIq6ESdrDZ8LKI3zpxhYkYM";
             var key = Encoding.ASCII.GetBytes(secret);
@@ -60,6 +63,13 @@ namespace ModerationService
             services.AddSingleton<IModerationContext>(sp => sp.GetRequiredService<IOptions<ModerationContext>>().Value);
 
             services.AddScoped<IModerationService, Services.ModerationService>();
+        }
+
+        private void ConfigureConsul(IServiceCollection services)
+        {
+            var serviceConfig = Configuration.GetServiceConfig();
+
+            services.RegisterConsulServices(serviceConfig);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
