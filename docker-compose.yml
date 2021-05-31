@@ -64,7 +64,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
-      - "27018:27017"
+      - "27018:27018"
 
   timelinedatabase:
     image: mongo
@@ -74,7 +74,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
-      - "27019:27017"
+      - "27019:27019"
 
   moderationdatabase:
     image: mongo
@@ -84,7 +84,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
-      - "27020:27017"
+      - "27020:27020"
 
   likedatabase:
     image: mongo
@@ -94,7 +94,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
-      - "27021:27017"
+      - "27021:27021"
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

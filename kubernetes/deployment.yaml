@@ -100,7 +100,7 @@ items:
     ports:
     - name: "27018"
       port: 27018
-      targetPort: 27017
+      targetPort: 27018
     selector:
       io.kompose.service: followdatabase
   status:
@@ -167,7 +167,7 @@ items:
     ports:
     - name: "27021"
       port: 27021
-      targetPort: 27017
+      targetPort: 27021
     selector:
       io.kompose.service: likedatabase
   status:
@@ -210,7 +210,7 @@ items:
     ports:
     - name: "27020"
       port: 27020
-      targetPort: 27017
+      targetPort: 27020
     selector:
       io.kompose.service: moderationdatabase
   status:
@@ -295,7 +295,7 @@ items:
     ports:
     - name: "27019"
       port: 27019
-      targetPort: 27017
+      targetPort: 27019
     selector:
       io.kompose.service: timelinedatabase
   status:
@@ -613,7 +613,7 @@ items:
           imagePullPolicy: ""
           name: followdatabase
           ports:
-          - containerPort: 27017
+          - containerPort: 27018
           resources: {}
         restartPolicy: Always
         serviceAccountName: ""
@@ -734,7 +734,7 @@ items:
           imagePullPolicy: ""
           name: likedatabase
           ports:
-          - containerPort: 27017
+          - containerPort: 27021
           resources: {}
         restartPolicy: Always
         serviceAccountName: ""
@@ -816,7 +816,7 @@ items:
           imagePullPolicy: ""
           name: moderationdatabase
           ports:
-          - containerPort: 27017
+          - containerPort: 27020
           resources: {}
         restartPolicy: Always
         serviceAccountName: ""
@@ -988,7 +988,7 @@ items:
           imagePullPolicy: ""
           name: timelinedatabase
           ports:
-          - containerPort: 27017
+          - containerPort: 27019
           resources: {}
         restartPolicy: Always
         serviceAccountName: ""
