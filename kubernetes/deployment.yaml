@@ -52,6 +52,25 @@ items:
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
+      io.kompose.service: consul
+    name: consul
+  spec:
+    type: LoadBalancer
+    ports:
+    - name: "8500"
+      port: 8500
+      targetPort: 8500
+    selector:
+      io.kompose.service: consul
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
       io.kompose.service: filemanagementservice
     name: filemanagementservice
   spec:
@@ -81,7 +100,7 @@ items:
     ports:
     - name: "27018"
       port: 27018
-      targetPort: 27017
+      targetPort: 27018
     selector:
       io.kompose.service: followdatabase
   status:
@@ -148,7 +167,7 @@ items:
     ports:
     - name: "27021"
       port: 27021
-      targetPort: 27017
+      targetPort: 27021
     selector:
       io.kompose.service: likedatabase
   status:
@@ -191,7 +210,7 @@ items:
     ports:
     - name: "27020"
       port: 27020
-      targetPort: 27017
+      targetPort: 27020
     selector:
       io.kompose.service: moderationdatabase
   status:
@@ -251,6 +270,7 @@ items:
       io.kompose.service: rabbit
     name: rabbit
   spec:
+    type: LoadBalancer
     ports:
     - name: "15672"
       port: 15672
@@ -260,8 +280,6 @@ items:
       targetPort: 5672
     selector:
       io.kompose.service: rabbit
-  status:
-    loadBalancer: {}
 - apiVersion: v1
   kind: Service
   metadata:
@@ -277,7 +295,7 @@ items:
     ports:
     - name: "27019"
       port: 27019
-      targetPort: 27017
+      targetPort: 27019
     selector:
       io.kompose.service: timelinedatabase
   status:
@@ -482,6 +500,52 @@ items:
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
+      io.kompose.service: consul
+    name: consul
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: consul
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: consul
+      spec:
+        containers:
+        - args:
+          - consul
+          - agent
+          - -dev
+          - -log-level=warn
+          - -ui
+          - -client=0.0.0.0
+          image: consul:latest
+          imagePullPolicy: ""
+          name: consul
+          ports:
+          - containerPort: 8500
+          resources: {}
+        hostname: consul
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
       io.kompose.service: filemanagementservice
     name: filemanagementservice
   spec:
@@ -549,7 +613,7 @@ items:
           imagePullPolicy: ""
           name: followdatabase
           ports:
-          - containerPort: 27017
+          - containerPort: 27018
           resources: {}
         restartPolicy: Always
         serviceAccountName: ""
@@ -670,7 +734,7 @@ items:
           imagePullPolicy: ""
           name: likedatabase
           ports:
-          - containerPort: 27017
+          - containerPort: 27021
           resources: {}
         restartPolicy: Always
         serviceAccountName: ""
@@ -752,7 +816,7 @@ items:
           imagePullPolicy: ""
           name: moderationdatabase
           ports:
-          - containerPort: 27017
+          - containerPort: 27020
           resources: {}
         restartPolicy: Always
         serviceAccountName: ""
@@ -924,7 +988,7 @@ items:
           imagePullPolicy: ""
           name: timelinedatabase
           ports:
-          - containerPort: 27017
+          - containerPort: 27019
           resources: {}
         restartPolicy: Always
         serviceAccountName: ""
@@ -1137,4 +1201,3 @@ items:
   status: {}
 kind: List
 metadata: {}
-
