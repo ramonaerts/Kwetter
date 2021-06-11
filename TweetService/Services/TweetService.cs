@@ -103,7 +103,7 @@ namespace TweetService.Services
 
             if(await CheckForProfanity(tweet))
             {
-                //TODO: Add message handler here.
+                await _messagePublisher.PublishMessageAsync("NewProfanityTweetMessage", new { TweetDateTime = tweet.TweetDateTime, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
             }
 
             await _messagePublisher.PublishMessageAsync("NewPostedTweetMessage", new { TweetDateTime = tweet.TweetDateTime, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });

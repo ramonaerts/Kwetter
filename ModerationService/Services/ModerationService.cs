@@ -2,6 +2,7 @@
 using ModerationService.DAL;
 using ModerationService.Entities;
 using ModerationService.Messages.Broker;
+using ModerationService.Models;
 using MongoDB.Driver;
 
 namespace ModerationService.Services
@@ -20,6 +21,30 @@ namespace ModerationService.Services
             _users = database.GetCollection<User>("Users");
         }
 
+        public async Task<bool> ApproveProfanityTweet(string tweetId)
+        {
+            var tweet = _tweets.Find(t => t.Id == tweetId).FirstOrDefault();
+
+            if (tweet == null) return false;
+
+            tweet.TweetStatus = Status.Approved;
+            await _tweets.ReplaceOneAsync(t => t.Id == tweetId, tweet);
+
+            return true;
+        }
+
+        public async Task<bool> UnApproveProfanityTweet(string tweetId)
+        {
+            var tweet = _tweets.Find(t => t.Id == tweetId).FirstOrDefault();
+
+            if (tweet == null) return false;
+
+            tweet.TweetStatus = Status.Unapproved;
+            await _tweets.ReplaceOneAsync(t => t.Id == tweetId, tweet);
+
+            return true;
+        }
+
         public async Task AddProfanityTweet(NewProfanityTweetMessage message)
         {
             var tweet = new Tweet
@@ -27,7 +52,8 @@ namespace ModerationService.Services
                 TweetDateTime = message.TweetDateTime,
                 Id = message.Id,
                 UserId = message.UserId,
-                TweetContent = message.TweetContent
+                TweetContent = message.TweetContent,
+                TweetStatus = Status.Pending
             };
 
             await _tweets.InsertOneAsync(tweet);
