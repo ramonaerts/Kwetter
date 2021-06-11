@@ -66,6 +66,14 @@ namespace Shared.Messaging
             channel.QueueBind("ModerationService", Exchange, "ForgetUserMessage");
             channel.QueueBind("AuthenticationService", Exchange, "ForgetUserMessage");
 
+            channel.QueueBind("LikeService", Exchange, "UnApproveTweetMessage");
+            channel.QueueBind("TweetService", Exchange, "UnApproveTweetMessage");
+            channel.QueueBind("TimelineService", Exchange, "UnApproveTweetMessage");
+
+            channel.QueueBind("LikeService", Exchange, "DeleteTweetMessage");
+            channel.QueueBind("TimelineService", Exchange, "DeleteTweetMessage");
+            channel.QueueBind("ModerationService", Exchange, "DeleteTweetMessage");
+
             _configured = true;
         }
     }
