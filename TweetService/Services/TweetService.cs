@@ -106,6 +106,8 @@ namespace TweetService.Services
                 await _messagePublisher.PublishMessageAsync("NewProfanityTweetMessage", new { TweetDateTime = tweet.TweetDateTime, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
             }
 
+            if(tweetContent.Contains("#")) await _messagePublisher.PublishMessageAsync("NewTopicTweet", new { Id = tweet.Id, TweetContent = tweet.TweetContent });
+
             await _messagePublisher.PublishMessageAsync("NewPostedTweetMessage", new { TweetDateTime = tweet.TweetDateTime, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
 
             _tweets.InsertOne(tweet);

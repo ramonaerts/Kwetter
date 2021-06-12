@@ -33,6 +33,7 @@ namespace Shared.Messaging
             channel.QueueDeclare("TimelineService", false, false);
             channel.QueueDeclare("ModerationService", false, false);
             channel.QueueDeclare("LikeService", false, false);
+            channel.QueueDeclare("TrendingService", false, false);
 
             //QueueBind(Service to which the message will be send, Exchange, Message class names)
             channel.QueueBind("TweetService", Exchange, "NewProfileMessage");
@@ -72,9 +73,11 @@ namespace Shared.Messaging
 
             channel.QueueBind("LikeService", Exchange, "DeleteTweetMessage");
             channel.QueueBind("TimelineService", Exchange, "DeleteTweetMessage");
-            channel.QueueBind("ModerationService", Exchange, "DeleteTweetMessage");
+            channel.QueueBind("ModerationService", Exchange, "DeleteTweetMessage"); 
 
-            _configured = true;
+            channel.QueueBind("TrendingService", Exchange, "NewTopicTweet");
+
+             _configured = true;
         }
     }
 }
