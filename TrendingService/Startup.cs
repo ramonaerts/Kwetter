@@ -15,6 +15,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Shared;
 using Shared.Consul;
+using TrendingService.DAL;
+using TrendingService.DAL.Config;
+using TrendingService.Services;
 
 namespace TrendingService
 {
@@ -56,6 +59,16 @@ namespace TrendingService
             services.AddAuthorization();
 
             services.AddMessagePublishing("TrendingService");
+
+            var config = new ServerConfig();
+            Configuration.Bind(config);
+
+            var trendingContext = new TrendingContext(config.MongoDB);
+            var repo = new TrendingRepository(trendingContext);
+
+            services.AddSingleton<ITrendingRepository>(repo);
+
+            services.AddScoped<ITrendingService, Services.TrendingService>();
         }
 
         private void ConfigureConsul(IServiceCollection services)
