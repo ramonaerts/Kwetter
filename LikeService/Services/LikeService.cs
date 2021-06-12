@@ -110,5 +110,10 @@ namespace LikeService.Services
         {
             await _likeRepository.DeleteUserLike(message.Id);
         }
+
+        public async Task UnApproveTweet(UnApproveTweetMessage message)
+        {
+            await _likeRepository.DeleteTweetAndLikes(message.TweetId);
+        }
     }
 }

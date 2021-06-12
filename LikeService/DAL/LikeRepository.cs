@@ -54,5 +54,10 @@ namespace LikeService.DAL
         {
             await _context.UserLikes.DeleteOneAsync(u => u.UserId == userId);
         }
+
+        public async Task DeleteTweetAndLikes(string tweetId)
+        {
+            await _context.TweetLikes.DeleteManyAsync(t => t.TweetId == tweetId);
+        }
     }
 }

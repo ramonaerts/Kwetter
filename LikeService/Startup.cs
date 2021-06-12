@@ -65,6 +65,7 @@ namespace LikeService
             services.AddMessagePublishing("LikeService", builder =>
             {
                 builder.WithHandler<ForgetUserMessageHandler>("ForgetUserMessage");
+                builder.WithHandler<UnApproveTweetMessageHandler>("UnApproveTweetMessage");
             });
 
             var config = new ServerConfig();

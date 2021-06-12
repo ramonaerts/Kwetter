@@ -4,16 +4,19 @@ using ModerationService.Entities;
 using ModerationService.Messages.Broker;
 using ModerationService.Models;
 using MongoDB.Driver;
+using Shared.Messaging;
 
 namespace ModerationService.Services
 {
     public class ModerationService : IModerationService
     {
+        private readonly IMessagePublisher _messagePublisher;
         private readonly IMongoCollection<Tweet> _tweets;
         private readonly IMongoCollection<User> _users;
 
-        public ModerationService(IModerationContext context)
+        public ModerationService(IModerationContext context, IMessagePublisher messagePublisher)
         {
+            _messagePublisher = messagePublisher;
             var client = new MongoClient(context.ConnectionString);
             var database = client.GetDatabase(context.DatabaseName);
 
@@ -41,6 +44,8 @@ namespace ModerationService.Services
 
             tweet.TweetStatus = Status.Unapproved;
             await _tweets.ReplaceOneAsync(t => t.Id == tweetId, tweet);
+
+            await _messagePublisher.PublishMessageAsync("UnApproveTweetMessage", new { TweetId = tweetId });
 
             return true;
         }

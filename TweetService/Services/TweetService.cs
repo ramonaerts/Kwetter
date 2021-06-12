@@ -137,5 +137,10 @@ namespace TweetService.Services
             await _users.DeleteOneAsync(u => u.Id == message.Id);
             await _tweets.DeleteManyAsync(u => u.UserId == message.Id);
         }
+
+        public async Task UnApproveTweet(UnApproveTweetMessage message)
+        {
+            await _tweets.DeleteOneAsync(t => t.Id == message.TweetId);
+        }
     }
 }
