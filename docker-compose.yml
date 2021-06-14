@@ -199,8 +199,8 @@ services:
       - "5080:80"
       - "5081:443"
 
-  trendingService:
-    image: ${DOCKER_REGISTRY-}trendingService
+  trendingservice:
+    image: ${DOCKER_REGISTRY-}trendingservice
     build:
       context: .
       dockerfile: TrendingService/Dockerfile

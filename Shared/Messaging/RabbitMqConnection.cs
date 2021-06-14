@@ -1,5 +1,6 @@
 ﻿using System;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Exceptions;
 
 namespace Shared.Messaging
 {
@@ -10,6 +11,18 @@ namespace Shared.Messaging
     {
         private IConnection _connection;
         public IModel CreateChannel()
+        {
+            try
+            {
+                return CreateChannelConnection();
+            }
+            catch (AlreadyClosedException e)
+            {
+                throw new AlreadyClosedException(e.ShutdownReason);
+            }
+        }
+
+        private IModel CreateChannelConnection()
         {
             var connection = GetConnection();
             return connection.CreateModel();
