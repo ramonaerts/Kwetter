@@ -9,5 +9,7 @@ namespace TrendingService.DAL
     public interface ITrendingRepository
     {
         List<Trend> GetAllTrends();
+        Trend GetTrendByTopic(string topic);
+        Task UpdateTrend(Trend trend);
     }
 }

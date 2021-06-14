@@ -20,5 +20,17 @@ namespace TrendingService.DAL
         {
             return _context.Trends.AsQueryable().ToList();
         }
+
+        public Trend GetTrendByTopic(string topic)
+        {
+            var trends = GetAllTrends();
+
+            return trends.FirstOrDefault(t => t.Topic == topic);
+        }
+
+        public async Task UpdateTrend(Trend trend)
+        {
+            await _context.Trends.ReplaceOneAsync(t => t.Id == trend.Id, trend);
+        }
     }
 }

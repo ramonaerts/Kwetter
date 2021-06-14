@@ -17,6 +17,7 @@ using Shared;
 using Shared.Consul;
 using TrendingService.DAL;
 using TrendingService.DAL.Config;
+using TrendingService.MessageHandlers;
 using TrendingService.Services;
 
 namespace TrendingService
@@ -60,7 +61,7 @@ namespace TrendingService
 
             services.AddMessagePublishing("TrendingService", builder =>
             {
-                //builder.WithHandler<NewTopicTweetMessageHandler>("NewTopicTweetMessage");
+                builder.WithHandler<NewTopicTweetMessageHandler>("NewTopicTweetMessage");
             });
 
             var config = new ServerConfig();

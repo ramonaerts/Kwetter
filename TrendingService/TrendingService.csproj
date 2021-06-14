@@ -16,10 +16,5 @@
     <PackageReference Include="Shared" Version="1.1.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MessageHandlers\" />
-    <Folder Include="Messages\Broker\" />
-  </ItemGroup>
-
 
 </Project>
