@@ -58,7 +58,10 @@ namespace TrendingService
 
             services.AddAuthorization();
 
-            services.AddMessagePublishing("TrendingService");
+            services.AddMessagePublishing("TrendingService", builder =>
+            {
+                //builder.WithHandler<NewTopicTweetMessageHandler>("NewTopicTweetMessage");
+            });
 
             var config = new ServerConfig();
             Configuration.Bind(config);

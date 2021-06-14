@@ -75,7 +75,7 @@ namespace Shared.Messaging
             channel.QueueBind("TimelineService", Exchange, "DeleteTweetMessage");
             channel.QueueBind("ModerationService", Exchange, "DeleteTweetMessage"); 
 
-            channel.QueueBind("TrendingService", Exchange, "NewTopicTweet");
+            channel.QueueBind("TrendingService", Exchange, "NewTopicTweetMessage");
 
              _configured = true;
         }
