@@ -8,7 +8,7 @@ namespace UserService
     {
         public static void Main(string[] args)
         {
-            System.Timers.Timer timer = new System.Timers.Timer { Interval = 30000 };
+            var timer = new System.Timers.Timer { Interval = 30000 };
             timer.Elapsed += TimerElapsed;
             timer.Start();
             CreateHostBuilder(args).Build().Run();
@@ -16,7 +16,7 @@ namespace UserService
 
         static void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            //QueuedTasks.ExecuteAction();
+            QueuedTasks.ExecuteAction();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
