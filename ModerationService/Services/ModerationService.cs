@@ -50,6 +50,17 @@ namespace ModerationService.Services
             return true;
         }
 
+        public async Task<bool> UpgradeUserToModerator(string userId)
+        {
+            var user = _users.Find(u => u.Id == userId).FirstOrDefault();
+
+            if (user == null) return false;
+
+            await _messagePublisher.PublishMessageAsync("UpgradeUserToAdminMessage", new { Id = user.Id });
+
+            return true;
+        }
+
         public async Task AddProfanityTweet(NewProfanityTweetMessage message)
         {
             var tweet = new Tweet

@@ -77,6 +77,8 @@ namespace Shared.Messaging
 
             channel.QueueBind("TrendingService", Exchange, "NewTopicTweetMessage");
 
+            channel.QueueBind("AuthenticationService", Exchange, "UpgradeUserToAdminMessage");
+
              _configured = true;
         }
     }

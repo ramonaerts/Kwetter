@@ -42,12 +42,12 @@ namespace ModerationService.Controllers
 
         [HttpPut]
         [Authorize(Roles = "Moderator,Admin")]
-        [Route("upgrade")]
-        public ApiResult UpgradeUserToModerator()
+        [Route("upgrade/{userId}")]
+        public async Task<ApiResult> UpgradeUserToModerator(string userId)
         {
-            var userId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            var result = await _moderationService.UpgradeUserToModerator(userId);
 
-            return ApiResult.Success(userId);
+            return result ? ApiResult.Success("User had been upgraded to admin.") : ApiResult.NotFound("Could not find user.");
         }
     }
 }
