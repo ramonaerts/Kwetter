@@ -36,6 +36,7 @@ namespace TrendingService.Services
             }
         }
 
+        //test
         private async Task UpdateTrendCount(string topic)
         {
             var trend = _trendingRepository.GetTrendByTopic(topic);
