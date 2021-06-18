@@ -46,7 +46,7 @@ namespace TrendingService.Services
                 {
                     Id = Guid.NewGuid().ToString(),
                     Topic = topic,
-                    TweetCount = 0
+                    TweetCount = 1
                 };
 
                 await _trendingRepository.CreateNewTrend(newTrend);
