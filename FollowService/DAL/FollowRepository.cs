@@ -42,5 +42,19 @@ namespace FollowService.DAL
         {
             await _context.Follows.DeleteManyAsync(f => f.Following == userId);
         }
+
+        public int GetAllFollowers(string userId)
+        {
+            var follows = _context.Follows.AsQueryable().ToList();
+
+            return follows.Count(f => f.Following == userId);
+        }
+
+        public int GetAllFollowings(string userId)
+        {
+            var follows = _context.Follows.AsQueryable().ToList();
+
+            return follows.Count(f => f.Follower == userId);
+        }
     }
 }
