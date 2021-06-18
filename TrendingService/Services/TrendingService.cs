@@ -28,8 +28,7 @@ namespace TrendingService.Services
 
         public async Task AddNewTopic(NewTopicTweetMessage message)
         {
-            var punctuation = message.TweetContent.Where(char.IsPunctuation).Distinct().ToArray();
-            var words = message.TweetContent.Split().Select(x => x.Trim(punctuation));
+            var words = message.TweetContent.Split();
 
             foreach (var word in words)
             {
@@ -41,9 +40,22 @@ namespace TrendingService.Services
         {
             var trend = _trendingRepository.GetTrendByTopic(topic);
 
-            trend.TweetCount++;
+            if (trend == null)
+            {
+                var newTrend = new Trend
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Topic = topic,
+                    TweetCount = 0
+                };
 
-            await _trendingRepository.UpdateTrend(trend);
+                await _trendingRepository.CreateNewTrend(newTrend);
+            }
+            else
+            {
+                trend.TweetCount++;
+                await _trendingRepository.UpdateTrend(trend);
+            }
         }
     }
 }

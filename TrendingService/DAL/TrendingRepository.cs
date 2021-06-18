@@ -28,6 +28,11 @@ namespace TrendingService.DAL
             return trends.FirstOrDefault(t => t.Topic == topic);
         }
 
+        public async Task CreateNewTrend(Trend newTrend)
+        {
+            await _context.Trends.InsertOneAsync(newTrend);
+        }
+
         public async Task UpdateTrend(Trend trend)
         {
             await _context.Trends.ReplaceOneAsync(t => t.Id == trend.Id, trend);

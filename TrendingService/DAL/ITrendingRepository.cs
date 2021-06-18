@@ -10,6 +10,7 @@ namespace TrendingService.DAL
     {
         List<Trend> GetAllTrends();
         Trend GetTrendByTopic(string topic);
+        Task CreateNewTrend(Trend newTrend);
         Task UpdateTrend(Trend trend);
     }
 }
