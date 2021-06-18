@@ -34,10 +34,10 @@ items:
   spec:
     ports:
     - name: "5020"
-      port: 5020
+      port: 80
       targetPort: 80
     - name: "5021"
-      port: 5021
+      port: 443
       targetPort: 443
     selector:
       io.kompose.service: authenticationservice
@@ -76,10 +76,10 @@ items:
   spec:
     ports:
     - name: "5030"
-      port: 5030
+      port: 80
       targetPort: 80
     - name: "5031"
-      port: 5031
+      port: 443
       targetPort: 443
     selector:
       io.kompose.service: filemanagementservice
@@ -99,7 +99,7 @@ items:
   spec:
     ports:
     - name: "27018"
-      port: 27018
+      port: 27017
       targetPort: 27017
     selector:
       io.kompose.service: followdatabase
@@ -119,13 +119,56 @@ items:
   spec:
     ports:
     - name: "5050"
-      port: 5050
+      port: 80
       targetPort: 80
     - name: "5051"
-      port: 5051
+      port: 443
       targetPort: 443
     selector:
       io.kompose.service: followservice
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: trendingdatabase
+    name: trendingdatabase
+  spec:
+    ports:
+    - name: "27022"
+      port: 27017
+      targetPort: 27017
+    selector:
+      io.kompose.service: trendingdatabase
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: trendingservice
+    name: trendingservice
+  spec:
+    ports:
+    - name: "5090"
+      port: 80
+      targetPort: 80
+    - name: "5091"
+      port: 443
+      targetPort: 443
+    selector:
+      io.kompose.service: trendingservice
   status:
     loadBalancer: {}
 - apiVersion: v1
@@ -166,7 +209,7 @@ items:
   spec:
     ports:
     - name: "27021"
-      port: 27021
+      port: 27017
       targetPort: 27017
     selector:
       io.kompose.service: likedatabase
@@ -186,10 +229,10 @@ items:
   spec:
     ports:
     - name: "5080"
-      port: 5080
+      port: 80
       targetPort: 80
     - name: "5081"
-      port: 5081
+      port: 443
       targetPort: 443
     selector:
       io.kompose.service: likeservice
@@ -209,7 +252,7 @@ items:
   spec:
     ports:
     - name: "27020"
-      port: 27020
+      port: 27017
       targetPort: 27017
     selector:
       io.kompose.service: moderationdatabase
@@ -229,10 +272,10 @@ items:
   spec:
     ports:
     - name: "5070"
-      port: 5070
+      port: 80
       targetPort: 80
     - name: "5071"
-      port: 5071
+      port: 443
       targetPort: 443
     selector:
       io.kompose.service: moderationservice
@@ -294,7 +337,7 @@ items:
   spec:
     ports:
     - name: "27019"
-      port: 27019
+      port: 27017
       targetPort: 27017
     selector:
       io.kompose.service: timelinedatabase
@@ -314,10 +357,10 @@ items:
   spec:
     ports:
     - name: "5060"
-      port: 5060
+      port: 80
       targetPort: 80
     - name: "5061"
-      port: 5061
+      port: 443
       targetPort: 443
     selector:
       io.kompose.service: timelineservice
@@ -357,10 +400,10 @@ items:
   spec:
     ports:
     - name: "5010"
-      port: 5010
+      port: 80
       targetPort: 80
     - name: "5011"
-      port: 5011
+      port: 443
       targetPort: 443
     selector:
       io.kompose.service: tweetservice
@@ -400,10 +443,10 @@ items:
   spec:
     ports:
     - name: "5040"
-      port: 5040
+      port: 80
       targetPort: 80
     - name: "5041"
-      port: 5041
+      port: 443
       targetPort: 443
     selector:
       io.kompose.service: userservice
@@ -1191,6 +1234,88 @@ items:
         - image: ramonaerts/kwetter-userservice:latest
           imagePullPolicy: ""
           name: userservice
+          ports:
+          - containerPort: 80
+          - containerPort: 443
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: trendingdatabase
+    name: trendingdatabase
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: trendingdatabase
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: trendingdatabase
+      spec:
+        containers:
+        - env:
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: example
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: root
+          image: mongo
+          imagePullPolicy: ""
+          name: trendingdatabase
+          ports:
+          - containerPort: 27017
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: trendingservice
+    name: trendingservice
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: trendingservice
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: trendingservice
+      spec:
+        containers:
+        - image: ramonaerts/kwetter-trendingservice:latest
+          imagePullPolicy: ""
+          name: trendingservice
           ports:
           - containerPort: 80
           - containerPort: 443
