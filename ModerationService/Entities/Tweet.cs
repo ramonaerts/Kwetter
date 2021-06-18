@@ -1,4 +1,5 @@
 ﻿using System;
+using ModerationService.Models;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace ModerationService.Entities
@@ -10,5 +11,6 @@ namespace ModerationService.Entities
         public string UserId { get; set; }
         public string TweetContent { get; set; }
         public DateTime TweetDateTime { get; set; }
+        public Status TweetStatus { get; set; }
     }
 }

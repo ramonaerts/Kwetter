@@ -96,6 +96,16 @@ services:
     ports:
       - "27021:27017"
 
+  trendingdatabase:
+    image: mongo
+    container_name: TrendingDatabase
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27022:27017"
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -188,3 +198,12 @@ services:
     ports:
       - "5080:80"
       - "5081:443"
+
+  trendingservice:
+    image: ${DOCKER_REGISTRY-}trendingservice
+    build:
+      context: .
+      dockerfile: TrendingService/Dockerfile
+    ports:
+      - "5090:80"
+      - "5091:443"

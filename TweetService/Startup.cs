@@ -69,8 +69,9 @@ namespace TweetService
                 {
                     builder.WithHandler<NewUserMessageHandler>("NewProfileMessage");
                     builder.WithHandler<ForgetUserMessageHandler>("ForgetUserMessage");
+                    builder.WithHandler<UnApproveTweetMessageHandler>("UnApproveTweetMessage");
                     builder.WithHandler<ProfileChangedMessageHandler>("ProfileChangedMessage");
-                    builder.WithHandler<ProfileImageChangedMessageHandler>("ProfileImageChangedMessage");
+                    builder.WithHandler<ProfileImageChangedMessageHandler>("ProfileImageChangedMessage"); 
                 });
 
             services.AddAuthorization();

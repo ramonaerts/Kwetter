@@ -120,5 +120,17 @@ namespace AuthenticationService.Services
             _authenticationContext.Remove(user);
             await _authenticationContext.SaveChangesAsync();
         }
+
+        public async Task UpgradeUserToAdmin(UpgradeUserToAdminMessage message)
+        {
+            var user = _authenticationContext.Users.FirstOrDefault(u => u.Id == message.Id);
+
+            if (user == null) return;
+
+            user.Role = UserRole.Admin;
+
+            _authenticationContext.Update(user);
+            await _authenticationContext.SaveChangesAsync();
+        }
     }
 }

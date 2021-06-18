@@ -56,8 +56,9 @@ namespace AuthenticationService
             services.AddMessagePublishing("AuthenticationService", builder =>
             {
                 builder.WithHandler<RegisterNewUserMessageHandler>("NewUserMessage");
-                builder.WithHandler<EmailChangedMessageHandler>("EmailChangedMessage");
+                builder.WithHandler<EmailChangedMessageHandler>("EmailChangedMessage"); 
                 builder.WithHandler<ForgetUserMessageHandler>("ForgetUserMessage");
+                builder.WithHandler<UpgradeUserToAdminMessageHandler>("UpgradeUserToAdminMessage");
             });
 
             services.AddScoped<IAuthService, AuthService>();

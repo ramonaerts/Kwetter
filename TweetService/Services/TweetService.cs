@@ -103,8 +103,10 @@ namespace TweetService.Services
 
             if(await CheckForProfanity(tweet))
             {
-                //TODO: Add message handler here.
+                await _messagePublisher.PublishMessageAsync("NewProfanityTweetMessage", new { TweetDateTime = tweet.TweetDateTime, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
             }
+
+            if(tweetContent.Contains("#")) await _messagePublisher.PublishMessageAsync("NewTopicTweetMessage", new { Id = tweet.Id, TweetContent = tweet.TweetContent });
 
             await _messagePublisher.PublishMessageAsync("NewPostedTweetMessage", new { TweetDateTime = tweet.TweetDateTime, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
 
@@ -136,6 +138,11 @@ namespace TweetService.Services
         {
             await _users.DeleteOneAsync(u => u.Id == message.Id);
             await _tweets.DeleteManyAsync(u => u.UserId == message.Id);
+        }
+
+        public async Task UnApproveTweet(UnApproveTweetMessage message)
+        {
+            await _tweets.DeleteOneAsync(t => t.Id == message.TweetId);
         }
     }
 }

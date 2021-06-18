@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using RabbitMQ.Client.Exceptions;
 
 namespace Shared.Messaging
 {
@@ -17,6 +18,20 @@ namespace Shared.Messaging
         }
 
         public Task PublishMessageAsync<T>(string messageType, T value)
+        {
+            try
+            {
+                SendMessageAsync(messageType, value);
+            }
+            catch (AlreadyClosedException)
+            {
+                QueuedTasks.QueueMethod(() => SendMessageAsync(messageType, value));
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public Task SendMessageAsync<T>(string messageType, T value)
         {
             using var channel = _connection.CreateChannel();
             var message = channel.CreateBasicProperties();

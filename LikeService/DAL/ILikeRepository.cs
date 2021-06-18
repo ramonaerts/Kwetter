@@ -15,5 +15,6 @@ namespace LikeService.DAL
         Task UpdateUserLike(UserLike userLike);
         Task UpdateTweetLike(TweetLike tweetLike);
         Task DeleteUserLike(string userId);
+        Task DeleteTweetAndLikes(string tweetId);
     }
 }

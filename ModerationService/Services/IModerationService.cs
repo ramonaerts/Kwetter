@@ -8,6 +8,9 @@ namespace ModerationService.Services
 {
     public interface IModerationService
     {
+        Task<bool> ApproveProfanityTweet(string tweetId);
+        Task<bool> UnApproveProfanityTweet(string tweetId);
+        Task<bool> UpgradeUserToModerator(string userId);
         Task AddProfanityTweet(NewProfanityTweetMessage message);
         Task AddUser(NewProfileMessage message);
         Task UpdateUser(ProfileChangedMessage message);
