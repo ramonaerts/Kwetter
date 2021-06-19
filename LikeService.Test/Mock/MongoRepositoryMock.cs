@@ -60,5 +60,10 @@ namespace LikeService.Test.Mock
             UserLikes.RemoveAll(u => u.Id == userId);
             return Task.CompletedTask;
         }
+
+        public Task DeleteTweetAndLikes(string tweetId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
