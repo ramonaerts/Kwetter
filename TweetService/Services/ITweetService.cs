@@ -11,8 +11,8 @@ namespace TweetService.Services
         Task AddUser(NewProfileMessage message);
         Task UpdateUser(ProfileChangedMessage message);
         Task UpdateUserImage(ProfileImageChangedMessage message);
-        Entities.Tweet GetTweet();
         Task CreateTweet(string id, string tweetContent);
+        Task<bool> DeleteTweet(string id, string userId, string roleString);
         Task<bool> CheckForProfanity(Entities.Tweet tweet);
         Task ForgetUser(ForgetUserMessage message);
         Task UnApproveTweet(UnApproveTweetMessage message);

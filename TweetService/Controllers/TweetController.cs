@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.API;
 using TweetService.Messages.Api;
+using TweetService.Models;
 using TweetService.Services;
 
 namespace TweetService.Controllers
@@ -53,6 +54,19 @@ namespace TweetService.Controllers
             await _tweetService.CreateTweet(id, message.TweetContent);
 
             return ApiResult.Success("Created");
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "User,Moderator,Admin")]
+        [Route("{id}")]
+        public async Task<ApiResult> DeleteTweet(string id)
+        {
+            var userId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            var roleString = User.Claims.First(c => c.Type == ClaimTypes.Role).Value.ToString();
+
+            var result = await _tweetService.DeleteTweet(id, userId, roleString);
+
+            return result ? ApiResult.Success("Tweet deleted") : ApiResult.NotFound("Something went wrong");
         }
     }
 }

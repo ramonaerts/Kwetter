@@ -86,9 +86,9 @@ namespace TweetService.Services
             await _users.ReplaceOneAsync(u => u.Id == message.Id, user);
         }
 
-        public Entities.Tweet GetTweet()
+        private Entities.Tweet GetTweet(string tweetId)
         {
-            return _tweets.Find(t => t.Id == "1").FirstOrDefault();
+            return _tweets.Find(t => t.Id == tweetId).FirstOrDefault();
         }
 
         public async Task CreateTweet(string id, string tweetContent)
@@ -132,6 +132,24 @@ namespace TweetService.Services
             var jObject = JsonConvert.DeserializeObject<JObject>(jsonString);
 
             return jObject["ProfanityResult"].Value<bool>();
+        }
+
+        public async Task<bool> DeleteTweet(string id, string userId, string roleString)
+        {
+            if (userId == null) return false;
+
+            var tweet = GetTweet(id);
+            if (tweet == null) return false;
+
+            var role = (UserRole)Enum.Parse(typeof(UserRole), roleString, true);
+
+            if (userId == tweet.UserId || role == UserRole.Moderator)
+            {
+                await _tweets.DeleteOneAsync(t => t.Id == id);
+                await _messagePublisher.PublishMessageAsync("DeleteTweetMessage", new { Id = tweet.Id });
+            }
+
+            return true;
         }
 
         public async Task ForgetUser(ForgetUserMessage message)
