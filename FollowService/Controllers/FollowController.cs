@@ -56,5 +56,15 @@ namespace FollowService.Controllers
 
             return ApiResult.Success(result);
         }
+
+        [HttpGet]
+        [Authorize(Roles = "User,Moderator,Admin")]
+        [Route("count/{id}")]
+        public ApiResult GetFollowCounts(string id)
+        {
+            var result = _followService.GetFollowCount(id);
+
+            return ApiResult.Success(result);
+        }
     }
 }
