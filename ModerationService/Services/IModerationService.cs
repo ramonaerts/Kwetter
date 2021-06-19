@@ -16,5 +16,6 @@ namespace ModerationService.Services
         Task UpdateUser(ProfileChangedMessage message);
         Task UpdateUserImage(ProfileImageChangedMessage message);
         Task ForgetUser(ForgetUserMessage message);
+        Task DeleteTweet(string tweetId);
     }
 }

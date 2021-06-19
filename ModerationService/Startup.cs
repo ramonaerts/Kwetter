@@ -54,6 +54,7 @@ namespace ModerationService
             {
                 builder.WithHandler<NewProfileMessageHandler>("NewProfileMessage");
                 builder.WithHandler<ForgetUserMessageHandler>("ForgetUserMessage");
+                builder.WithHandler<DeleteTweetMessageHandler>("DeleteTweetMessage");
                 builder.WithHandler<ProfileChangedMessageHandler>("ProfileChangedMessage");
                 builder.WithHandler<NewProfanityTweetMessageHandler>("NewProfanityTweetMessage");
                 builder.WithHandler<ProfileImageChangedMessageHandler>("ProfileImageChangedMessage");

@@ -125,9 +125,9 @@ namespace TimelineService.Services
             await _follows.DeleteManyAsync(f => f.Following == message.Id);
         }
 
-        public async Task UnApproveTweet(UnApproveTweetMessage message)
+        public async Task DeleteTweet(string tweetId)
         {
-            await _tweets.DeleteOneAsync(t => t.Id == message.TweetId);
+            await _tweets.DeleteOneAsync(t => t.Id == tweetId);
         }
     }
 }

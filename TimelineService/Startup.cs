@@ -66,6 +66,7 @@ namespace TimelineService
                 builder.WithHandler<NewProfileMessageHandler>("NewProfileMessage");
                 builder.WithHandler<ForgetUserMessageHandler>("ForgetUserMessage");
                 builder.WithHandler<AddFollowerMessageHandler>("AddFollowerMessage");
+                builder.WithHandler<DeleteTweetMessageHandler>("DeleteTweetMessage");
                 builder.WithHandler<UnApproveTweetMessageHandler>("UnApproveTweetMessage");
                 builder.WithHandler<NewPostedTweetMessageHandler>("NewPostedTweetMessage");
                 builder.WithHandler<ProfileChangedMessageHandler>("ProfileChangedMessage");

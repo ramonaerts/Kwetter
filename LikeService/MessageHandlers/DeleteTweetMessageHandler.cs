@@ -8,15 +8,15 @@ using Shared.Messaging;
 
 namespace LikeService.MessageHandlers
 {
-    public class UnApproveTweetMessageHandler : IMessageHandler<UnApproveTweetMessage>
+    public class DeleteTweetMessageHandler : IMessageHandler<DeleteTweetMessage>
     {
         private readonly ILikeService _likeService;
-        public UnApproveTweetMessageHandler(ILikeService tweetService)
+        public DeleteTweetMessageHandler(ILikeService tweetService)
         {
             _likeService = tweetService;
         }
 
-        public async Task HandleMessageAsync(string messageType, UnApproveTweetMessage message)
+        public async Task HandleMessageAsync(string messageType, DeleteTweetMessage message)
         {
             await _likeService.DeleteTweet(message.TweetId);
         }

@@ -109,7 +109,12 @@ namespace ModerationService.Services
         public async Task ForgetUser(ForgetUserMessage message)
         {
             await _users.DeleteOneAsync(u => u.Id == message.Id);
-            await _tweets.DeleteManyAsync(u => u.UserId == message.Id);
+            await _tweets.DeleteManyAsync(t => t.UserId == message.Id);
+        }
+
+        public async Task DeleteTweet(string tweetId)
+        {
+            await _tweets.DeleteOneAsync(t => t.Id == tweetId);
         }
     }
 }
