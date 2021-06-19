@@ -1,4 +1,5 @@
 using System.Text;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,6 +50,14 @@ namespace ModerationService
                     ValidateAudience = false
                 };
             });
+
+            var mapperConfig = new MapperConfiguration(m =>
+            {
+                m.AddProfile(new AutoMapperProfile());
+            });
+
+            var mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddMessagePublishing("ModerationService", builder =>
             {

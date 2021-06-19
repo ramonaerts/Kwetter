@@ -24,22 +24,12 @@ namespace TweetService.Controllers
 
         [HttpGet]
         [Authorize(Roles = "User,Moderator,Admin")]
-        [Route("tweets")]
-        public ApiResult GetUserTweets()
-        {
-            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
-
-            var tweets = _tweetService.GetTweets(id);
-
-            return ApiResult.Success(tweets);
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "User,Moderator,Admin")]
         [Route("{id}")]
         public ApiResult GetProfileTweets(string id)
         {
-            var tweets = _tweetService.GetTweets(id);
+            var currentUserId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+
+            var tweets = _tweetService.GetTweets(id, currentUserId);
 
             return ApiResult.Success(tweets);
         }

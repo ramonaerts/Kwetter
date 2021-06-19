@@ -7,7 +7,7 @@ namespace TweetService.Services
 {
     public interface ITweetService
     {
-        List<Tweet> GetTweets(string id);
+        List<Tweet> GetTweets(string id, string currentUserId);
         Task AddUser(NewProfileMessage message);
         Task UpdateUser(ProfileChangedMessage message);
         Task UpdateUserImage(ProfileImageChangedMessage message);

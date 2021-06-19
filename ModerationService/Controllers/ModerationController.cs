@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ModerationService.Models;
 using ModerationService.Services;
 using Shared.API;
 
@@ -18,6 +19,36 @@ namespace ModerationService.Controllers
         public ModerationController(IModerationService moderationService)
         {
             _moderationService = moderationService;
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Moderator")]
+        [Route("pending")]
+        public ApiResult GetPendingTweets()
+        {
+            var tweets = _moderationService.GetProfanityTweetsByStatus(Status.Pending);
+
+            return ApiResult.Success(tweets);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Moderator")]
+        [Route("approved")]
+        public ApiResult GetApprovedTweets()
+        {
+            var tweets = _moderationService.GetProfanityTweetsByStatus(Status.Approved);
+
+            return ApiResult.Success(tweets);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Moderator")]
+        [Route("unapproved")]
+        public ApiResult GetUnapprovedTweets()
+        {
+            var tweets = _moderationService.GetProfanityTweetsByStatus(Status.Unapproved);
+
+            return ApiResult.Success(tweets);
         }
 
         [HttpPut]

@@ -37,7 +37,7 @@ namespace TweetService.Services
             _users = database.GetCollection<Entities.User>("Users");
         }
 
-        public List<Tweet> GetTweets(string id)
+        public List<Tweet> GetTweets(string id, string currentUserId)
         {
             var tweets = _tweets.Find(t => t.UserId == id).ToList();
 
@@ -48,6 +48,8 @@ namespace TweetService.Services
             foreach (var tweet in tweetModels)
             {
                 tweet.User = user;
+
+                tweet.OwnTweet = user.Id == currentUserId;
             }
 
             tweetModels = tweetModels.OrderByDescending(x => x.TweetDateTime).ToList();
