@@ -18,7 +18,7 @@ namespace LikeService.MessageHandlers
 
         public async Task HandleMessageAsync(string messageType, DeleteTweetMessage message)
         {
-            await _likeService.DeleteTweet(message.TweetId);
+            await _likeService.DeleteTweet(message.Id);
         }
     }
 }

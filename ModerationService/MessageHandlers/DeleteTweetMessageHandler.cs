@@ -18,7 +18,7 @@ namespace ModerationService.MessageHandlers
 
         public async Task HandleMessageAsync(string messageType, DeleteTweetMessage message)
         {
-            await _moderationService.DeleteTweet(message.TweetId);
+            await _moderationService.DeleteTweet(message.Id);
         }
     }
 }

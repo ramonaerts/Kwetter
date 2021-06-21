@@ -18,7 +18,7 @@ namespace TimelineService.MessageHandlers
 
         public async Task HandleMessageAsync(string messageType, DeleteTweetMessage message)
         {
-            await _timelineService.DeleteTweet(message.TweetId);
+            await _timelineService.DeleteTweet(message.Id);
         }
     }
 }

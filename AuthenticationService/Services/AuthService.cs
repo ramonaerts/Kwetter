@@ -54,6 +54,24 @@ namespace AuthenticationService.Services
             await _authenticationContext.SaveChangesAsync();
         }
 
+        public async Task AddModerator(NewAdminMessage message)
+        {
+            var salt = GenerateSalt();
+            var hash = HashPassword(message.Password, salt);
+
+            var user = new User
+            {
+                Id = message.Id,
+                Email = message.Email,
+                Hash = hash,
+                Salt = salt,
+                Role = UserRole.Moderator
+            };
+
+            _authenticationContext.Add(user);
+            await _authenticationContext.SaveChangesAsync();
+        }
+
         private byte[] HashPassword(string password, byte[] salt)
         {
             var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password))

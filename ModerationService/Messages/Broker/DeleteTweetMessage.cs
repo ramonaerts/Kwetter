@@ -7,6 +7,6 @@ namespace ModerationService.Messages.Broker
 {
     public class DeleteTweetMessage
     {
-        public string TweetId { get; set; }
+        public string Id { get; set; }
     }
 }

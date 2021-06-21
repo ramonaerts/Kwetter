@@ -10,6 +10,7 @@ namespace AuthenticationService.Services
     {
         User LoginUser(LoginMessage message);
         Task AddUser(NewUserMessage message);
+        Task AddModerator(NewAdminMessage message);
         Task UpdateEmail(EmailChangedMessage message);
         string CreateToken(string userId, UserRole role);
         Task ForgetUser(ForgetUserMessage message);
