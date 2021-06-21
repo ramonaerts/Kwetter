@@ -32,6 +32,18 @@ namespace UserService.Controllers
             return await _userService.RegisterUser(message) ? ApiResult.Success("success") : ApiResult.BadRequest("Something went wrong.");
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("admin")]
+        public async Task<ApiResult> CreateAdmin(RegisterMessage message)
+        {
+            if (!_userService.VerifyPasswords(message.Password, message.ConfirmPassword)) return ApiResult.BadRequest("Password don't match.");
+
+            if (_userService.VerifyUniqueEmail(message.Email)) return ApiResult.BadRequest("This email is already in use.");
+
+            return await _userService.CreateAdmin(message) ? ApiResult.Success("success") : ApiResult.BadRequest("Something went wrong.");
+        }
+
         [HttpDelete]
         [Authorize(Roles = "User")]
         [Route("forget")]
