@@ -48,7 +48,7 @@ namespace TimelineService.Services
                 tweet.OwnTweet = false;
             }
 
-            tweetModels = tweetModels.OrderByDescending(x => x.TweetDateTime).ToList();
+            tweetModels.Reverse();
 
             return tweetModels;
         }

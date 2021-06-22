@@ -106,6 +106,16 @@ services:
     ports:
       - "27022:27017"
 
+  filemanagementdatabase:
+    image: mongo
+    container_name: FileManagementDatabase
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27023:27017"
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin

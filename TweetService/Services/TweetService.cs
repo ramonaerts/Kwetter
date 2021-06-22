@@ -52,7 +52,7 @@ namespace TweetService.Services
                 tweet.OwnTweet = user.Id == currentUserId;
             }
 
-            tweetModels = tweetModels.OrderByDescending(x => x.TweetDateTime).ToList();
+            tweetModels.Reverse();
 
             return tweetModels;
         }
