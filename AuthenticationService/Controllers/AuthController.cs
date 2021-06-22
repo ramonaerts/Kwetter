@@ -22,12 +22,19 @@ namespace AuthenticationService.Controllers
         [HttpPost("login")]
         public ApiResult Login([FromBody] LoginMessage message)
         {
-            var user = _authService.LoginUser(message);
-            if (user == null) return ApiResult.Forbidden("Wrong credentials");
+            try
+            {
+                var user = _authService.LoginUser(message);
+                if (user == null) return ApiResult.Forbidden("Wrong credentials");
 
-            var token = _authService.CreateToken(user.Id, user.Role);
+                var token = _authService.CreateToken(user.Id, user.Role);
 
-            return ApiResult.Success(user, token);
+                return ApiResult.Success(user, token);
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
     }
 }

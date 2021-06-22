@@ -26,9 +26,16 @@ namespace ModerationService.Controllers
         [Route("pending")]
         public ApiResult GetPendingTweets()
         {
-            var tweets = _moderationService.GetProfanityTweetsByStatus(Status.Pending);
+            try
+            {
+                var tweets = _moderationService.GetProfanityTweetsByStatus(Status.Pending);
 
-            return ApiResult.Success(tweets);
+                return ApiResult.Success(tweets);
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpGet]
@@ -36,9 +43,16 @@ namespace ModerationService.Controllers
         [Route("approved")]
         public ApiResult GetApprovedTweets()
         {
-            var tweets = _moderationService.GetProfanityTweetsByStatus(Status.Approved);
+            try
+            {
+                var tweets = _moderationService.GetProfanityTweetsByStatus(Status.Approved);
 
-            return ApiResult.Success(tweets);
+                return ApiResult.Success(tweets);
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpGet]
@@ -46,9 +60,16 @@ namespace ModerationService.Controllers
         [Route("unapproved")]
         public ApiResult GetUnapprovedTweets()
         {
-            var tweets = _moderationService.GetProfanityTweetsByStatus(Status.Unapproved);
+            try
+            {
+                var tweets = _moderationService.GetProfanityTweetsByStatus(Status.Unapproved);
 
-            return ApiResult.Success(tweets);
+                return ApiResult.Success(tweets);
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpPut]
@@ -56,9 +77,16 @@ namespace ModerationService.Controllers
         [Route("approve/{tweetId}")]
         public async Task<ApiResult> ApproveTweet(string tweetId)
         {
-            var result = await _moderationService.ApproveProfanityTweet(tweetId);
+            try
+            {
+                var result = await _moderationService.ApproveProfanityTweet(tweetId);
 
-            return result ? ApiResult.Success("Tweet has been approved.") : ApiResult.NotFound("Could not find Tweet.");
+                return result ? ApiResult.Success("Tweet has been approved.") : ApiResult.NotFound("Could not find Tweet.");
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpPut]
@@ -66,9 +94,16 @@ namespace ModerationService.Controllers
         [Route("unapprove/{tweetId}")]
         public async Task<ApiResult> UnApproveTweet(string tweetId)
         {
-            var result = await _moderationService.UnApproveProfanityTweet(tweetId);
+            try
+            {
+                var result = await _moderationService.UnApproveProfanityTweet(tweetId);
 
-            return result ? ApiResult.Success("Tweet has been approved.") : ApiResult.NotFound("Could not find Tweet.");
+                return result ? ApiResult.Success("Tweet has been approved.") : ApiResult.NotFound("Could not find Tweet.");
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpPut]
@@ -76,9 +111,16 @@ namespace ModerationService.Controllers
         [Route("upgrade/{userId}")]
         public async Task<ApiResult> UpgradeUserToModerator(string userId)
         {
-            var result = await _moderationService.UpgradeUserToModerator(userId);
+            try
+            {
+                var result = await _moderationService.UpgradeUserToModerator(userId);
 
-            return result ? ApiResult.Success("User had been upgraded to admin.") : ApiResult.NotFound("Could not find user.");
+                return result ? ApiResult.Success("User had been upgraded to admin.") : ApiResult.NotFound("Could not find user.");
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
     }
 }

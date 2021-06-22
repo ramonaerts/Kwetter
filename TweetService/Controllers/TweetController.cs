@@ -27,11 +27,18 @@ namespace TweetService.Controllers
         [Route("{id}")]
         public ApiResult GetProfileTweets(string id)
         {
-            var currentUserId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            try
+            {
+                var currentUserId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            var tweets = _tweetService.GetTweets(id, currentUserId);
+                var tweets = _tweetService.GetTweets(id, currentUserId);
 
-            return ApiResult.Success(tweets);
+                return ApiResult.Success(tweets);
+            }
+            catch (Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpPost]
@@ -39,11 +46,18 @@ namespace TweetService.Controllers
         [Route("create")]
         public async Task<ApiResult> CreateTweet(CreateTweetMessage message)
         {
-            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            try
+            {
+                var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            await _tweetService.CreateTweet(id, message.TweetContent);
+                await _tweetService.CreateTweet(id, message.TweetContent);
 
-            return ApiResult.Success("Created");
+                return ApiResult.Success("Created");
+            }
+            catch (Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpDelete]
@@ -51,12 +65,19 @@ namespace TweetService.Controllers
         [Route("{id}")]
         public async Task<ApiResult> DeleteTweet(string id)
         {
-            var userId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
-            var roleString = User.Claims.First(c => c.Type == ClaimTypes.Role).Value.ToString();
+            try
+            {
+                var userId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+                var roleString = User.Claims.First(c => c.Type == ClaimTypes.Role).Value.ToString();
 
-            var result = await _tweetService.DeleteTweet(id, userId, roleString);
+                var result = await _tweetService.DeleteTweet(id, userId, roleString);
 
-            return result ? ApiResult.Success("Tweet deleted") : ApiResult.NotFound("Something went wrong");
+                return result ? ApiResult.Success("Tweet deleted") : ApiResult.NotFound("Something went wrong");
+            }
+            catch (Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
     }
 }

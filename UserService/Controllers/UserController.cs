@@ -25,11 +25,18 @@ namespace UserService.Controllers
         [Route("register")]
         public async Task<ApiResult> RegisterUser(RegisterMessage message) 
         {
-            if(!_userService.VerifyPasswords(message.Password, message.ConfirmPassword)) return ApiResult.BadRequest("Password don't match.");
+            try
+            {
+                if (!_userService.VerifyPasswords(message.Password, message.ConfirmPassword)) return ApiResult.BadRequest("Password don't match.");
 
-            if(_userService.VerifyUniqueEmail(message.Email)) return ApiResult.BadRequest("This email is already in use.");
+                if (_userService.VerifyUniqueEmail(message.Email)) return ApiResult.BadRequest("This email is already in use.");
 
-            return await _userService.RegisterUser(message) ? ApiResult.Success("success") : ApiResult.BadRequest("Something went wrong.");
+                return await _userService.RegisterUser(message) ? ApiResult.Success("success") : ApiResult.BadRequest("Something went wrong.");
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpPost]
@@ -37,11 +44,18 @@ namespace UserService.Controllers
         [Route("admin")]
         public async Task<ApiResult> CreateAdmin(RegisterMessage message)
         {
-            if (!_userService.VerifyPasswords(message.Password, message.ConfirmPassword)) return ApiResult.BadRequest("Password don't match.");
+            try
+            {
+                if (!_userService.VerifyPasswords(message.Password, message.ConfirmPassword)) return ApiResult.BadRequest("Password don't match.");
 
-            if (_userService.VerifyUniqueEmail(message.Email)) return ApiResult.BadRequest("This email is already in use.");
+                if (_userService.VerifyUniqueEmail(message.Email)) return ApiResult.BadRequest("This email is already in use.");
 
-            return await _userService.CreateAdmin(message) ? ApiResult.Success("success") : ApiResult.BadRequest("Something went wrong.");
+                return await _userService.CreateAdmin(message) ? ApiResult.Success("success") : ApiResult.BadRequest("Something went wrong.");
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpDelete]
@@ -49,11 +63,18 @@ namespace UserService.Controllers
         [Route("forget")]
         public async Task<ApiResult> ForgetUser()
         {
-            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            try
+            {
+                var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            var result = await _userService.ForgetUser(id);
+                var result = await _userService.ForgetUser(id);
 
-            return result ? ApiResult.Success("Account deleted") : ApiResult.NotFound("User could not be found");
+                return result ? ApiResult.Success("Account deleted") : ApiResult.NotFound("User could not be found");
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
     }
 }

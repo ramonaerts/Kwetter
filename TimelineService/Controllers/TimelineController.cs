@@ -26,11 +26,18 @@ namespace TimelineService.Controllers
         [Route("timeline")]
         public ApiResult GetUserTimeline()
         {
-            var userId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            try
+            {
+                var userId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            var tweets = _timelineService.GetUserTimeline(userId);
+                var tweets = _timelineService.GetUserTimeline(userId);
 
-            return ApiResult.Success(tweets);
+                return ApiResult.Success(tweets);
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
     }
 }
