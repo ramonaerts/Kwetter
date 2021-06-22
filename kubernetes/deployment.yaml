@@ -224,6 +224,26 @@ items:
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
+      io.kompose.service: filemanagementdatabase
+    name: filemanagementdatabase
+  spec:
+    ports:
+    - name: "27023"
+      port: 27017
+      targetPort: 27017
+    selector:
+      io.kompose.service: filemanagementdatabase
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
       io.kompose.service: likeservice
     name: likeservice
   spec:
@@ -776,6 +796,49 @@ items:
           image: mongo
           imagePullPolicy: ""
           name: likedatabase
+          ports:
+          - containerPort: 27017
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+        -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: filemanagementdatabase
+    name: filemanagementdatabase
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: filemanagementdatabase
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
+            -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: filemanagementdatabase
+      spec:
+        containers:
+        - env:
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: example
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: root
+          image: mongo
+          imagePullPolicy: ""
+          name: filemanagementdatabase
           ports:
           - containerPort: 27017
           resources: {}

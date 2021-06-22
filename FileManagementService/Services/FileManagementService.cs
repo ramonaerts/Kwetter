@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using FileManagementService.DAL;
+using FileManagementService.Entities;
 using FileManagementService.Enums;
 using Shared.Messaging;
 
@@ -9,21 +11,30 @@ namespace FileManagementService.Services
     public class FileManagementService : IFileManagementService
     {
         private readonly IMessagePublisher _messagePublisher;
+        private readonly IFileManagementRepository _fileManagementRepository;
 
-        public FileManagementService(IMessagePublisher messagePublisher)
+        public FileManagementService(IMessagePublisher messagePublisher, IFileManagementRepository fileManagementRepository)
         {
             _messagePublisher = messagePublisher;
+            _fileManagementRepository = fileManagementRepository;
         }
 
         public async Task SaveProfileImage(string id, string image, DataType type)
         {
             var base64 = image.Substring(image.LastIndexOf(',') + 1);
             var uniqueFileName = Guid.NewGuid() + GetFileExtension(base64);
-            var filePath = Environment.CurrentDirectory + GetPath(type) + uniqueFileName;
+            
+            var profileImage = new ProfileImage
+            {
+                Id = Guid.NewGuid().ToString(),
+                DataType = DataType.Profile,
+                File = base64,
+                Filename = uniqueFileName
+            };
+
+            await _fileManagementRepository.SaveImage(profileImage);
 
             await _messagePublisher.PublishMessageAsync("ProfileImageChangedMessage", new { Id = id, Image = uniqueFileName });
-
-            File.WriteAllBytes(filePath, Convert.FromBase64String(base64));
         }
 
         public void DeleteOldProfileImage(string id, string oldImage, DataType type)
@@ -35,12 +46,14 @@ namespace FileManagementService.Services
 
         public bool GetContentOfType(string dataString, DataType type, out byte[] bytes)
         {
-            bytes = new byte[0];
-            var path = GetPath(type);
+            var profileImage = _fileManagementRepository.GetImage(dataString, type);
+            if (profileImage == null)
+            {
+                bytes = null;
+                return false;
+            }
 
-            if (!File.Exists(Path.Combine(Environment.CurrentDirectory + path + dataString))) return false;
-
-            bytes = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory + path + dataString));
+            bytes = Convert.FromBase64String(profileImage.File);
 
             return true;
         }

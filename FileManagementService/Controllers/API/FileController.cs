@@ -34,7 +34,7 @@ namespace FileManagementService.Controllers.API
 
                 await _fileManagementService.SaveProfileImage(id, message.Image, DataType.Profile);
 
-                return ApiResult.Success("Image successfully changed");
+                return ApiResult.Success(null, "Image successfully changed");
             }
             catch (System.Exception)
             {

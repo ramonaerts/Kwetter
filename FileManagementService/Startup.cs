@@ -1,4 +1,6 @@
 using System.Text;
+using FileManagementService.DAL;
+using FileManagementService.DAL.Config;
 using FileManagementService.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -50,6 +52,14 @@ namespace FileManagementService
             services.AddAuthorization();
 
             services.AddMessagePublishing("FileManagementService");
+
+            var config = new ServerConfig();
+            Configuration.Bind(config);
+
+            var fileManagementContext = new FileManagementContext(config.MongoDB);
+            var repo = new FileManagementRepository(fileManagementContext);
+
+            services.AddSingleton<IFileManagementRepository>(repo);
 
             services.AddScoped<IFileManagementService, Services.FileManagementService>();
         }
