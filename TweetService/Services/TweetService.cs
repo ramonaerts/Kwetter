@@ -97,7 +97,7 @@ namespace TweetService.Services
         {
             var tweet = new Entities.Tweet
             {
-                TweetDateTime = DateTime.Now,
+                TweetDateTime = DateTime.Now.ToString("d/MM/yyyy"),
                 Id = Guid.NewGuid().ToString(),
                 UserId = id,
                 TweetContent = tweetContent

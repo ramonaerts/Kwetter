@@ -45,6 +45,7 @@ namespace AuthenticationService.Services
             {
                 Id = message.Id,
                 Email = message.Email,
+                Username = message.Username,
                 Hash = hash,
                 Salt = salt,
                 Role = UserRole.User
@@ -63,6 +64,7 @@ namespace AuthenticationService.Services
             {
                 Id = message.Id,
                 Email = message.Email,
+                Username = message.Username,
                 Hash = hash,
                 Salt = salt,
                 Role = UserRole.Moderator

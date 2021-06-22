@@ -44,6 +44,8 @@ namespace TimelineService.Services
             foreach (var tweet in tweetModels)
             {
                 tweet.User = _users.Find(u => u.Id == tweet.UserId).FirstOrDefault();
+
+                tweet.OwnTweet = false;
             }
 
             tweetModels = tweetModels.OrderByDescending(x => x.TweetDateTime).ToList();
