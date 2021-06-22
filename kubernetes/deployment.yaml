@@ -192,7 +192,7 @@ items:
     - name: "50001"
       port: 50001
       targetPort: 443
-      odePort: 30001
+      nodePort: 30001
     selector:
       io.kompose.service: gateway
 - apiVersion: v1
