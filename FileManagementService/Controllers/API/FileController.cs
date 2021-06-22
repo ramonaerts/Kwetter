@@ -26,13 +26,20 @@ namespace FileManagementService.Controllers.API
         [HttpPost("edit")]
         public async Task<ApiResult> EditProfilePicture(EditProfileImageMessage message)
         {
-            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            try
+            {
+                var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            //if (message.OldImage != null) _fileManagementService.DeleteOldProfileImage(id, message.NewImage, DataType.Profile);
+                //if (message.OldImage != null) _fileManagementService.DeleteOldProfileImage(id, message.NewImage, DataType.Profile);
 
-            await _fileManagementService.SaveProfileImage(id, message.Image, DataType.Profile);
+                await _fileManagementService.SaveProfileImage(id, message.Image, DataType.Profile);
 
-            return ApiResult.Success("Image successfully changed");
+                return ApiResult.Success("Image successfully changed");
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
     }
 }

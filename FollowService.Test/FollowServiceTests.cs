@@ -104,5 +104,55 @@ namespace FollowService.Test
             Assert.False(resultAfterOne);
             Assert.False(resultAfterTwo);
         }
+
+        [Fact]
+        public async Task UserFollowsHimselfTestFalse()
+        {
+            var result = await _followService.FollowUser("1", "1");
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public async Task GetFollowerCountTest()
+        {
+            for (var i = 1; i < 41; i++)
+            {
+                await _followService.FollowUser(i.ToString(), "0");
+            }
+
+            var followerCount = _followService.GetFollowCount("0");
+
+            Assert.Equal(40, followerCount.FollowerCount);
+        }
+
+        [Fact]
+        public async Task GetFollowingCountTest()
+        {
+            await _followService.FollowUser("0", "1");
+            await _followService.FollowUser("0", "2");
+            await _followService.FollowUser("0", "3");
+
+            var followerCount = _followService.GetFollowCount("0");
+
+            Assert.Equal(3, followerCount.FollowingCount);
+        }
+
+        [Fact]
+        public async Task GetFollowerAndFollowingCountTest()
+        {
+            for (var i = 1; i < 36; i++)
+            {
+                await _followService.FollowUser(i.ToString(), "0");
+            }
+
+            await _followService.FollowUser("0", "1");
+            await _followService.FollowUser("0", "2");
+
+            var followerCount = _followService.GetFollowCount("0");
+
+            Assert.Equal(35, followerCount.FollowerCount);
+            Assert.Equal(2, followerCount.FollowingCount);
+        }
     }
 }

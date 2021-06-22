@@ -1,7 +1,10 @@
 ﻿using System;
-using TimelineService.Entities;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using ModerationService.Entities;
 
-namespace TimelineService.Models
+namespace ModerationService.Models
 {
     public class Tweet
     {
@@ -10,6 +13,6 @@ namespace TimelineService.Models
         public User User { get; set; }
         public string TweetContent { get; set; }
         public string TweetDateTime { get; set; }
-        public bool OwnTweet { get; set; }
+        public Status TweetStatus { get; set; }
     }
 }

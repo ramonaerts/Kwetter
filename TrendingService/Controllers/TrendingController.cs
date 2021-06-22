@@ -27,9 +27,16 @@ namespace TrendingService.Controllers
         [Route("top")]
         public ApiResult GetTopTrends()
         {
-            var topTrends = _trendingService.GetTopTrends();
+            try
+            {
+                var topTrends = _trendingService.GetTopTrends();
 
-            return ApiResult.Success(topTrends);
+                return ApiResult.Success(topTrends);
+            }
+            catch (Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
     }
 }

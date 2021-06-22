@@ -26,16 +26,23 @@ namespace UserService.Controllers
         [Route("{username}")]
         public async Task<ApiResult> GetProfileByName(string username)
         {
-            var profile = await _profileService.GetProfileByUsername(username);
+            try
+            {
+                var profile = await _profileService.GetProfileByUsername(username);
 
-            if (profile == null) return ApiResult.NotFound("User was not found");
+                if (profile == null) return ApiResult.NotFound("User was not found");
 
-            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+                var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            if (id == profile.Id) profile.Self = true;
-            else profile.Email = null;
+                if (id == profile.Id) profile.Self = true;
+                else profile.Email = null;
 
-            return ApiResult.Success(profile);
+                return ApiResult.Success(profile);
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpGet]
@@ -43,11 +50,18 @@ namespace UserService.Controllers
         [Route("@me")]
         public async Task<ApiResult> GetOwnProfile()
         {
-            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            try
+            {
+                var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            var user = await _profileService.GetProfileById(id);
+                var user = await _profileService.GetProfileById(id);
 
-            return ApiResult.Success(user);
+                return ApiResult.Success(user);
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpPut]
@@ -55,11 +69,18 @@ namespace UserService.Controllers
         [Route("edit")]
         public async Task<ApiResult> EditProfile(EditProfileMessage message)
         {
-            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            try
+            {
+                var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            if(message.Id != id) return ApiResult.Forbidden("Not allowed");
+                if (message.Id != id) return ApiResult.Forbidden("Not allowed");
 
-            return await _profileService.EditProfile(message) ? ApiResult.Success("Profile edited correctly") : ApiResult.BadRequest("Something went wrong");
+                return await _profileService.EditProfile(message) ? ApiResult.Success("Profile edited correctly") : ApiResult.BadRequest("Something went wrong");
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
     }
 }

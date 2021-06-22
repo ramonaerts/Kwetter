@@ -45,9 +45,29 @@ namespace AuthenticationService.Services
             {
                 Id = message.Id,
                 Email = message.Email,
+                Username = message.Username,
                 Hash = hash,
                 Salt = salt,
                 Role = UserRole.User
+            };
+
+            _authenticationContext.Add(user);
+            await _authenticationContext.SaveChangesAsync();
+        }
+
+        public async Task AddModerator(NewAdminMessage message)
+        {
+            var salt = GenerateSalt();
+            var hash = HashPassword(message.Password, salt);
+
+            var user = new User
+            {
+                Id = message.Id,
+                Email = message.Email,
+                Username = message.Username,
+                Hash = hash,
+                Salt = salt,
+                Role = UserRole.Moderator
             };
 
             _authenticationContext.Add(user);

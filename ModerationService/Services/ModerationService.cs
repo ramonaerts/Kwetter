@@ -1,26 +1,33 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using ModerationService.DAL;
 using ModerationService.Entities;
 using ModerationService.Messages.Broker;
 using ModerationService.Models;
 using MongoDB.Driver;
 using Shared.Messaging;
+using Tweet = ModerationService.Models.Tweet;
 
 namespace ModerationService.Services
 {
     public class ModerationService : IModerationService
     {
+        private readonly IMapper _mapper;
         private readonly IMessagePublisher _messagePublisher;
-        private readonly IMongoCollection<Tweet> _tweets;
+        private readonly IMongoCollection<Entities.Tweet> _tweets;
         private readonly IMongoCollection<User> _users;
 
-        public ModerationService(IModerationContext context, IMessagePublisher messagePublisher)
+        public ModerationService(IModerationContext context, IMessagePublisher messagePublisher, IMapper mapper)
         {
             _messagePublisher = messagePublisher;
+            _mapper = mapper;
+
             var client = new MongoClient(context.ConnectionString);
             var database = client.GetDatabase(context.DatabaseName);
 
-            _tweets = database.GetCollection<Tweet>("Tweets");
+            _tweets = database.GetCollection<Entities.Tweet>("Tweets");
             _users = database.GetCollection<User>("Users");
         }
 
@@ -61,9 +68,25 @@ namespace ModerationService.Services
             return true;
         }
 
+        public List<Tweet> GetProfanityTweetsByStatus(Status status)
+        {
+            var tweets = _tweets.Find(t => t.TweetStatus == status).ToList();
+
+            var tweetModels = _mapper.Map<List<Tweet>>(tweets);
+
+            foreach (var tweet in tweetModels)
+            {
+                tweet.User = _users.Find(u => u.Id == tweet.UserId).FirstOrDefault();
+            }
+
+            tweetModels = tweetModels.OrderByDescending(x => x.TweetDateTime).ToList();
+
+            return tweetModels;
+        }
+
         public async Task AddProfanityTweet(NewProfanityTweetMessage message)
         {
-            var tweet = new Tweet
+            var tweet = new Entities.Tweet
             {
                 TweetDateTime = message.TweetDateTime,
                 Id = message.Id,
@@ -109,7 +132,12 @@ namespace ModerationService.Services
         public async Task ForgetUser(ForgetUserMessage message)
         {
             await _users.DeleteOneAsync(u => u.Id == message.Id);
-            await _tweets.DeleteManyAsync(u => u.UserId == message.Id);
+            await _tweets.DeleteManyAsync(t => t.UserId == message.Id);
+        }
+
+        public async Task DeleteTweet(string tweetId)
+        {
+            await _tweets.DeleteOneAsync(t => t.Id == tweetId);
         }
     }
 }

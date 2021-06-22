@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.API;
 using TweetService.Messages.Api;
+using TweetService.Models;
 using TweetService.Services;
 
 namespace TweetService.Controllers
@@ -23,24 +24,21 @@ namespace TweetService.Controllers
 
         [HttpGet]
         [Authorize(Roles = "User,Moderator,Admin")]
-        [Route("tweets")]
-        public ApiResult GetUserTweets()
-        {
-            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
-
-            var tweets = _tweetService.GetTweets(id);
-
-            return ApiResult.Success(tweets);
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "User,Moderator,Admin")]
         [Route("{id}")]
         public ApiResult GetProfileTweets(string id)
         {
-            var tweets = _tweetService.GetTweets(id);
+            try
+            {
+                var currentUserId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            return ApiResult.Success(tweets);
+                var tweets = _tweetService.GetTweets(id, currentUserId);
+
+                return ApiResult.Success(tweets);
+            }
+            catch (Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpPost]
@@ -48,11 +46,38 @@ namespace TweetService.Controllers
         [Route("create")]
         public async Task<ApiResult> CreateTweet(CreateTweetMessage message)
         {
-            var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            try
+            {
+                var id = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            await _tweetService.CreateTweet(id, message.TweetContent);
+                await _tweetService.CreateTweet(id, message.TweetContent);
 
-            return ApiResult.Success("Created");
+                return ApiResult.Success("Created");
+            }
+            catch (Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "User,Moderator,Admin")]
+        [Route("{id}")]
+        public async Task<ApiResult> DeleteTweet(string id)
+        {
+            try
+            {
+                var userId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+                var roleString = User.Claims.First(c => c.Type == ClaimTypes.Role).Value.ToString();
+
+                var result = await _tweetService.DeleteTweet(id, userId, roleString);
+
+                return result ? ApiResult.Success("Tweet deleted") : ApiResult.NotFound("Something went wrong");
+            }
+            catch (Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
     }
 }

@@ -29,7 +29,7 @@ namespace UserService.Services
                 Username = message.Username,
                 Nickname = message.Username,
                 Image = "default.png",
-                Location = null,
+                Location = "",
                 FollowersCount = 0,
                 FollowingCount = 0,
                 Verified = false
@@ -38,7 +38,32 @@ namespace UserService.Services
             _userContext.Add(user);
             _userContext.SaveChanges();
 
-            await _messagePublisher.PublishMessageAsync("NewUserMessage", new { Id = user.Id, Email = user.Email, Password = message.Password });
+            await _messagePublisher.PublishMessageAsync("NewUserMessage", new { Id = user.Id, Email = user.Email, Username = user.Username, Password = message.Password });
+            await _messagePublisher.PublishMessageAsync("NewProfileMessage",
+                new { Id = user.Id, Username = user.Username, Nickname = user.Nickname, Image = user.Image });
+
+            return true;
+        }
+
+        public async Task<bool> CreateAdmin(RegisterMessage message)
+        {
+            var user = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                Email = message.Email,
+                Username = message.Username,
+                Nickname = message.Username,
+                Image = "default.png",
+                Location = "",
+                FollowersCount = 0,
+                FollowingCount = 0,
+                Verified = true
+            };
+
+            _userContext.Add(user);
+            _userContext.SaveChanges();
+
+            await _messagePublisher.PublishMessageAsync("NewAdminMessage", new { Id = user.Id, Email = user.Email, Username = user.Username, Password = message.Password });
             await _messagePublisher.PublishMessageAsync("NewProfileMessage",
                 new { Id = user.Id, Username = user.Username, Nickname = user.Nickname, Image = user.Image });
 

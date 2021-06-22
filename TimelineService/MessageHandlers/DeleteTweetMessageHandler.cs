@@ -8,17 +8,17 @@ using TimelineService.Services;
 
 namespace TimelineService.MessageHandlers
 {
-    public class UnApproveTweetMessageHandler : IMessageHandler<UnApproveTweetMessage>
+    public class DeleteTweetMessageHandler : IMessageHandler<DeleteTweetMessage>
     {
         private readonly ITimelineService _timelineService;
-        public UnApproveTweetMessageHandler(ITimelineService timelineService)
+        public DeleteTweetMessageHandler(ITimelineService timelineService)
         {
             _timelineService = timelineService;
         }
 
-        public async Task HandleMessageAsync(string messageType, UnApproveTweetMessage message)
+        public async Task HandleMessageAsync(string messageType, DeleteTweetMessage message)
         {
-            await _timelineService.DeleteTweet(message.TweetId);
+            await _timelineService.DeleteTweet(message.Id);
         }
     }
 }

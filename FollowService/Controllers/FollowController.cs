@@ -26,11 +26,18 @@ namespace FollowService.Controllers
         [Route("follow")]
         public async Task<ApiResult> PostFollower(FollowMessage message)
         {
-            var followerId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            try
+            {
+                var followerId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            var result = await _followService.FollowUser(followerId, message.Id);
+                var result = await _followService.FollowUser(followerId, message.Id);
 
-            return result ? ApiResult.Success("Followed successfully") : ApiResult.BadRequest("Something went wrong");
+                return result ? ApiResult.Success("Followed successfully") : ApiResult.BadRequest("Something went wrong");
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpDelete]
@@ -38,11 +45,18 @@ namespace FollowService.Controllers
         [Route("{id}")]
         public async Task<ApiResult> DeleteFollower(string id)
         {
-            var followerId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            try
+            {
+                var followerId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            var result = await _followService.UnFollowUser(followerId, id);
+                var result = await _followService.UnFollowUser(followerId, id);
 
-            return result ? ApiResult.Success("followed successfully") : ApiResult.BadRequest("Something went wrong");
+                return result ? ApiResult.Success("followed successfully") : ApiResult.BadRequest("Something went wrong");
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpGet]
@@ -50,11 +64,35 @@ namespace FollowService.Controllers
         [Route("{id}")]
         public ApiResult CheckIfFollows(string id)
         {
-            var followerId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            try
+            {
+                var followerId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            var result = _followService.FollowExists(followerId, id);
+                var result = _followService.FollowExists(followerId, id);
 
-            return ApiResult.Success(result);
+                return ApiResult.Success(result);
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "User,Moderator,Admin")]
+        [Route("count/{id}")]
+        public ApiResult GetFollowCounts(string id)
+        {
+            try
+            {
+                var result = _followService.GetFollowCount(id);
+
+                return ApiResult.Success(result);
+            }
+            catch (System.Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
     }
 }

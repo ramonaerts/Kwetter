@@ -27,11 +27,18 @@ namespace LikeService.Controllers
         [Route("{tweetId}")]
         public async Task<ApiResult> LikeTweet(string tweetId)
         {
-            var userId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            try
+            {
+                var userId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            var result = await _likeService.NewLike(userId, tweetId);
+                var result = await _likeService.NewLike(userId, tweetId);
 
-            return result ? ApiResult.Success("Success") : ApiResult.BadRequest("Something went wrong");
+                return result ? ApiResult.Success("Success") : ApiResult.BadRequest("Something went wrong");
+            }
+            catch (Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpDelete]
@@ -39,11 +46,18 @@ namespace LikeService.Controllers
         [Route("{tweetId}")]
         public async Task<ApiResult> UnlikeTweet(string tweetId)
         {
-            var userId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            try
+            {
+                var userId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            var result = await _likeService.RemoveLike(userId, tweetId);
+                var result = await _likeService.RemoveLike(userId, tweetId);
 
-            return result ? ApiResult.Success("Success") : ApiResult.BadRequest("Something went wrong");
+                return result ? ApiResult.Success("Success") : ApiResult.BadRequest("Something went wrong");
+            }
+            catch (Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
 
         [HttpGet]
@@ -51,11 +65,18 @@ namespace LikeService.Controllers
         [Route("{tweetId}")]
         public ApiResult GetLikes(string tweetId)
         {
-            var userId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
+            try
+            {
+                var userId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value.ToString();
 
-            var result = _likeService.GetLikes(userId, tweetId);
+                var result = _likeService.GetLikes(userId, tweetId);
 
-            return ApiResult.Success(result);
+                return ApiResult.Success(result);
+            }
+            catch (Exception)
+            {
+                return ApiResult.BadRequest("Something went wrong");
+            }
         }
     }
 }

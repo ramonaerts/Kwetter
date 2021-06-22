@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FollowService.DAL;
 using FollowService.Entities;
 using FollowService.Messages.Broker;
+using FollowService.Models;
 using MongoDB.Driver;
 using Shared.Messaging;
 
@@ -26,8 +28,24 @@ namespace FollowService.Services
             return follow != null;
         }
 
+        public FollowCount GetFollowCount(string userId)
+        {
+            var followerCount = _followRepository.GetAllFollowers(userId);
+            var followingCount = _followRepository.GetAllFollowings(userId);
+
+            var followCount = new FollowCount
+            {
+                FollowerCount = followerCount,
+                FollowingCount = followingCount
+            };
+
+            return followCount;
+        }
+
         public async Task<bool> FollowUser(string followerId, string followingId)
         {
+            if (followerId == followingId) return false;
+
             if (FollowExists(followerId, followingId)) return false;
 
             var follow = new Follow

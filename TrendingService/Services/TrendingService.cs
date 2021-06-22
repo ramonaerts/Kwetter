@@ -21,9 +21,10 @@ namespace TrendingService.Services
         {
             var trends = _trendingRepository.GetAllTrends();
 
-            trends = trends.OrderBy(t => t.TweetCount).ToList();
+            trends = trends.OrderByDescending(t => t.TweetCount).ToList();
+            if(trends.Count > 10) trends = trends.GetRange(0, 10);
 
-            return trends.GetRange(0, 10);
+            return trends;
         }
 
         public async Task AddNewTopic(NewTopicTweetMessage message)
@@ -38,6 +39,9 @@ namespace TrendingService.Services
 
         private async Task UpdateTrendCount(string topic)
         {
+            topic = topic.ToLower();
+            topic = "#" + char.ToUpper(topic[1]) + topic.Substring(2);
+
             var trend = _trendingRepository.GetTrendByTopic(topic);
 
             if (trend == null)

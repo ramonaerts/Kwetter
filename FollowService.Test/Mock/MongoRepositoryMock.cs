@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FollowService.DAL;
@@ -43,6 +44,16 @@ namespace FollowService.Test.Mock
         {
             Follows.RemoveAll(f => f.Following == userId);
             return Task.CompletedTask;
+        }
+
+        public int GetAllFollowers(string userId)
+        {
+            return Follows.Count(f => f.Following == userId);
+        }
+
+        public int GetAllFollowings(string userId)
+        {
+            return Follows.Count(f => f.Follower == userId);
         }
     }
 }

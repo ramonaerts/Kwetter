@@ -13,6 +13,7 @@ namespace AuthenticationService.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: true),
+                    Username = table.Column<string>(nullable: true),
                     Hash = table.Column<byte[]>(nullable: true),
                     Salt = table.Column<byte[]>(nullable: true),
                     Role = table.Column<int>(nullable: false)

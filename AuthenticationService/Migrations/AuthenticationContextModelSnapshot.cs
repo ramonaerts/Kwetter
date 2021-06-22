@@ -34,6 +34,9 @@ namespace AuthenticationService.Migrations
                     b.Property<byte[]>("Salt")
                         .HasColumnType("longblob");
 
+                    b.Property<string>("Username")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");

@@ -14,6 +14,6 @@ namespace LikeService.Services
         Task<bool> RemoveLike(string userId, string tweetId);
         Like GetLikes(string userId, string tweetId);
         Task ForgetUser(ForgetUserMessage message);
-        Task UnApproveTweet(UnApproveTweetMessage message);
+        Task DeleteTweet(string tweetId);
     }
 }

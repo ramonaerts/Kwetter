@@ -1,4 +1,5 @@
 using System.Text;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -50,10 +51,19 @@ namespace ModerationService
                 };
             });
 
+            var mapperConfig = new MapperConfiguration(m =>
+            {
+                m.AddProfile(new AutoMapperProfile());
+            });
+
+            var mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             services.AddMessagePublishing("ModerationService", builder =>
             {
                 builder.WithHandler<NewProfileMessageHandler>("NewProfileMessage");
                 builder.WithHandler<ForgetUserMessageHandler>("ForgetUserMessage");
+                builder.WithHandler<DeleteTweetMessageHandler>("DeleteTweetMessage");
                 builder.WithHandler<ProfileChangedMessageHandler>("ProfileChangedMessage");
                 builder.WithHandler<NewProfanityTweetMessageHandler>("NewProfanityTweetMessage");
                 builder.WithHandler<ProfileImageChangedMessageHandler>("ProfileImageChangedMessage");

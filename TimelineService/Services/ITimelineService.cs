@@ -15,6 +15,6 @@ namespace TimelineService.Services
         Task UpdateUser(ProfileChangedMessage message);
         Task UpdateUserImage(ProfileImageChangedMessage message);
         Task ForgetUser(ForgetUserMessage message);
-        Task UnApproveTweet(UnApproveTweetMessage message);
+        Task DeleteTweet(string tweetId);
     }
 }

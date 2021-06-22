@@ -13,5 +13,7 @@ namespace FollowService.DAL
         Task DeleteOneFollower(string followerId, string followingId);
         Task DeleteAllFollowers(string userId);
         Task DeleteAllFollowing(string userId);
+        int GetAllFollowers(string userId);
+        int GetAllFollowings(string userId);
     }
 }
