@@ -1324,6 +1324,40 @@ items:
         serviceAccountName: ""
         volumes: null
   status: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: website
+    namespace: default
+  spec:
+    ports:
+      - name: "80"
+        port: 80
+        targetPort: 80
+    selector:
+      app: website
+    type: LoadBalancer
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: website-deployment
+    namespace: default
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: website
+    template:
+      metadata:
+        labels:
+          app: website
+      spec:
+        containers:
+          - name: website
+            image: ramonaerts/kwetter-frontend
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 80
+        restartPolicy: Always
 kind: List
 metadata: {}
-
