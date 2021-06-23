@@ -520,7 +520,6 @@ items:
           - name: volume
             persistentVolumeClaim:
               claimName: azure-managed-disk
-
   status: {}
 - apiVersion: apps/v1
   kind: Deployment
