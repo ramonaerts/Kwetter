@@ -488,7 +488,6 @@ items:
     selector:
       matchLabels:
         io.kompose.service: authenticationdatabase
-    strategy: {}
     template:
       metadata:
         annotations:
@@ -1161,7 +1160,6 @@ items:
     selector:
       matchLabels:
         io.kompose.service: tweetdatabase
-    strategy: {}
     template:
       metadata:
         annotations:
