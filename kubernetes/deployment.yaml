@@ -473,7 +473,7 @@ items:
   status:
     loadBalancer: {}
 - apiVersion: apps/v1
-  kind: Deployment
+  kind: StatefulSet
   metadata:
     annotations:
       kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
@@ -511,9 +511,16 @@ items:
           ports:
           - containerPort: 3306
           resources: {}
+          volumeMounts:
+          - mountPath: "/mnt/azure"
+            name: volume
         restartPolicy: Always
         serviceAccountName: ""
-        volumes: null
+        volumes:
+          - name: volume
+            persistentVolumeClaim:
+            claimName: azure-managed-disk
+
   status: {}
 - apiVersion: apps/v1
   kind: Deployment
@@ -1140,7 +1147,7 @@ items:
         volumes: null
   status: {}
 - apiVersion: apps/v1
-  kind: Deployment
+  kind: StatefulSet
   metadata:
     annotations:
       kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert

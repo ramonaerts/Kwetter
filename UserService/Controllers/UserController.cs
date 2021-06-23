@@ -27,9 +27,9 @@ namespace UserService.Controllers
         {
             try
             {
-                if (!_userService.VerifyPasswords(message.Password, message.ConfirmPassword)) return ApiResult.BadRequest("Password don't match.");
+                if (!_userService.VerifyPasswords(message.Password, message.ConfirmPassword)) return ApiResult.NotModified("Password don't match.");
 
-                if (_userService.VerifyUniqueEmail(message.Email)) return ApiResult.BadRequest("This email is already in use.");
+                if (_userService.VerifyUniqueEmail(message.Email)) return ApiResult.NotModified("This email is already in use.");
 
                 return await _userService.RegisterUser(message) ? ApiResult.Success("success") : ApiResult.BadRequest("Something went wrong.");
             }

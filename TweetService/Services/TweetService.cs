@@ -52,7 +52,7 @@ namespace TweetService.Services
                 tweet.OwnTweet = user.Id == currentUserId;
             }
 
-            tweetModels.Reverse();
+            tweetModels = tweetModels.OrderByDescending(x => x.TimeStamp).ToList();
 
             return tweetModels;
         }
@@ -98,6 +98,7 @@ namespace TweetService.Services
             var tweet = new Entities.Tweet
             {
                 TweetDateTime = DateTime.Now.ToString("d/MM/yyyy"),
+                TimeStamp = DateTime.Now,
                 Id = Guid.NewGuid().ToString(),
                 UserId = id,
                 TweetContent = tweetContent
@@ -105,12 +106,12 @@ namespace TweetService.Services
 
             if(await CheckForProfanity(tweet))
             {
-                await _messagePublisher.PublishMessageAsync("NewProfanityTweetMessage", new { TweetDateTime = tweet.TweetDateTime, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
+                await _messagePublisher.PublishMessageAsync("NewProfanityTweetMessage", new { TweetDateTime = tweet.TweetDateTime, TimeStamp = tweet.TimeStamp, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
             }
 
             if(tweetContent.Contains("#")) await _messagePublisher.PublishMessageAsync("NewTopicTweetMessage", new { Id = tweet.Id, TweetContent = tweet.TweetContent });
 
-            await _messagePublisher.PublishMessageAsync("NewPostedTweetMessage", new { TweetDateTime = tweet.TweetDateTime, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
+            await _messagePublisher.PublishMessageAsync("NewPostedTweetMessage", new { TweetDateTime = tweet.TweetDateTime, TimeStamp = tweet.TimeStamp, Id = tweet.Id, UserId = tweet.UserId, TweetContent = tweet.TweetContent });
 
             _tweets.InsertOne(tweet);
         }
