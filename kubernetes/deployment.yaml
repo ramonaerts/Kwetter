@@ -475,13 +475,6 @@ items:
 - apiVersion: apps/v1
   kind: StatefulSet
   metadata:
-    annotations:
-      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
-        -f docker-compose.yml -o deployment.yml
-      kompose.version: 1.21.0 (992df58d8)
-    creationTimestamp: null
-    labels:
-      io.kompose.service: authenticationdatabase
     name: authenticationdatabase
   spec:
     serviceName: "authenticationdatabase"
@@ -520,7 +513,8 @@ items:
           - name: volume
             persistentVolumeClaim:
               claimName: azure-managed-disk
-  status: {}
+  status:
+    replicas: 1
 - apiVersion: apps/v1
   kind: Deployment
   metadata:
@@ -1148,13 +1142,6 @@ items:
 - apiVersion: apps/v1
   kind: StatefulSet
   metadata:
-    annotations:
-      kompose.cmd: C:\Users\Gebruiker\Downloads\kompose-windows-amd64.exe convert
-        -f docker-compose.yml -o deployment.yml
-      kompose.version: 1.21.0 (992df58d8)
-    creationTimestamp: null
-    labels:
-      io.kompose.service: tweetdatabase
     name: tweetdatabase
   spec:
     serviceName: "tweetdatabase"
@@ -1187,7 +1174,8 @@ items:
         restartPolicy: Always
         serviceAccountName: ""
         volumes: null
-  status: {}
+  status: 
+    replicas: 1
 - apiVersion: apps/v1
   kind: Deployment
   metadata:
