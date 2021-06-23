@@ -48,7 +48,7 @@ namespace TimelineService.Services
                 tweet.OwnTweet = false;
             }
 
-            tweetModels.Reverse();
+            tweetModels = tweetModels.OrderByDescending(x => x.TimeStamp).ToList();
 
             return tweetModels;
         }
@@ -63,6 +63,7 @@ namespace TimelineService.Services
             var tweet = new Tweet
             {
                 TweetDateTime = message.TweetDateTime,
+                TimeStamp = message.TimeStamp,
                 Id = message.Id,
                 UserId = message.UserId,
                 TweetContent = message.TweetContent

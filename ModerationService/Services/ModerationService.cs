@@ -79,7 +79,7 @@ namespace ModerationService.Services
                 tweet.User = _users.Find(u => u.Id == tweet.UserId).FirstOrDefault();
             }
 
-            tweetModels = tweetModels.OrderByDescending(x => x.TweetDateTime).ToList();
+            tweetModels = tweetModels.OrderByDescending(x => x.TimeStamp).ToList();
 
             return tweetModels;
         }
