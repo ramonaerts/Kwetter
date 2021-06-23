@@ -519,7 +519,7 @@ items:
         volumes:
           - name: volume
             persistentVolumeClaim:
-            claimName: azure-managed-disk
+              claimName: azure-managed-disk
 
   status: {}
 - apiVersion: apps/v1
