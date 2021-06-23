@@ -484,6 +484,7 @@ items:
       io.kompose.service: authenticationdatabase
     name: authenticationdatabase
   spec:
+    serviceName: "authenticationdatabase"
     replicas: 1
     selector:
       matchLabels:
@@ -1156,6 +1157,7 @@ items:
       io.kompose.service: tweetdatabase
     name: tweetdatabase
   spec:
+    serviceName: "tweetdatabase"
     replicas: 1
     selector:
       matchLabels:
