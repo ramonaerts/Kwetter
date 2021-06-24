@@ -880,7 +880,13 @@ items:
           ports:
           - containerPort: 80
           - containerPort: 443
-          resources: {}
+          resources: 
+            requests:
+              cpu: 250m
+            limits: 
+              cpu: 500m
+          stdin: true
+          tty: true
         restartPolicy: Always
         serviceAccountName: ""
         volumes: null
@@ -1416,5 +1422,17 @@ items:
             ports:
               - containerPort: 80
         restartPolicy: Always
+- apiVersion: autoscaling/v1
+  kind: HorizontalPodAutoscaler
+  metadata:
+    name: likeservice-hpa
+  spec:
+    maxReplicas: 10 # define max replica count
+    minReplicas: 2  # define min replica count
+    scaleTargetRef:
+      apiVersion: apps/v1
+      kind: Deployment
+      name: likeservice
+    targetCPUUtilizationPercentage: 50 # target CPU utilization 
 kind: List
 metadata: {}
