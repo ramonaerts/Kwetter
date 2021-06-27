@@ -9,6 +9,7 @@ namespace TrendingService.Services
 {
     public interface ITrendingService
     {
+        //test
         List<Trend> GetTopTrends();
         Task AddNewTopic(NewTopicTweetMessage message);
     }
